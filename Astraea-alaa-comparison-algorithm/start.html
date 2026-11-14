@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,10 +45,8 @@
     <div class="start-top-actions">
       <div class="sci-badge-pill">
         <span class="pulse-indicator"></span>
-        <span class="badge-text" data-i18n="start.mission_status">MISSION CLEARANCE: ACTIVE</span>
+        <span class="badge-text" data-i18n="start.mission_status">MISSION CLEARANCE: ACTIVE &amp; VERIFIED</span>
       </div>
-      <button class="btn-control" id="startThemeBtn" onclick="toggleStartTheme()" title="Toggle Dark/Light Mode">☀️</button>
-      <button class="btn-control" id="startLangBtn" onclick="toggleStartLanguage()" title="Switch Language">English</button>
     </div>
   </header>
 
@@ -63,19 +61,17 @@
 
     <!-- Main Title -->
     <h1 class="start-main-title">
-      <span class="title-gradient" data-i18n="start.title">منصة Astraea للنظائر الكوكبية</span>
+      <span class="title-gradient" data-i18n="start.title">Astraea Planetary Analog Platform</span>
     </h1>
 
-    <p class="start-lead-desc" data-i18n="start.subtitle">
-      بوابتك العلمية المتقدمة لمطابقة تضاريس كوكب الأرض مع أهداف القمر والمريخ بدقة فيزيائية عالية، عبر فحص 421,800 خلية جغرافية وحساب مؤشرات التباين التضاريسي والحراري والجيولوجي.
-    </p>
+    <p class="start-lead-desc" data-i18n="start.subtitle">Your space-agency standard platform comparing Earth terrain cells to Lunar and Martian targets with high physical fidelity across 421,800 scanned candidate cells.</p>
 
     <!-- Celestial Trio Visualizer -->
     <div class="celestial-trio">
       <div class="planet-orb orb-earth" title="Earth (Terra)">
         <div class="planet-surface"></div>
         <div class="planet-atmosphere"></div>
-        <span class="orb-label" data-i18n="start.orb_earth">الأرض • Terra</span>
+        <span class="orb-label" data-i18n="start.orb_earth">Earth • Terra</span>
       </div>
       <div class="orbital-link-line">
         <div class="scan-beam-pulse"></div>
@@ -87,7 +83,7 @@
       <div class="planet-orb orb-mars" title="Mars">
         <div class="planet-surface"></div>
         <div class="planet-atmosphere"></div>
-        <span class="orb-label" data-i18n="start.orb_mars">المريخ • Mars</span>
+        <span class="orb-label" data-i18n="start.orb_mars">Mars • Red Planet</span>
       </div>
       <div class="orbital-link-line">
         <div class="scan-beam-pulse"></div>
@@ -98,7 +94,7 @@
       </div>
       <div class="planet-orb orb-moon" title="The Moon (Luna)">
         <div class="planet-surface"></div>
-        <span class="orb-label" data-i18n="start.orb_moon">القمر • Luna</span>
+        <span class="orb-label" data-i18n="start.orb_moon">The Moon • Luna</span>
       </div>
     </div>
 
@@ -109,9 +105,9 @@
       <div class="user-card-header">
         <div class="user-card-avatar" id="startUserAvatar"></div>
         <div class="user-card-details">
-          <div class="user-card-welcome" data-i18n="start.welcome_back">مرحباً بعودتك إلى غرفة القيادة الفلكية:</div>
-          <div class="user-card-name" id="startUserName">القائدة منار</div>
-          <div class="user-card-role" id="startUserRole">كبير علماء الكواكب • Level 5</div>
+          <div class="user-card-welcome" data-i18n="start.welcome_back">Welcome back to the Mission Observatory:</div>
+          <div class="user-card-name" id="startUserName">Commander</div>
+          <div class="user-card-role" id="startUserRole">Planetary Scientist • Level 5</div>
         </div>
         <div class="user-card-level-badge" id="startUserLevelBadge">
           <span class="badge-num" id="startUserLevelNum">LVL 5</span>
@@ -124,22 +120,22 @@
         <div class="user-stat-box">
           <span class="stat-icon">🔭</span>
           <span class="stat-val" id="startUserSitesCount">6</span>
-          <span class="stat-lbl" data-i18n="start.analogs_discovered">نظائر مكتشفة</span>
+          <span class="stat-lbl" data-i18n="start.analogs_discovered">Discovered Analogs</span>
         </div>
         <div class="user-stat-box">
           <span class="stat-icon">📄</span>
           <span class="stat-val" id="startUserFindingsCount">2</span>
-          <span class="stat-lbl" data-i18n="start.saved_findings">تقارير علمية</span>
+          <span class="stat-lbl" data-i18n="start.saved_findings">Research Briefs</span>
         </div>
         <div class="user-stat-box">
           <span class="stat-icon">⚖️</span>
           <span class="stat-val" id="startUserCompCount">12</span>
-          <span class="stat-lbl" data-i18n="start.matrices_run">مقارنات منجزة</span>
+          <span class="stat-lbl" data-i18n="start.matrices_run">Matrices Evaluated</span>
         </div>
         <div class="user-stat-box">
           <span class="stat-icon">🌐</span>
           <span class="stat-val" id="startUserProgressPct">100%</span>
-          <span class="stat-lbl" data-i18n="start.platform_exp">استكشاف المنصة</span>
+          <span class="stat-lbl" data-i18n="start.platform_exp">Platform Exploration</span>
         </div>
       </div>
 
@@ -147,12 +143,12 @@
       <div class="user-card-actions">
         <a href="index.html" class="start-btn-primary pulse-btn" id="resumeMissionBtn">
           <span>🚀</span>
-          <span data-i18n="start.btn_resume">استئناف المهمة والاستكشاف الميداني</span>
+          <span data-i18n="start.btn_resume">Resume Active Mission &amp; Exploration 🚀</span>
           <span class="btn-arrow">←</span>
         </a>
         <button type="button" class="start-btn-secondary" id="startSignOutBtn">
           <span>🚪</span>
-          <span data-i18n="start.btn_switch">تبديل الحساب / تسجيل الخروج</span>
+          <span data-i18n="start.btn_switch">Switch Account / Sign Out 🚪</span>
         </button>
       </div>
     </div>
@@ -172,18 +168,16 @@
             <line x1="15" y1="12" x2="3" y2="12"></line>
           </svg>
         </div>
-        <h3 class="card-title" data-i18n="start.card_signin_title">تسجيل الدخول للمنصة</h3>
-        <p class="card-desc" data-i18n="start.card_signin_desc">
-          لديك حساب باحث مسبق؟ سجّل دخولك للوصول فورياً إلى رتبتك العلمية وتقاريرك وتفضيلاتك المحفوظة.
-        </p>
+        <h3 class="card-title" data-i18n="start.card_signin_title">Mission Clearance Sign In</h3>
+        <p class="card-desc" data-i18n="start.card_signin_desc">Already hold credentials? Authenticate to access your research clearance level, discoveries, and saved matrices.</p>
         <a href="login.html" class="start-btn-card btn-signin">
-          <span data-i18n="start.btn_signin">تسجيل الدخول 🚀</span>
+          <span data-i18n="start.btn_signin">Sign In 🚀</span>
         </a>
       </div>
 
       <!-- Option 2: Register (Featured / Highlighted) -->
       <div class="entry-card card-register featured">
-        <div class="featured-ribbon" data-i18n="start.ribbon_recommended">موصى به للباحثين ⭐</div>
+        <div class="featured-ribbon" data-i18n="start.ribbon_recommended">Recommended for Researchers ⭐</div>
         <div class="card-glow-edge"></div>
         <div class="card-icon-badge">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -193,12 +187,10 @@
             <line x1="23" y1="11" x2="17" y2="11"></line>
           </svg>
         </div>
-        <h3 class="card-title" data-i18n="start.card_reg_title">إنشاء حساب باحث جديد</h3>
-        <p class="card-desc" data-i18n="start.card_reg_desc">
-          أنشئ ملفك الفلكي لحفظ استكشافاتك تلقائياً، وتوثيق مواقع النظائر التي تعثر عليها، ورفع مستواك العلمي من باحث مستجد إلى كبير علماء.
-        </p>
+        <h3 class="card-title" data-i18n="start.card_reg_title">Create Researcher Account</h3>
+        <p class="card-desc" data-i18n="start.card_reg_desc">Establish your clearance profile to persist research discoveries, track XP rank progression from Cadet to Chief Astrobiologist, and save findings.</p>
         <a href="register.html" class="start-btn-card btn-register">
-          <span data-i18n="start.btn_register">إنشاء حساب باحث فلكي ✨</span>
+          <span data-i18n="start.btn_register">Create Clearance Profile ✨</span>
         </a>
       </div>
 
@@ -211,12 +203,10 @@
             <polygon points="10 8 16 12 10 16 10 8"></polygon>
           </svg>
         </div>
-        <h3 class="card-title" data-i18n="start.card_guest_title">متابعة كباحث زائر</h3>
-        <p class="card-desc" data-i18n="start.card_guest_desc">
-          تخطّ التسجيل واستكشف محطة الكواكب ثلاثية الأبعاد، وخريطة المواقع، ونماذج المقارنة الفيزيائية بحرية.
-        </p>
+        <h3 class="card-title" data-i18n="start.card_guest_title">Continue as Guest Explorer</h3>
+        <p class="card-desc" data-i18n="start.card_guest_desc">Bypass authentication and directly explore the 3D planetary observatory, site finder, and physical comparison matrices.</p>
         <a href="index.html" class="start-btn-card btn-guest">
-          <span data-i18n="start.btn_guest">تخطي والدخول للمنصة 🔭</span>
+          <span data-i18n="start.btn_guest">Skip &amp; Enter Platform 🔭</span>
         </a>
       </div>
 
@@ -224,13 +214,13 @@
 
     <!-- Quick Exploration Links Bar -->
     <div class="start-nav-strip">
-      <span class="nav-strip-label" data-i18n="start.quick_sectors">أقسام المنصة العلمية:</span>
+      <span class="nav-strip-label" data-i18n="start.quick_sectors">Scientific Observatories:</span>
       <div class="nav-strip-links">
-        <a href="index.html" class="nav-strip-link">🪐 <span data-i18n="nav.home">الرئيسية (3D Explorer)</span></a>
-        <a href="finder.html" class="nav-strip-link">🗺️ <span data-i18n="nav.finder">باحث المواقع (Site Finder)</span></a>
-        <a href="compare.html" class="nav-strip-link">⚖️ <span data-i18n="nav.compare">المقارنة المعيارية (Compare)</span></a>
-        <a href="evidence.html" class="nav-strip-link">📊 <span data-i18n="nav.evidence">الأدلة والكتالوج (Evidence)</span></a>
-        <a href="guide.html" class="nav-strip-link">🤖 <span data-i18n="nav.guide">الدليل والميثاق (Guide)</span></a>
+        <a href="index.html" class="nav-strip-link">🪐 <span data-i18n="nav.home">Home (3D Station)</span></a>
+        <a href="finder.html" class="nav-strip-link">🗺️ <span data-i18n="nav.finder">Site Finder</span></a>
+        <a href="compare.html" class="nav-strip-link">⚖️ <span data-i18n="nav.compare">Benchmark Compare</span></a>
+        <a href="evidence.html" class="nav-strip-link">📊 <span data-i18n="nav.evidence">Catalog &amp; Evidence</span></a>
+        <a href="guide.html" class="nav-strip-link">🤖 <span data-i18n="nav.guide">Mission Guide</span></a>
       </div>
     </div>
 
@@ -238,19 +228,19 @@
     <div class="start-features-bar">
       <div class="feature-item">
         <div class="feature-num">421,800</div>
-        <div class="feature-label" data-i18n="start.metric_cells">خلايا أرضية مفحوصة</div>
+        <div class="feature-label" data-i18n="start.metric_cells">Terrestrial Cells Scanned</div>
       </div>
       <div class="feature-item">
         <div class="feature-num">94.2%</div>
-        <div class="feature-label" data-i18n="start.metric_recall">دقة استدعاء النظائر المعروفة</div>
+        <div class="feature-label" data-i18n="start.metric_recall">Known Analog Recall Rate</div>
       </div>
       <div class="feature-item">
         <div class="feature-num">38</div>
-        <div class="feature-label" data-i18n="start.metric_candidates">مرشح جديد عالي التطابق</div>
+        <div class="feature-label" data-i18n="start.metric_candidates">New High-Fidelity Candidates</div>
       </div>
       <div class="feature-item">
         <div class="feature-num">NDVI ≤ 0.20</div>
-        <div class="feature-label" data-i18n="start.metric_abiotic">حاجز العزل غير الحيوي الصارم</div>
+        <div class="feature-label" data-i18n="start.metric_abiotic">Abiotic Gate Filter (NDVI ≤ 0.20)</div>
       </div>
     </div>
 

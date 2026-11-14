@@ -685,7 +685,7 @@ const UserSystem = {
           <div class="custom-modal-header">
             <div class="modal-header-title">
               <span class="modal-icon">👨‍🚀</span>
-              <span id="editModalHeaderTitle">Edit Researcher Profile / تعديل الملف الشخصي</span>
+              <span id="editModalHeaderTitle">Edit Researcher Profile</span>
             </div>
             <button class="custom-modal-close" id="closeEditProfileModalBtn">✕</button>
           </div>
@@ -693,48 +693,48 @@ const UserSystem = {
           <form class="custom-modal-body" id="editProfileForm">
             <!-- Avatar & Gender Picker -->
             <div class="form-group-avatar-select">
-              <label class="form-label">Researcher Avatar & Identity / الشخصية العلمية ورتبة الباحث:</label>
+              <label class="form-label">Researcher Avatar & Identity:</label>
               <div class="avatar-options-grid">
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="👨‍🚀" data-gender="male">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">👨‍🚀</span>
-                    <span class="avatar-desc">رائد فضاء (Male Astronaut)</span>
+                    <span class="avatar-desc">Male Astronaut</span>
                   </span>
                 </label>
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="👩‍🚀" data-gender="female">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">👩‍🚀</span>
-                    <span class="avatar-desc">رائدة فضاء (Female Astronaut)</span>
+                    <span class="avatar-desc">Female Astronaut</span>
                   </span>
                 </label>
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="👨‍🔬" data-gender="male">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">👨‍🔬</span>
-                    <span class="avatar-desc">باحث علمي (Male Scientist)</span>
+                    <span class="avatar-desc">Male Scientist</span>
                   </span>
                 </label>
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="👩‍🔬" data-gender="female">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">👩‍🔬</span>
-                    <span class="avatar-desc">باحثة علمية (Female Scientist)</span>
+                    <span class="avatar-desc">Female Scientist</span>
                   </span>
                 </label>
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="🧑‍🚀" data-gender="neutral">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">🧑‍🚀</span>
-                    <span class="avatar-desc">قائد بعثة (Commander)</span>
+                    <span class="avatar-desc">Commander</span>
                   </span>
                 </label>
                 <label class="avatar-option-card">
                   <input type="radio" name="userAvatarRadio" value="🧑‍🔬" data-gender="neutral">
                   <span class="avatar-card-visual">
                     <span class="avatar-emoji">🧑‍🔬</span>
-                    <span class="avatar-desc">جيولوجي كوكبي (Geologist)</span>
+                    <span class="avatar-desc">Geologist</span>
                   </span>
                 </label>
               </div>
@@ -742,25 +742,25 @@ const UserSystem = {
 
             <!-- Name Input -->
             <div class="form-group-field">
-              <label class="form-label">Full Name / الاسم الكامل:</label>
+              <label class="form-label">Full Name:</label>
               <input type="text" class="custom-modal-input" id="editUserName" required>
             </div>
 
             <!-- Phone / Researcher ID -->
             <div class="form-group-field">
-              <label class="form-label">Phone Number or ID / رقم الهاتف أو المعرّف:</label>
+              <label class="form-label">Phone Number or ID:</label>
               <input type="tel" class="custom-modal-input" id="editUserPhone" placeholder="+962 7 9000 0000">
             </div>
 
             <!-- Email -->
             <div class="form-group-field">
-              <label class="form-label">Official Email / البريد الإلكتروني:</label>
+              <label class="form-label">Official Email:</label>
               <input type="email" class="custom-modal-input" id="editUserEmail" required>
             </div>
 
             <div class="custom-modal-footer">
-              <button type="button" class="btn-modal-cancel" id="cancelEditProfileBtn">إلغاء / Cancel</button>
-              <button type="submit" class="btn-modal-submit">حفظ التعديلات / Save Profile 💾</button>
+              <button type="button" class="btn-modal-cancel" id="cancelEditProfileBtn">Cancel</button>
+              <button type="submit" class="btn-modal-submit">Save Profile 💾</button>
             </div>
           </form>
         </div>
@@ -773,66 +773,66 @@ const UserSystem = {
         <div class="custom-modal-dialog">
           <div class="custom-modal-header">
             <div class="modal-header-title">
-              <span>Astraea Planetary Clearance / بوابة تسجيل الدخول</span>
+              <span>Astraea Planetary Clearance</span>
             </div>
             <button class="custom-modal-close" id="closeAuthModalBtn">✕</button>
           </div>
 
           <div class="auth-tabs-nav">
-            <button class="auth-tab-btn active" id="authTabSignIn">تسجيل الدخول (Sign In)</button>
-            <button class="auth-tab-btn" id="authTabSignUp">إنشاء حساب باحث (Register)</button>
+            <button class="auth-tab-btn active" id="authTabSignIn">Sign In</button>
+            <button class="auth-tab-btn" id="authTabSignUp">Register</button>
           </div>
 
           <!-- Sign In Form -->
           <form class="custom-modal-body" id="signInForm">
             <div class="form-group-field">
-              <label class="form-label">Email or Researcher ID / البريد أو المعرّف:</label>
+              <label class="form-label">Email or Researcher ID:</label>
               <input type="text" class="custom-modal-input" id="signInEmail" placeholder="researcher@astraea.space" required>
             </div>
             <div class="form-group-field">
-              <label class="form-label">Password / كلمة المرور:</label>
+              <label class="form-label">Password:</label>
               <input type="password" class="custom-modal-input" id="signInPass" placeholder="••••••••" required>
             </div>
             <div class="custom-modal-footer">
-              <button type="button" class="btn-modal-cancel" id="cancelAuthBtn">إلغاء</button>
-              <button type="submit" class="btn-modal-submit">دخول المنصة / Sign In 🚀</button>
+              <button type="button" class="btn-modal-cancel" id="cancelAuthBtn">Cancel</button>
+              <button type="submit" class="btn-modal-submit">Sign In 🚀</button>
             </div>
           </form>
 
           <!-- Sign Up Form -->
           <form class="custom-modal-body" id="signUpForm" style="display:none;">
             <div class="form-group-field">
-              <label class="form-label">Full Name / الاسم الكامل:</label>
+              <label class="form-label">Full Name:</label>
               <input type="text" class="custom-modal-input" id="signUpName" placeholder="Dr. Sarah Connor" required>
             </div>
             <div class="form-group-field">
-              <label class="form-label">Gender & Avatar / رتبة الفضائي:</label>
+              <label class="form-label">Gender & Avatar:</label>
               <div class="signup-avatar-toggle">
                 <label class="signup-avatar-pill">
                   <input type="radio" name="signUpAvatarRadio" value="👩‍🚀" data-gender="female" checked>
-                  <span>👩‍🚀 أنثى فضائية (Female)</span>
+                  <span>Female</span>
                 </label>
                 <label class="signup-avatar-pill">
                   <input type="radio" name="signUpAvatarRadio" value="👨‍🚀" data-gender="male">
-                  <span>👨‍🚀 ذكر فضائي (Male)</span>
+                  <span>Male</span>
                 </label>
               </div>
             </div>
             <div class="form-group-field">
-              <label class="form-label">Phone / رقم الهاتف:</label>
+              <label class="form-label">Phone:</label>
               <input type="tel" class="custom-modal-input" id="signUpPhone" placeholder="+962 7 9999 8888">
             </div>
             <div class="form-group-field">
-              <label class="form-label">Email / البريد الإلكتروني:</label>
+              <label class="form-label">Email:</label>
               <input type="email" class="custom-modal-input" id="signUpEmail" placeholder="new.researcher@astraea.space" required>
             </div>
             <div class="form-group-field">
-              <label class="form-label">Password / كلمة المرور:</label>
+              <label class="form-label">Password:</label>
               <input type="password" class="custom-modal-input" id="signUpPass" placeholder="••••••••" required>
             </div>
             <div class="custom-modal-footer">
-              <button type="button" class="btn-modal-cancel" id="cancelSignUpBtn">إلغاء</button>
-              <button type="submit" class="btn-modal-submit">إنشاء الحساب وبدء الاستكشاف 🌟</button>
+              <button type="button" class="btn-modal-cancel" id="cancelSignUpBtn">Cancel</button>
+              <button type="submit" class="btn-modal-submit">Create account 🌟</button>
             </div>
           </form>
         </div>
@@ -925,7 +925,7 @@ const UserSystem = {
                   <span>🚀</span> التحدي الاستكشافي: لماذا نحتاج نظائر كوكبية على الأرض؟
                 </h4>
                 <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.8rem;">
-                  مهمات استكشاف الفضاء الكبرى — مثل برنامج <strong>أرتميس (Artemis)</strong> التابع لوكالة ناسا لإنشاء قواعد دائمة عند القطب الجنوبي للقمر، ومهمات إرسال الروفرات ورواد الفضاء إلى المريخ — تكلف مليارات الدولارات وسنوات طويلة من العمل الدقيق. إن إرسال مركبات أو بدلات فضاء إلى بيئات قاسية مجهولة دون اختبار مسبق في بيئات أرضية تشبهها فيزيائياً يُعد خطراً هندسياً وعلمياً جسيماً.
+                  مهمات استكشاف الفضاء الكبرى — مثل برنامج <strong>Artemis</strong> التابع لوكالة ناسا لإنشاء قواعد دائمة عند القطب الجنوبي للقمر، ومهمات إرسال الروفرات ورواد الفضاء إلى المريخ — تكلف مليارات الدولارات وسنوات طويلة من العمل الدقيق. إن إرسال مركبات أو بدلات فضاء إلى بيئات قاسية مجهولة دون اختبار مسبق في بيئات أرضية تشبهها فيزيائياً يُعد خطراً هندسياً وعلمياً جسيماً.
                 </p>
                 <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
                   تاريخياً، كان اختيار "النظائر الأرضية" (Earth Analogs) يتم بشكل يدوي أو وصفي تقديري يفتقر للمطابقة الرقمية المتعددة المعايير، مما يؤدي إلى مفاجآت تضاريسية قد تُعطل عجلات الروفرات أو تعيق حركة رواد الفضاء.
@@ -937,7 +937,7 @@ const UserSystem = {
                   <span>🎯</span> الهدف الجوهري لمنصة TerraTwin:
                 </h4>
                 <ul style="font-size: 0.88rem; line-height: 1.8; color: var(--text-secondary); padding-right: 1.2rem; margin-bottom: 0;">
-                  <li><strong>المطابقة الفيزيائية الدقيقة:</strong> دمج قياسات أقمار رصد الأرض (NASA MODIS, NASADEM, SRTM, Sentinel-2) مع قياسات المسابر الكوكبية المدارية (LRO LOLA, Diviner, MGS MOLA) في نموذج رياضي موحد.</li>
+                  <li><strong>المطابقة الفيزيائية الدقيقة:</strong>LRO LOLA, Diviner, MGS MOLA في نموذج رياضي موحد.</li>
                   <li><strong>محاكاة واختبار الروبوتات والأنظمة:</strong> تمكين مهندسي وكالات الفضاء من اختبار أنظمة الملاحة الذاتية، ومقاومة عجلات المركبات للتضاريس الصخرية، واختبار البدلات الفضائية في بيئات مطابقة 100%.</li>
                   <li><strong>تقليل التكاليف والمخاطر:</strong> تحديد المواقع الأرضية المثالية بأعلى نسب تشابه رياضي موثق لمنع فشل المعدات الفضائية باهظة الثمن قبل مغادرتها الغلاف الجوي.</li>
                 </ul>
@@ -948,7 +948,7 @@ const UserSystem = {
             <div class="ethics-tab-content" id="tabContent_ethics" style="display: none;">
               <div class="ethics-section-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(224,86,56,0.25); border-radius: 8px; padding: 1.1rem; margin-bottom: 1rem;">
                 <h4 style="color: #ff7043; font-size: 1.05rem; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
-                  <span>🛡️</span> حاجز العزل غير الحيوي (Physical Abiotic Gate via MODIS NDVI):
+                  <span>🛡️</span>Physical Abiotic Gate via MODIS NDVI:
                 </h4>
                 <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.6rem;">
                   سطح القمر والمريخ خامل كلياً وخالٍ من الغطاء النباتي (NDVI = 0.000). لضمان النزاهة العلمية وتفادي أي نتائج مضللة، تطبق المنصة <strong>حاجز تصفية صارم</strong> (Strict Hard Gate) يستبعد فوراً وبشكل تلقائي أي موقع أرضي يتجاوز مؤشر غطائه الحيوي العتبة الفيزيائية:
@@ -963,17 +963,17 @@ const UserSystem = {
 
               <div class="ethics-section-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(160, 178, 204,0.2); border-radius: 8px; padding: 1.1rem; margin-bottom: 1rem;">
                 <h4 style="color: #e2c492; font-size: 1.05rem; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
-                  <span>📊</span> النزاهة والبيانات المفتوحة (Open Science & Zero Fabrication):
+                  <span>📊</span>Open Science & Zero Fabrication:
                 </h4>
                 <ul style="font-size: 0.88rem; line-height: 1.8; color: var(--text-secondary); padding-right: 1.2rem; margin-bottom: 0;">
-                  <li><strong>مصداقية المصادر:</strong> 100% من القياسات الفيزيائية (الانحدار، الخشونة، البياض، التباين الحراري) مستخرجة من مستودعات مفتوحة ومراجعة علمياً تابعة لـ NASA PDS و ESA Copernicus و USGS.</li>
-                  <li><strong>لا توجد أرقام عشوائية أو تخيلية:</strong> كل نسبة مئوية محسوبة عبر خوارزميات إحصائية موحدة تعتمد على المئين الراداري (Percentile Ranking) لمنع انحياز مقاييس الدقة المكانية.</li>
+                  <li><strong>مصداقية المصادر:</strong>الانحدار، الخشونة، البياض، التباين الحراري مستخرجة من مستودعات مفتوحة ومراجعة علمياً تابعة لـ NASA PDS و ESA Copernicus و USGS.</li>
+                  <li><strong>لا توجد أرقام عشوائية أو تخيلية:</strong>Percentile Ranking لمنع انحياز مقاييس الدقة المكانية.</li>
                 </ul>
               </div>
 
               <div class="ethics-section-card" style="background: rgba(134, 196, 160,0.03); border: 1px solid rgba(134, 196, 160,0.25); border-radius: 8px; padding: 1.1rem;">
                 <h4 style="color: #86c4a0; font-size: 1.05rem; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
-                  <span>🌿</span> المسؤولية البيئية وحماية نظائر الأرض (Environmental Stewardship):
+                  <span>🌿</span>Environmental Stewardship:
                 </h4>
                 <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
                   ندعو كافة البعثات التناظرية والفرق البحثية الميدانية إلى احترام البيئات الصحراوية والبركانية والقطبية الفريدة على كوكب الأرض، والالتزام الصارم بمبادئ عدم ترك أثر (Leave No Trace) وحماية المجتمعات المحلية في مناطق الاستكشاف.
@@ -996,7 +996,7 @@ const UserSystem = {
 
                 <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
                   <div style="font-weight: 700; color: #fff; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
-                    <span>2️⃣</span> خريطة الأماكن المشابهة (Site Finder)
+                    <span>2️⃣</span>Site Finder
                   </div>
                   <p style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">
                     خريطة أقمار صناعية عالية الدقة من ناسا و ESRI. يمكنكِ تصفية المواقع حسب التضاريس (صحراوي، بركاني، قطبي)، وتتبع إشارات السونار النبضية مع نسب التشابه فوق كل موقع تضاريسي.

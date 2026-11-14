@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,12 +34,10 @@
         <line x1="19" y1="12" x2="5" y2="12"></line>
         <polyline points="12 19 5 12 12 5"></polyline>
       </svg>
-      <span data-i18n="auth.back_home">العودة إلى المنصة الرئيسية</span>
+      <span data-i18n="auth.back_home">Back to Observatory</span>
     </a>
 
     <div class="auth-top-actions">
-      <button class="btn-control" id="authThemeBtn" onclick="toggleAuthTheme()" title="Toggle Dark/Light Mode">☀️</button>
-      <button class="btn-control" id="authLangBtn" onclick="toggleAuthLanguage()" title="Switch Language">English</button>
     </div>
   </header>
 
@@ -66,15 +64,15 @@
             <circle cx="12" cy="12" r="3" fill="#dea062"></circle>
           </svg>
         </div>
-        <h1 class="auth-title" id="authHeaderTitle" data-i18n="auth.signin_title">بوابة تسجيل الدخول</h1>
-        <p class="auth-subtitle" id="authHeaderSub" data-i18n="auth.signin_sub">أدخل معرّفك الفلكي للوصول إلى تحليلات النظائر الكوكبية</p>
+        <h1 class="auth-title" id="authHeaderTitle" data-i18n="auth.signin_title">Mission Clearance Sign In</h1>
+        <p class="auth-subtitle" id="authHeaderSub" data-i18n="auth.signin_sub">Authenticate to access planetary twin telemetry &amp; field catalogs</p>
       </div>
 
       <!-- Animated Sliding Navigation Tabs -->
       <div class="auth-nav-tabs" id="authNavTabs">
         <div class="auth-tab-slider" id="authTabSlider"></div>
-        <button type="button" class="auth-nav-tab active" id="tabBtnSignIn" data-i18n="auth.tab_signin">تسجيل الدخول</button>
-        <button type="button" class="auth-nav-tab" id="tabBtnRegister" data-i18n="auth.tab_register">إنشاء حساب جديد</button>
+        <button type="button" class="auth-nav-tab active" id="tabBtnSignIn" data-i18n="auth.tab_signin">Sign In</button>
+        <button type="button" class="auth-nav-tab" id="tabBtnRegister" data-i18n="auth.tab_register">Create Account</button>
       </div>
 
       <!-- Dynamic Alert Box -->
@@ -87,14 +85,14 @@
         <form class="auth-form-view active" id="signInFormView">
           
           <div class="auth-field-group">
-            <label class="auth-label" for="loginEmail" data-i18n="auth.email_label">البريد الإلكتروني المعتمد أو معرّف الباحث:</label>
+            <label class="auth-label" for="loginEmail" data-i18n="auth.email_label">Official Research Email or ID:</label>
             <div class="auth-input-wrapper">
               <input type="email" class="auth-input" id="loginEmail" placeholder="researcher@terratwin.space" required autocomplete="email">
             </div>
           </div>
 
           <div class="auth-field-group">
-            <label class="auth-label" for="loginPassword" data-i18n="auth.password_label">كلمة المرور:</label>
+            <label class="auth-label" for="loginPassword" data-i18n="auth.password_label">Clearance Password:</label>
             <div class="auth-input-wrapper">
               <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
               <button type="button" class="auth-password-toggle" title="Toggle password visibility">
@@ -109,22 +107,22 @@
           <div class="auth-options-row">
             <label class="auth-checkbox-label">
               <input type="checkbox" id="rememberMeCheckbox" checked>
-              <span data-i18n="auth.remember_me">تذكّر جلستي</span>
+              <span data-i18n="auth.remember_me">Remember My Session</span>
             </label>
-            <a href="#" class="auth-link-text" id="forgotPassLink" data-i18n="auth.forgot_password">نسيت كلمة المرور؟</a>
+            <a href="#" class="auth-link-text" id="forgotPassLink" data-i18n="auth.forgot_password">Forgot Password?</a>
           </div>
 
           <button type="submit" class="auth-submit-btn" id="signInSubmitBtn">
-            <span data-i18n="auth.btn_signin">دخول المنصة العلمية</span>
+            <span data-i18n="auth.btn_signin">Access Mission Platform</span>
           </button>
 
           <button type="button" class="auth-demo-btn" id="quickDemoLoginBtn">
-            <span data-i18n="auth.btn_demo">دخول تجريبي سريع كباحث فلكي</span>
+            <span data-i18n="auth.btn_demo">1-Click Fast Researcher Demo</span>
           </button>
 
           <div class="auth-card-footer">
-            <span data-i18n="auth.no_account">ليس لديك حساب بعد؟</span>
-            <a href="#" class="auth-link-text" id="linkToRegister" style="margin-inline-start: 0.4rem;" data-i18n="auth.goto_register">إنشاء حساب باحث جديد</a>
+            <span data-i18n="auth.no_account">Don't have an account yet?</span>
+            <a href="#" class="auth-link-text" id="linkToRegister" style="margin-inline-start: 0.4rem;" data-i18n="auth.goto_register">Create New Researcher Account</a>
           </div>
 
         </form>
@@ -133,21 +131,21 @@
         <form class="auth-form-view hidden-right" id="registerFormView">
           
           <div class="auth-field-group">
-            <label class="auth-label" for="regName" data-i18n="auth.name_label">الاسم الكامل للباحث:</label>
+            <label class="auth-label" for="regName" data-i18n="auth.name_label">Full Researcher Name:</label>
             <div class="auth-input-wrapper">
               <input type="text" class="auth-input" id="regName" placeholder="Dr. Sarah Connor" required autocomplete="name">
             </div>
           </div>
 
           <div class="auth-field-group">
-            <label class="auth-label" for="regEmail" data-i18n="auth.email_label">البريد الإلكتروني المعتمد:</label>
+            <label class="auth-label" for="regEmail" data-i18n="auth.email_label">Official Research Email or ID:</label>
             <div class="auth-input-wrapper">
               <input type="email" class="auth-input" id="regEmail" placeholder="s.connor@agency.space" required autocomplete="email">
             </div>
           </div>
 
           <div class="auth-field-group">
-            <label class="auth-label" for="regPassword" data-i18n="auth.password_reg_label">كلمة المرور (5 خانات على الأقل):</label>
+            <label class="auth-label" for="regPassword" data-i18n="auth.password_reg_label">Clearance Password (5+ characters):</label>
             <div class="auth-input-wrapper">
               <input type="password" class="auth-input" id="regPassword" placeholder="••••••••" required autocomplete="new-password">
               <button type="button" class="auth-password-toggle" title="Toggle password visibility">
@@ -160,62 +158,62 @@
           </div>
 
           <div class="auth-field-group">
-            <label class="auth-label" data-i18n="auth.avatar_label">الشخصية العلمية ورتبة الباحث:</label>
+            <label class="auth-label" data-i18n="auth.avatar_label">Researcher Identity &amp; Avatar:</label>
             <div class="auth-avatar-grid">
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="astronaut_m" data-gender="male" checked>
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="astronaut_m" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_male">رائد فضاء</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_male">Male Astronaut</span>
                 </div>
               </label>
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="astronaut_f" data-gender="female">
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="astronaut_f" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_female">رائدة فضاء</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_female">Female Astronaut</span>
                 </div>
               </label>
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="scientist_m" data-gender="male">
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="scientist_m" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_scientist_m">باحث علمي</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_scientist_m">Male Scientist</span>
                 </div>
               </label>
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="scientist_f" data-gender="female">
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="scientist_f" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_scientist_f">باحثة علمية</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_scientist_f">Female Scientist</span>
                 </div>
               </label>
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="commander" data-gender="neutral">
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="commander" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_commander">قائد بعثة</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_commander">Mission Commander</span>
                 </div>
               </label>
               <label class="auth-avatar-card">
                 <input type="radio" name="userAvatarRadio" value="geologist" data-gender="neutral">
                 <div class="auth-avatar-box">
                   <div class="auth-avatar-svg" data-avatar-id="geologist" data-avatar-size="52"></div>
-                  <span class="auth-avatar-label" data-i18n="auth.avatar_geologist">جيولوجي كوكبي</span>
+                  <span class="auth-avatar-label" data-i18n="auth.avatar_geologist">Planetary Geologist</span>
                 </div>
               </label>
             </div>
           </div>
 
           <div class="auth-field-group">
-            <label class="auth-label" for="regRole" data-i18n="auth.role_label">التخصص الاستكشافي الكوكبي:</label>
+            <label class="auth-label" for="regRole" data-i18n="auth.role_label">Planetary Specialization:</label>
             <div class="auth-input-wrapper">
               <select class="auth-input" id="regRole" style="cursor:pointer;">
-                <option value="Planetary Geospatial Engineering" data-i18n="auth.role_geospatial">هندسة تضاريس الكواكب</option>
-                <option value="Field Rover Autonomous Navigation" data-i18n="auth.role_rover">ملاحة الروبوتات الفضائية الميدانية</option>
-                <option value="Astrobiology & Extremophile Analogs" data-i18n="auth.role_astrobiology">علم الأحياء الفلكية والبيئات المتطرفة</option>
-                <option value="In-Situ Resource Utilization (ISRU)" data-i18n="auth.role_isru">استغلال الموارد الفضائية الموضعية (ISRU)</option>
-                <option value="Comparative Field Analog Geology" data-i18n="auth.role_geology">جيولوجيا النظائر الميدانية المقارنة</option>
+                <option value="Planetary Geospatial Engineering" data-i18n="auth.role_geospatial">Planetary Geospatial Engineering</option>
+                <option value="Field Rover Autonomous Navigation" data-i18n="auth.role_rover">Field Rover Autonomous Navigation</option>
+                <option value="Astrobiology & Extremophile Analogs" data-i18n="auth.role_astrobiology">Astrobiology &amp; Extremophile Analogs</option>
+                <option value="In-Situ Resource Utilization (ISRU)" data-i18n="auth.role_isru">In-Situ Resource Utilization (ISRU)</option>
+                <option value="Comparative Field Analog Geology" data-i18n="auth.role_geology">Comparative Field Analog Geology</option>
               </select>
             </div>
           </div>
@@ -223,17 +221,17 @@
           <div class="auth-options-row">
             <label class="auth-checkbox-label">
               <input type="checkbox" id="agreeEthicsCheckbox" required checked>
-              <span data-i18n="auth.ethics_agree">أوافق على ميثاق النزاهة العلمية وحماية الكواكب</span>
+              <span data-i18n="auth.ethics_agree">I agree to the Planetary Protection &amp; Scientific Ethics Charter</span>
             </label>
           </div>
 
           <button type="submit" class="auth-submit-btn" id="registerSubmitBtn">
-            <span data-i18n="auth.btn_register">إنشاء الحساب وبدء الاستكشاف</span>
+            <span data-i18n="auth.btn_register">Grant Clearance &amp; Begin Exploration</span>
           </button>
 
           <div class="auth-card-footer">
-            <span data-i18n="auth.has_account">لديك حساب بالفعل؟</span>
-            <a href="#" class="auth-link-text" id="linkToLogin" style="margin-inline-start: 0.4rem;" data-i18n="auth.goto_signin">تسجيل الدخول إلى حسابك</a>
+            <span data-i18n="auth.has_account">Already registered?</span>
+            <a href="#" class="auth-link-text" id="linkToLogin" style="margin-inline-start: 0.4rem;" data-i18n="auth.goto_signin">Sign In to Your Account</a>
           </div>
 
         </form>
@@ -241,7 +239,7 @@
         <!-- ==================== FORGOT / RESET PASSWORD VIEW ==================== -->
         <form class="auth-form-view hidden-right" id="forgotFormView">
           <div class="auth-field-group">
-            <label class="auth-label" for="forgotEmailInput" data-i18n="auth.forgot_email_label">البريد الإلكتروني المسجّل:</label>
+            <label class="auth-label" for="forgotEmailInput" data-i18n="auth.forgot_email_label">Registered Email Address:</label>
             <div class="auth-input-wrapper">
               <input type="email" class="auth-input" id="forgotEmailInput" placeholder="researcher@astraea.space" required autocomplete="email">
             </div>
@@ -251,14 +249,14 @@
 
           <div id="forgotResetFields" style="display:none; flex-direction:column; gap:1rem;">
             <div class="auth-field-group">
-              <label class="auth-label" for="forgotResetCode" data-i18n="auth.reset_code_label">رمز التحقق المرسل لبريدك (6 أرقام):</label>
+              <label class="auth-label" for="forgotResetCode" data-i18n="auth.reset_code_label">Verification Code Sent to Email (6 digits):</label>
               <div class="auth-input-wrapper">
                 <input type="text" class="auth-input" id="forgotResetCode" placeholder="123456" maxlength="6" inputmode="numeric">
               </div>
             </div>
 
             <div class="auth-field-group">
-              <label class="auth-label" for="forgotNewPassword" data-i18n="auth.new_password_label">كلمة المرور الجديدة (5 خانات على الأقل):</label>
+              <label class="auth-label" for="forgotNewPassword" data-i18n="auth.new_password_label">New Password (5+ characters):</label>
               <div class="auth-input-wrapper">
                 <input type="password" class="auth-input" id="forgotNewPassword" placeholder="••••••••" autocomplete="new-password">
                 <button type="button" class="auth-password-toggle" title="Toggle password visibility"></button>
@@ -266,7 +264,7 @@
             </div>
 
             <div class="auth-field-group">
-              <label class="auth-label" for="forgotConfirmPassword" data-i18n="auth.confirm_password_label">تأكيد كلمة المرور الجديدة:</label>
+              <label class="auth-label" for="forgotConfirmPassword" data-i18n="auth.confirm_password_label">Confirm New Password:</label>
               <div class="auth-input-wrapper">
                 <input type="password" class="auth-input" id="forgotConfirmPassword" placeholder="••••••••" autocomplete="new-password">
                 <button type="button" class="auth-password-toggle" title="Toggle password visibility"></button>
@@ -275,15 +273,15 @@
           </div>
 
           <button type="submit" class="auth-submit-btn" id="forgotSubmitBtn">
-            <span id="forgotSubmitBtnText" data-i18n="auth.btn_send_code">إرسال رمز التحقق إلى البريد</span>
+            <span id="forgotSubmitBtnText" data-i18n="auth.btn_send_code">Send Verification Code to Email</span>
           </button>
 
           <button type="button" class="auth-demo-btn" id="resendForgotCodeBtn" style="display:none;">
-            <span data-i18n="auth.btn_resend_code">إعادة إرسال رمز جديد</span>
+            <span data-i18n="auth.btn_resend_code">Resend New Code</span>
           </button>
 
           <div class="auth-card-footer">
-            <a href="#" class="auth-link-text" id="backToSignInFromForgot" data-i18n="auth.back_to_signin">العودة إلى تسجيل الدخول</a>
+            <a href="#" class="auth-link-text" id="backToSignInFromForgot" data-i18n="auth.back_to_signin">Back to Sign In</a>
           </div>
         </form>
 
