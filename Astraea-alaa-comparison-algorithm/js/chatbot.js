@@ -1,15 +1,13 @@
 /**
  * TerraTwin AI - assistant UI + conversation logic.
  *
- * Answers:    POST /api/chat (netlify/functions/chat.js) -> Groq (Qwen3), streamed as NDJSON.
- *             The function runs the same TerraTwin retrieval (js/rag-engine.js) server-side.
- * Locally:    js/rag-engine.js handles instant greetings and the catalog fallback answers
- *             used when the AI service is unreachable or rate-limited.
+ * Every answer comes from the local TerraTwin catalog: js/rag-engine.js retrieves entries from
+ * data/terratwin-knowledge.json + data/terratwin-platform-guide.json and the matching entries
+ * are shown with their sources. No external service is called.
  *
  * Routing per message:
- *   greeting   -> instant reply (no request)
- *   general    -> AI answers from its own knowledge
- *   terratwin  -> AI answers from retrieved catalog entries and cites them [n]
+ *   terratwin           -> catalog answer + sources list
+ *   greeting / general  -> polite scope reply + 3 example questions
  *
  * Layout (a03279a): 520px dialog, compact collapsible suggested questions (4 / 8) that hide
  * once the chat starts, no category filter bar.
@@ -17,13 +15,10 @@
 (function (global) {
   'use strict';
 
-  const API_URL = 'api/chat';
-  const SS_CHAT = 'terratwin_chat_v2';
+  const SS_CHAT = 'terratwin_chat_v3';  // v3: catalog-only answers (older AI-era history is ignored)
   const SS_OPEN = 'terratwin_chat_open';
   const MAX_STORED = 40;
-  const MAX_MESSAGE = 2000;           // must match LIMITS.message in netlify/functions/chat.js
-  const FIRST_BYTE_TIMEOUT_MS = 30000;
-  const IDLE_TIMEOUT_MS = 30000;
+  const MAX_MESSAGE = 2000;
 
   const ssGet = (k) => { try { return global.sessionStorage.getItem(k); } catch (e) { return null; } };
   const ssSet = (k, v) => { try { global.sessionStorage.setItem(k, v); } catch (e) { /* ignore */ } };
@@ -107,57 +102,41 @@
   const STR = {
     en: {
       subtitle: 'Planetary Intelligence Assistant',
-      placeholder: 'Ask anything: TerraTwin sites, Mars, the Moon, science, code...',
-      send: 'Send', stop: 'Stop', clear: 'Clear Chat', minimize: 'Minimize', close: 'Close',
+      placeholder: 'Ask about TerraTwin: sites, Moon and Mars targets, data, method, pages...',
+      send: 'Send', clear: 'Clear Chat', minimize: 'Minimize', close: 'Close',
       suggested: 'Suggested Questions', more: 'More Questions ▾', less: 'Show Less ▴',
       welcomeTitle: 'Welcome to TerraTwin AI',
-      welcomeDesc: 'Ask me anything - general knowledge, science, math or code - or explore planetary analogs, compare Earth, Moon and Mars environments, and discover the science behind TerraTwin.',
-      thinking: 'TerraTwin AI is thinking...', writing: 'TerraTwin AI is writing...',
-      cleared: 'Conversation cleared. Ask a new question any time.',
-      stopped: 'Stopped.', truncated: 'The answer reached its length limit. Ask "continue" for more.',
-      empty: '(The AI returned an empty answer. Please try rephrasing.)',
+      welcomeDesc: 'Ask me about TerraTwin: its Earth analog sites, Moon and Mars targets, similarity rankings, data sources, method and pages. Every answer comes from the TerraTwin catalog, with its sources.',
+      thinking: 'Searching the TerraTwin catalog...',
       tooLong: (n) => `Your message is too long. Please keep it under ${n} characters.`,
       sourcesLabel: 'TerraTwin sources used:',
       copied: 'Copied',
-      status: { online: 'AI Online', offline: 'Catalog mode', busy: 'AI busy' },
-      footerMode: { online: 'GROQ · ONLINE', offline: 'CATALOG MODE', busy: 'RATE LIMITED', generating: 'GENERATING' },
-      badge: { instant: 'INSTANT', ai: 'QWEN3 · AI', 'ai-rag': 'QWEN3 + TERRATWIN DATA', catalog: 'CATALOG DATA', notice: 'NOTICE', error: 'ERROR', user: 'YOU' },
-      banner: {
-        offline: 'The AI service is not reachable right now. TerraTwin questions are answered from the catalog.',
-        busy: 'The AI service is busy (request limit reached). Please wait a minute; TerraTwin questions are answered from the catalog meanwhile.'
-      },
-      general: {
-        offline: 'Sorry, the AI service is not reachable right now, so I cannot answer general questions at the moment. Please try again shortly. TerraTwin questions still work from the catalog.',
-        busy: (s) => `The AI service is busy right now (request limit reached). Please try again in about ${s} seconds. TerraTwin questions still work from the catalog.`,
-        'not-configured': 'The AI service is not configured on this server yet (missing API key). TerraTwin questions still work from the catalog.'
-      }
+      status: 'TerraTwin catalog',
+      footer: 'Answers from the TerraTwin catalog',
+      footerMode: 'CATALOG',
+      badge: { instant: 'TERRATWIN', catalog: 'CATALOG DATA', notice: 'NOTICE', user: 'YOU' },
+      scope: 'I answer questions about TerraTwin: its sites, Moon and Mars targets, data, method and pages.',
+      examplesLabel: 'For example, you can ask:',
+      examples: ['Which Earth sites best match Jezero Crater?', 'What is the ROC AUC of TerraTwin?', 'How does the NDVI gate filter vegetation and cities?']
     },
     ar: {
       subtitle: 'المساعد العلمي الذكي للكواكب',
-      placeholder: 'اسأل عن أي شيء: مواقع TerraTwin، المريخ، القمر، العلوم، البرمجة...',
-      send: 'إرسال', stop: 'إيقاف', clear: 'مسح المحادثة', minimize: 'تصغير', close: 'إغلاق',
+      placeholder: 'اسأل عن TerraTwin: المواقع، أهداف القمر والمريخ، البيانات، المنهجية، الصفحات...',
+      send: 'إرسال', clear: 'مسح المحادثة', minimize: 'تصغير', close: 'إغلاق',
       suggested: 'الأسئلة المقترحة', more: 'المزيد من الأسئلة ▾', less: 'عرض أقل ▴',
       welcomeTitle: 'أهلاً بك في TerraTwin AI',
-      welcomeDesc: 'اسألني عن أي شيء - معلومات عامة أو علوم أو رياضيات أو برمجة - أو استكشف المواقع الأرضية النظيرة، وقارن بين بيئات الأرض والقمر والمريخ، وتعرّف على الأسس العلمية لمنصة TerraTwin.',
-      thinking: 'TerraTwin AI يفكر...', writing: 'TerraTwin AI يكتب الإجابة...',
-      cleared: 'تم مسح المحادثة. تفضل بطرح سؤال جديد في أي وقت.',
-      stopped: 'تم الإيقاف.', truncated: 'وصلت الإجابة إلى الحد الأقصى للطول. اكتب "أكمل" للمزيد.',
-      empty: '(لم تُرجع خدمة الذكاء الاصطناعي إجابة. حاول إعادة صياغة السؤال.)',
+      welcomeDesc: 'اسألني عن TerraTwin: المواقع الأرضية النظيرة، وأهداف القمر والمريخ، وترتيب التشابه، ومصادر البيانات، والمنهجية، وصفحات المنصة. كل إجابة مأخوذة من كتالوج TerraTwin مع ذكر مصادرها.',
+      thinking: 'جارٍ البحث في كتالوج TerraTwin...',
       tooLong: (n) => `رسالتك طويلة جداً. يرجى ألا تتجاوز ${n} حرف.`,
       sourcesLabel: 'مصادر TerraTwin المستخدمة:',
       copied: 'تم النسخ',
-      status: { online: 'الذكاء الاصطناعي متصل', offline: 'نمط الكتالوج', busy: 'الخدمة مشغولة' },
-      footerMode: { online: 'GROQ · متصل', offline: 'نمط الكتالوج', busy: 'تجاوز حد الطلبات', generating: 'جاري التوليد' },
-      badge: { instant: 'فوري', ai: 'QWEN3 · ذكاء اصطناعي', 'ai-rag': 'QWEN3 + بيانات TERRATWIN', catalog: 'بيانات الكتالوج', notice: 'تنبيه', error: 'خطأ', user: 'أنت' },
-      banner: {
-        offline: 'خدمة الذكاء الاصطناعي غير متاحة حالياً. تتم الإجابة عن أسئلة TerraTwin من الكتالوج.',
-        busy: 'خدمة الذكاء الاصطناعي مشغولة (تم تجاوز حد الطلبات). انتظر دقيقة؛ وتتم الإجابة عن أسئلة TerraTwin من الكتالوج في الأثناء.'
-      },
-      general: {
-        offline: 'عذراً، خدمة الذكاء الاصطناعي غير متاحة حالياً، لذلك لا أستطيع الإجابة عن الأسئلة العامة الآن. حاول مرة أخرى بعد قليل. أسئلة TerraTwin ما زالت تعمل من الكتالوج.',
-        busy: (s) => `خدمة الذكاء الاصطناعي مشغولة حالياً (تم تجاوز حد الطلبات). حاول مرة أخرى بعد حوالي ${s} ثانية. أسئلة TerraTwin ما زالت تعمل من الكتالوج.`,
-        'not-configured': 'خدمة الذكاء الاصطناعي غير مهيأة على هذا الخادم بعد (مفتاح API غير موجود). أسئلة TerraTwin ما زالت تعمل من الكتالوج.'
-      }
+      status: 'كتالوج TerraTwin',
+      footer: 'الإجابات من كتالوج TerraTwin',
+      footerMode: 'الكتالوج',
+      badge: { instant: 'TERRATWIN', catalog: 'بيانات الكتالوج', notice: 'تنبيه', user: 'أنت' },
+      scope: 'أجيب عن الأسئلة المتعلقة بمنصة TerraTwin: مواقعها، وأهداف القمر والمريخ، والبيانات، والمنهجية، والصفحات.',
+      examplesLabel: 'على سبيل المثال، يمكنك أن تسأل:',
+      examples: ['ما المواقع الأرضية الأكثر تطابقاً مع فوهة جيزيرو؟', 'ما قيمة ROC AUC في TerraTwin؟', 'كيف تحجب بوابة NDVI الغطاء النباتي والمدن؟']
     }
   };
 
@@ -166,15 +145,13 @@
       salam: 'Wa alaikum assalam!', hello: 'Hello!', morning: 'Good morning!', evening: 'Good evening!',
       howareyou: "I'm doing well, thank you for asking!", thanks: "You're very welcome - happy to help!",
       bye: 'Goodbye! Come back any time.',
-      tail: 'How can I help you today? Ask me anything - general questions, science, math or code - or about TerraTwin\'s Earth analogs for the Moon and Mars.',
-      who: "I'm **TerraTwin AI**, the assistant built into this website. I use the **Qwen3** language model (served by Groq).\n\n- I can answer general questions: science, space, math, programming, history, everyday topics.\n- For TerraTwin questions I use the platform's verified catalog - sites, similarity rankings, the NDVI gate, data sources - and cite the entries I used.\n\nWhat would you like to know?"
+      who: "I'm **TerraTwin AI**, the assistant built into this website."
     },
     ar: {
       salam: 'وعليكم السلام ورحمة الله وبركاته!', hello: 'أهلاً وسهلاً!', morning: 'صباح النور!', evening: 'مساء النور!',
       howareyou: 'بخير والحمد لله، شكراً لسؤالك!', thanks: 'عفواً، يسعدني ذلك دائماً!',
       bye: 'مع السلامة! أهلاً بك في أي وقت.',
-      tail: 'كيف أستطيع مساعدتك اليوم؟ اسألني عن أي شيء - أسئلة عامة أو علوم أو رياضيات أو برمجة - أو عن نظائر القمر والمريخ الأرضية في TerraTwin.',
-      who: 'أنا **TerraTwin AI**، المساعد المدمج في هذا الموقع. أستخدم نموذج اللغة **Qwen3** (عبر خدمة Groq).\n\n- أجيب عن الأسئلة العامة: العلوم والفضاء والرياضيات والبرمجة والتاريخ والحياة اليومية.\n- وفي أسئلة TerraTwin أعتمد على الكتالوج الموثق للمنصة - المواقع وترتيب التشابه وبوابة NDVI ومصادر البيانات - مع ذكر المصادر التي استخدمتها.\n\nماذا تود أن تعرف؟'
+      who: 'أنا **TerraTwin AI**، المساعد المدمج في هذا الموقع.'
     }
   };
 
@@ -208,8 +185,8 @@
     { q_en: 'How does the NDVI gate filter vegetation and cities?', q_ar: 'كيف تحجب بوابة NDVI الغطاء النباتي والمدن؟', icon: '📊' },
     { q_en: 'Compare the Atacama Desert (Yungay) and Mafraq for Mars testing.', q_ar: 'قارن بين صحراء أتاكاما (يونغاي) والمفرق لاختبارات المريخ.', icon: '⚖️' },
     { q_en: 'What is the Mahalanobis distance in TerraTwin?', q_ar: 'ما هي مسافة ماهالانوبيس في TerraTwin؟', icon: '🧠' },
-    { q_en: 'Why is Mars red?', q_ar: 'لماذا يبدو المريخ أحمر اللون؟', icon: '🔴' },
-    { q_en: 'Write a Python function that checks if a number is prime.', q_ar: 'اكتب دالة بايثون تتحقق مما إذا كان العدد أولياً.', icon: '💻' },
+    { q_en: 'What is the ROC AUC of TerraTwin?', q_ar: 'ما قيمة ROC AUC في TerraTwin؟', icon: '📈' },
+    { q_en: 'Which Earth sites best match Jezero Crater?', q_ar: 'ما المواقع الأرضية الأكثر تطابقاً مع فوهة جيزيرو؟', icon: '🔴' },
     { q_en: 'Which Earth locations resemble Martian terrain?', q_ar: 'ما المواقع الأرضية التي تشبه تضاريس المريخ؟', icon: '🌍' },
     { q_en: 'Why can Earth sites never simulate lunar gravity or radiation?', q_ar: 'لماذا تعجز المواقع الأرضية عن محاكاة جاذبية القمر أو الإشعاع؟', icon: '🌙' }
   ];
@@ -217,12 +194,7 @@
   const ICON_GLOBE = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3.6 9h16.8"></path><path d="M3.6 15h16.8"></path><path d="M11.5 3a17 17 0 0 0 0 18"></path><path d="M12.5 3a17 17 0 0 1 0 18"></path></svg>';
   const ICON_AVATAR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line></svg>';
   const ICON_SEND = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-  const ICON_STOP = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>';
   const ICON_STAR = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>';
-
-  class ApiError extends Error {
-    constructor(code, extra = {}) { super(code); this.code = code; Object.assign(this, extra); }
-  }
 
   /* ------------------------------------------------------------------ *
    * Chatbot
@@ -233,12 +205,9 @@
     isSuggestionsExpanded: false,
     hasStartedChatting: false,
     busy: false,
-    service: 'online',  // online | offline | busy  (last known state of the AI service)
-    messages: [],       // {id, role, content, lang, mode, sources, time, inHistory, streaming}
+    messages: [],       // {id, role, content, lang, mode, sources, time}
     lastAnalysis: null,
     _seq: 0,
-    _abort: null,
-    _renderPending: new Set(),
 
     get RAG() { return global.TerraTwinRAG; },
     uiLang() { return (global.I18n && global.I18n.currentLang === 'ar') ? 'ar' : 'en'; },
@@ -270,7 +239,7 @@
       try {
         const saved = JSON.parse(ssGet(SS_CHAT) || 'null');
         if (saved && Array.isArray(saved.messages)) {
-          this.messages = saved.messages.map(m => Object.assign(m, { streaming: false }));
+          this.messages = saved.messages;
           this.lastAnalysis = saved.lastAnalysis || null;
           this._seq = this.messages.reduce((mx, m) => Math.max(mx, m.id || 0), 0);
         }
@@ -280,8 +249,7 @@
 
     persist() {
       const msgs = this.messages.slice(-MAX_STORED).map(m => ({
-        id: m.id, role: m.role, content: m.content, lang: m.lang, mode: m.mode, sources: m.sources,
-        time: m.time, inHistory: m.inHistory
+        id: m.id, role: m.role, content: m.content, lang: m.lang, mode: m.mode, sources: m.sources, time: m.time
       }));
       ssSet(SS_CHAT, JSON.stringify({ messages: msgs, lastAnalysis: this.lastAnalysis }));
     },
@@ -330,8 +298,6 @@
             </div>
           </div>
 
-          <div class="webllm-banner" id="webllmBanner"></div>
-
           <div class="chatbot-suggestions-section ${this.hasStartedChatting ? 'chat-active' : ''}" id="chatbotSuggestionsSection">
             <div class="suggestions-header">
               <span class="suggestions-title">${escapeHtml(T.suggested)}</span>
@@ -358,7 +324,7 @@
           <div class="chatbot-footer-status" id="chatbotFooterStatus">
             <span class="footer-powered">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-              <span>Powered by Groq + TerraTwin RAG</span>
+              <span>${escapeHtml(T.footer)}</span>
             </span>
             <span class="footer-mode-badge mode-ready" id="chatbotFooterModeBadge">
               <span class="mode-dot"></span>
@@ -389,7 +355,7 @@
           </div>
           <p class="welcome-desc">${escapeHtml(T.welcomeDesc)}</p>
           <div class="welcome-pills">
-            <span class="welcome-pill"><span>⚡</span> Groq · Qwen3</span>
+            <span class="welcome-pill"><span>📚</span> TerraTwin catalog</span>
             <span class="welcome-pill"><span>🛰️</span> NASA PDS / USGS</span>
             <span class="welcome-pill"><span>🌐</span> العربية / English</span>
           </div>
@@ -416,8 +382,7 @@
       const L = this.t(m.lang || this.uiLang());
       const dir = m.role === 'user' ? 'auto' : (m.lang === 'ar' ? 'rtl' : 'ltr');
       const badgeCls = {
-        user: 'badge-user', instant: 'badge-terratwin', ai: 'badge-qwen-local', 'ai-rag': 'badge-qwen-rag',
-        catalog: 'badge-rag-fallback', notice: 'badge-model-loading', error: 'badge-rag-fallback'
+        user: 'badge-user', instant: 'badge-terratwin', catalog: 'badge-qwen-rag', notice: 'badge-model-loading'
       }[m.role === 'user' ? 'user' : m.mode] || 'badge-terratwin';
       const badgeText = m.role === 'user' ? ui.badge.user : (ui.badge[m.mode] || 'TERRATWIN AI');
       const text = m.role === 'user'
@@ -437,7 +402,7 @@
 
       el.className = `chat-bubble ${m.role === 'user' ? 'user' : 'bot'}`;
       el.innerHTML = `
-        <div class="chat-text${m.streaming ? ' streaming-cursor' : ''}" dir="${dir}">${text}</div>
+        <div class="chat-text" dir="${dir}">${text}</div>
         ${sources}
         <div class="chat-meta">
           <span class="chat-badge ${badgeCls}">${escapeHtml(badgeText)}</span>
@@ -461,16 +426,10 @@
       if (nearBottom || m.role === 'user') body.scrollTop = body.scrollHeight;
     },
 
-    scheduleRender(m) {
-      if (this._renderPending.has(m.id)) return;
-      this._renderPending.add(m.id);
-      requestAnimationFrame(() => { this._renderPending.delete(m.id); this.renderMessage(m); });
-    },
-
     addMessage(fields) {
       const m = Object.assign({
-        id: ++this._seq, role: 'assistant', content: '', lang: this.uiLang(), mode: 'ai', sources: [],
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), inHistory: false
+        id: ++this._seq, role: 'assistant', content: '', lang: this.uiLang(), mode: 'catalog', sources: [],
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }, fields);
       this.messages.push(m);
       this.renderMessage(m);
@@ -498,34 +457,13 @@
       }).join('');
     },
 
-    /* ---------------------------------------------------- service status UI */
-    setService(state) {
-      if (this.service === state) return;
-      this.service = state;
-      this.updateStatusUI();
-    },
-
+    /* ---------------------------------------------------- status UI */
     updateStatusUI() {
       const T = this.t(this.uiLang());
-      const s = this.service;
       const textEl = document.getElementById('chatbotHeaderStatusText');
-      const dotEl = document.getElementById('chatbotHeaderStatusDot');
-      if (textEl) textEl.textContent = T.status[s] || T.status.online;
-      if (dotEl) dotEl.className = `status-indicator-dot ${s === 'online' ? 'dot-ready' : 'dot-fallback'}`;
-
-      const fb = document.getElementById('chatbotFooterModeBadge');
+      if (textEl) textEl.textContent = T.status;
       const ft = document.getElementById('chatbotFooterModeText');
-      if (fb && ft) {
-        const key = this.busy ? 'generating' : s;
-        ft.textContent = T.footerMode[key] || T.footerMode.online;
-        fb.className = 'footer-mode-badge ' + (this.busy ? 'mode-rag' : s === 'online' ? 'mode-ready' : 'mode-fallback');
-      }
-
-      const banner = document.getElementById('webllmBanner');
-      if (banner) {
-        banner.innerHTML = s === 'online' ? '' : `<div class="webllm-warning-card"><span>⚠️ ${escapeHtml(T.banner[s] || T.banner.offline)}</span></div>`;
-        banner.style.display = s === 'online' ? 'none' : '';
-      }
+      if (ft) ft.textContent = T.footerMode;
     },
 
     /* ---------------------------------------------------- events */
@@ -553,7 +491,7 @@
       const input = $('chatbotInputField');
       form?.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (this.busy) { this.stopGeneration(); return; }
+        if (this.busy) return;
         const q = (input.value || '').trim();
         if (!q) return;
         input.value = '';
@@ -591,20 +529,14 @@
       el.style.height = Math.min(el.scrollHeight, 120) + 'px';
     },
 
-    setBusyUI(busy, label = null) {
+    setBusyUI(busy) {
       const T = this.t(this.uiLang());
       const btn = document.getElementById('chatbotSendBtn');
       const typing = document.getElementById('chatbotTypingIndicator');
       const lbl = document.getElementById('chatbotTypingLabel');
-      if (btn) {
-        btn.classList.toggle('is-stop', busy);
-        btn.innerHTML = busy ? ICON_STOP : ICON_SEND;
-        btn.title = busy ? T.stop : T.send;
-        btn.setAttribute('aria-label', btn.title);
-      }
+      if (btn) btn.disabled = busy;
       if (typing) typing.style.display = busy ? 'flex' : 'none';
-      if (lbl) lbl.textContent = busy ? (label || T.thinking) : '';
-      this.updateStatusUI();
+      if (lbl) lbl.textContent = busy ? T.thinking : '';
     },
 
     /* ---------------------------------------------------- dialog */
@@ -624,7 +556,6 @@
     },
 
     clearChat() {
-      this.stopGeneration();
       this.messages = [];
       this.lastAnalysis = null;
       this.hasStartedChatting = false;
@@ -637,10 +568,6 @@
       if (this.hasStartedChatting) return;
       this.hasStartedChatting = true;
       document.getElementById('chatbotSuggestionsSection')?.classList.add('chat-active');
-    },
-
-    stopGeneration() {
-      if (this._abort) { this._stoppedByUser = true; this._abort.abort(); }
     },
 
     /* ---------------------------------------------------- page context */
@@ -674,181 +601,53 @@
         this.addMessage({ role: 'assistant', content: this.t(lang).tooLong(MAX_MESSAGE), lang, mode: 'notice' });
         return;
       }
-      if (this.RAG) await this.RAG.init();
+
+      // The catalog loads once from the local data/ files; later questions answer immediately.
+      if (this.RAG && !this.RAG.isLoaded) {
+        this.busy = true;
+        this.setBusyUI(true);
+        try { await this.RAG.init(); } finally { this.busy = false; this.setBusyUI(false); }
+      }
 
       const context = this.getPageContext();
       const analysis = this.RAG
         ? this.RAG.analyze(text, { uiLang: this.uiLang(), page: this.currentPage, context, previous: this.lastAnalysis })
         : { lang: this.uiLang(), intent: 'general', question: text, chunks: [], entityIds: [] };
 
-      const userMsg = this.addMessage({ role: 'user', content: text, lang: analysis.lang, inHistory: true });
+      this.addMessage({ role: 'user', content: text, lang: analysis.lang });
 
-      if (analysis.intent === 'greeting') {
-        this.addMessage({ role: 'assistant', content: this.greetingReply(analysis), lang: analysis.lang, mode: 'instant' });
+      if (analysis.intent !== 'terratwin') {
+        this.addMessage({ role: 'assistant', content: this.scopeReply(analysis), lang: analysis.lang, mode: 'instant' });
         return;
       }
-      const previous = this.lastAnalysis;
+
       this.lastAnalysis = { intent: analysis.intent, query: analysis.question, entityIds: analysis.entityIds };
-      this.persist();
-      await this.answerWithAI(analysis, userMsg, { context, previous });
+      const chunks = (analysis.chunks || []).slice(0, 3);
+      this.addMessage({
+        role: 'assistant',
+        content: this.RAG.directAnswer(analysis),
+        lang: analysis.lang,
+        mode: 'catalog',
+        sources: this.RAG.sourcesFor(chunks)
+      });
     },
 
-    greetingReply(analysis) {
-      const G = GREETINGS[analysis.lang === 'ar' ? 'ar' : 'en'];
-      const types = (analysis.greeting && analysis.greeting.types) || ['hello'];
-      if (types.includes('who') || types.includes('capabilities')) return G.who;
-      const order = ['salam', 'morning', 'evening', 'hello', 'howareyou', 'thanks', 'bye'];
-      const parts = order.filter(t => types.includes(t)).map(t => G[t]);
-      if (types.includes('bye')) return parts.join(' ');
-      return `${parts.join(' ')} ${G.tail}`.trim();
-    },
-
-    /** Last 3 real question/answer pairs before userMsg (sent as conversation context). */
-    historyBefore(userMsg) {
-      const idx = this.messages.indexOf(userMsg);
-      const before = this.messages.slice(0, idx < 0 ? this.messages.length : idx);
-      const pairs = [];
-      for (let i = 0; i < before.length - 1; i++) {
-        const u = before[i], a = before[i + 1];
-        if (u.role === 'user' && u.inHistory && a.role === 'assistant' && a.inHistory && a.content) {
-          pairs.push({ role: 'user', content: u.content.slice(0, 1200) }, { role: 'assistant', content: a.content.slice(0, 1200) });
-        }
-      }
-      return pairs.slice(-6);
-    },
-
-    async answerWithAI(analysis, userMsg, { context, previous }) {
-      const lang = analysis.lang;
+    /** Reply for greetings and questions outside TerraTwin: the assistant's scope + 3 example questions. */
+    scopeReply(analysis) {
+      const lang = analysis.lang === 'ar' ? 'ar' : 'en';
       const T = this.t(lang);
-      const msg = this.addMessage({ role: 'assistant', content: '', lang, mode: analysis.intent === 'terratwin' ? 'ai-rag' : 'ai', streaming: true });
-
-      this.busy = true;
-      this._stoppedByUser = false;
-      this._abort = new AbortController();
-      this.setBusyUI(true, this.t(this.uiLang()).thinking);
-
-      let wrote = false;
-      try {
-        const result = await this.streamChat({
-          message: analysis.question || userMsg.content,
-          lang, page: this.currentPage, context, previous,
-          history: this.historyBefore(userMsg)
-        }, {
-          onMeta: (meta) => {
-            msg.mode = meta.intent === 'terratwin' && meta.sources && meta.sources.length ? 'ai-rag' : 'ai';
-            msg.sources = Array.isArray(meta.sources) ? meta.sources : [];
-          },
-          onText: (full) => {
-            if (!wrote) { wrote = true; this.setBusyUI(true, this.t(this.uiLang()).writing); }
-            msg.content = full;
-            this.scheduleRender(msg);
-          }
-        }, this._abort.signal);
-
-        this.setService('online');
-        msg.content = (result.text || '').trim() || T.empty;
-        if (result.finish === 'length') msg.content += `\n\n_${T.truncated}_`;
-        msg.inHistory = !!result.text;
-      } catch (err) {
-        if (this._stoppedByUser) {
-          msg.content = (msg.content ? msg.content + '\n\n' : '') + `_${T.stopped}_`;
-          msg.inHistory = msg.content.length > 60;
-        } else {
-          const code = (err && err.code) || 'offline';
-          const reason = code === 'rate-limited' ? 'busy' : 'offline';
-          this.setService(reason);
-          if (code !== 'rate-limited' && code !== 'not-configured') console.warn('[TerraTwinAI] AI request failed:', code);
-          const partial = msg.content ? `${msg.content}\n\n---\n\n` : '';
-          if (analysis.intent === 'terratwin' && this.RAG) {
-            msg.content = partial + this.RAG.directAnswer(analysis, reason);
-            msg.mode = 'catalog';
-            msg.sources = this.RAG.sourcesFor((analysis.chunks || []).slice(0, 3));
-          } else {
-            const g = code === 'not-configured' ? T.general['not-configured']
-              : reason === 'busy' ? T.general.busy(Math.max(5, Math.min(120, Number(err.retryAfter) || 60)))
-              : T.general.offline;
-            msg.content = partial + g;
-            msg.mode = 'notice';
-            msg.sources = [];
-          }
-          msg.inHistory = false;
+      const G = GREETINGS[lang];
+      let opener = '';
+      if (analysis.intent === 'greeting') {
+        const types = (analysis.greeting && analysis.greeting.types) || ['hello'];
+        if (types.includes('who') || types.includes('capabilities')) opener = G.who;
+        else {
+          const order = ['salam', 'morning', 'evening', 'hello', 'howareyou', 'thanks', 'bye'];
+          opener = order.filter(t => types.includes(t)).map(t => G[t]).join(' ');
         }
-      } finally {
-        msg.streaming = false;
-        this._abort = null;
-        this.busy = false;
-        this.renderMessage(msg);
-        this.persist();
-        this.setBusyUI(false);
       }
-    },
-
-    /**
-     * POST /api/chat and read the NDJSON stream.
-     * @returns {Promise<{text, finish, model}>}
-     */
-    async streamChat(payload, { onMeta, onText }, signal) {
-      let timer = null;
-      let timedOut = false;
-      const local = new AbortController();
-      const relay = () => local.abort();
-      signal.addEventListener('abort', relay, { once: true });
-      const arm = (ms) => { clearTimeout(timer); timer = setTimeout(() => { timedOut = true; local.abort(); }, ms); };
-      arm(FIRST_BYTE_TIMEOUT_MS);
-
-      try {
-        let res;
-        try {
-          res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: local.signal
-          });
-        } catch (e) {
-          if (signal.aborted) throw e;
-          throw new ApiError(timedOut ? 'timeout' : 'offline');
-        }
-        if (!res.ok) {
-          let info = {};
-          try { info = await res.json(); } catch (e) { /* non-JSON (e.g. static host 404) */ }
-          const code = res.status === 429 ? 'rate-limited' : (info.error || `http-${res.status}`);
-          throw new ApiError(code, { retryAfter: info.retryAfter || Number(res.headers.get('Retry-After')) || null });
-        }
-        const type = res.headers.get('Content-Type') || '';
-        if (!/ndjson/.test(type) || !res.body) throw new ApiError('bad-response');
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '', text = '', finish = null, model = null;
-        for (;;) {
-          let chunk;
-          try { chunk = await reader.read(); } catch (e) {
-            if (signal.aborted) throw e;
-            throw new ApiError(timedOut ? 'timeout' : 'stream-interrupted');
-          }
-          if (chunk.done) break;
-          arm(IDLE_TIMEOUT_MS);
-          buffer += decoder.decode(chunk.value, { stream: true });
-          let nl;
-          while ((nl = buffer.indexOf('\n')) >= 0) {
-            const line = buffer.slice(0, nl).trim();
-            buffer = buffer.slice(nl + 1);
-            if (!line) continue;
-            let evt;
-            try { evt = JSON.parse(line); } catch (e) { continue; }
-            if (evt.type === 'meta') { model = evt.model; if (onMeta) onMeta(evt); }
-            else if (evt.type === 'delta' && evt.text) { text += evt.text; if (onText) onText(text); }
-            else if (evt.type === 'done') finish = evt.finish;
-            else if (evt.type === 'error') throw new ApiError(evt.code || 'stream-interrupted');
-          }
-        }
-        if (!finish && !text) throw new ApiError('stream-interrupted');
-        return { text, finish: finish || 'stop', model };
-      } finally {
-        clearTimeout(timer);
-        signal.removeEventListener('abort', relay);
-      }
+      const examples = T.examples.map(q => `- ${q}`).join('\n');
+      return `${opener ? opener + ' ' : ''}${T.scope}\n\n${T.examplesLabel}\n${examples}`;
     }
   };
 

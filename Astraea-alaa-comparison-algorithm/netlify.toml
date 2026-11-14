@@ -3,17 +3,6 @@
   # To update the site: replace data/final_data.xlsx and push.
   command = "pip install openpyxl && python tools/build-site-data.py data/final_data.xlsx"
   publish = "."
-  functions = "netlify/functions"
-
-# The chat function imports js/rag-engine.js and the data/*.json knowledge files;
-# esbuild bundles them into the function. (The API key comes from the environment, never from this file.)
-[functions]
-  node_bundler = "esbuild"
-
-[[redirects]]
-  from = "/api/chat"
-  to = "/.netlify/functions/chat"
-  status = 200
 
 [[headers]]
   for = "/*"
