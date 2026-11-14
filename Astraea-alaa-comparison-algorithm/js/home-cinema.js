@@ -504,7 +504,6 @@ $('#burger').onclick = () => $('#nav').classList.toggle('open');
 const ldNum = $('#ldNum'), ldBar = $('#ldBar');
 let shown = 0;
 // returning visitor: hide the 000–100% counter and show only a quiet black screen while planets load
-try { if (localStorage.getItem('tt_started')) $('.ld-in') && ($('.ld-in').style.visibility = 'hidden'); } catch (e) {}
 (function loadLoop() {
   shown += (loadPct * 100 - shown) * .14 + (loadPct === 1 ? 2.5 : .05);
   shown = Math.min(shown, loadPct * 100);
@@ -513,8 +512,6 @@ try { if (localStorage.getItem('tt_started')) $('.ld-in') && ($('.ld-in').style.
 })();
 function ready() {
   $('#ldMsg').textContent = 'Systems ready';
-  let started = false; try { started = localStorage.getItem('tt_started'); } catch (e) {} // seen once on this device → skip next time
-  if (started) return begin(false);
   $('#ldBtns').classList.add('on');
   gsap.to('#ldBtns', { opacity: 1, y: 0, duration: 1, ease: 'expo.out', startAt: { y: 20 } });
   // nobody clicks? continue on our own so visitors (and judges) are never stuck here
