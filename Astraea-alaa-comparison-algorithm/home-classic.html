@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraTwin — Planetary Analog Matching Platform</title>
+  <meta name="description" content="Multi-attribute planetary surface matching platform comparing Earth analog sites to lunar and Martian targets with physical fidelity.">
+  
+  <!-- Space Agency Typography (Orbitron, IBM Plex Sans Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/astrabot.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/luxe.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body>
+  <!-- ==========================================================================
+       LIVING DEEP-SPACE BACKGROUND (Fixed, Pointer-Events None, Parallax Layers)
+       ========================================================================== -->
+  <div class="space-living-background" aria-hidden="true">
+    <div class="nebula-container">
+      <div class="nebula-cloud nebula-blue"></div>
+      <div class="nebula-cloud nebula-teal"></div>
+      <div class="nebula-cloud nebula-planet-tint"></div>
+    </div>
+    <div class="starfield-layer starfield-far" id="starfieldFar"></div>
+    <div class="starfield-layer starfield-near" id="starfieldNear"></div>
+    <div class="twinkle-stars-layer">
+      <span class="twinkle-dot tk-1"></span>
+      <span class="twinkle-dot tk-2"></span>
+      <span class="twinkle-dot tk-3"></span>
+      <span class="twinkle-dot tk-4"></span>
+      <span class="twinkle-dot tk-5"></span>
+      <span class="twinkle-dot tk-6"></span>
+      <span class="twinkle-dot tk-7"></span>
+      <span class="twinkle-dot tk-8"></span>
+    </div>
+  </div>
+
+  <!-- Skip to Main Content Link -->
+  <a href="#main-content" class="skip-link" data-i18n="nav.skip_link">Skip to main content</a>
+
+  <!-- ==========================================================================
+       PERSISTENT NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link" title="TerraTwin Home">
+        <div class="brand-logo-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+            <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-title">TerraTwin<span class="brand-dot"></span></span>
+          <span class="brand-subtitle" data-i18n="nav.brand_subtitle">Planetary Analog Intelligence</span>
+        </div>
+      </a>
+
+      <!-- Page Links (5 Pages) -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-page="home" data-i18n="nav.home">Home</a>
+        <a href="finder.html" class="nav-link" data-page="finder" data-i18n="nav.finder">Site Finder</a>
+        <a href="compare.html" class="nav-link" data-page="compare" data-i18n="nav.compare">Compare Sites</a>
+        <a href="evidence.html" class="nav-link" data-page="evidence" data-i18n="nav.evidence">Evidence & Method</a>
+        <a href="guide.html" class="nav-link" data-page="guide" data-i18n="nav.guide">Guide</a>
+      </nav>
+
+      <!-- Header Controls: Lang, Profile, 3-Dots Menu -->
+      <div class="header-actions" id="headerControlsSpotlight">
+        
+        <!-- Mission Profile Selector Badge & Dropdown -->
+        <div class="profile-selector-container">
+          <button class="profile-badge-btn" id="profileBadgeBtn" aria-haspopup="true" aria-expanded="false" title="Configure Mission Profile & Weights">
+            <span class="profile-indicator-dot"></span>
+            <span id="activeProfileLabel">TASI Baseline</span>
+            <span class="profile-chevron">▼</span>
+          </button>
+
+          <!-- Dropdown Panel (Internal weights sliders editable exclusively inside) -->
+          <div class="profile-dropdown-panel" id="profileDropdownPanel">
+            <div class="profile-panel-header">
+              <span class="profile-panel-title" id="profilePanelTitle">Mission Profile</span>
+            </div>
+            <p class="caption" id="profilePanelSubtitle" data-i18n="nav.profile_helper">Choose a mission type — it changes how much each criterion counts in every score.</p>
+
+            <div class="profile-options-grid">
+              <button class="profile-option-btn active" data-profile="tasi">TASI Baseline</button>
+              <button class="profile-option-btn" data-profile="rover">Rover Traverse</button>
+              <button class="profile-option-btn" data-profile="landing">Landing Site</button>
+              <button class="profile-option-btn" data-profile="thermal">Habitat &amp; Thermal</button>
+              <button class="profile-option-btn" data-profile="optics">Optics &amp; Solar</button>
+            </div>
+
+            <div class="weights-section-title">
+              <span id="weightsSectionTitle">Criteria Weights</span>
+            </div>
+
+            <!-- Weight sliders: the 4 criteria available in the real dataset -->
+            <div class="weight-slider-group" id="weightGroup_slope">
+              <div class="weight-slider-header">
+                <span id="weightLabel_slope">Slope</span>
+                <span class="weight-val" id="weightVal_slope">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_slope" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_roughness">
+              <div class="weight-slider-header">
+                <span id="weightLabel_roughness">Roughness</span>
+                <span class="weight-val" id="weightVal_roughness">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_roughness" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_albedo">
+              <div class="weight-slider-header">
+                <span id="weightLabel_albedo">Albedo (brightness)</span>
+                <span class="weight-val" id="weightVal_albedo">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_albedo" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_thermal">
+              <div class="weight-slider-header">
+                <span id="weightLabel_thermal">Thermal Swing</span>
+                <span class="weight-val" id="weightVal_thermal">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_thermal" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <button class="weights-reset-btn" id="resetWeightsBtn">Reset Defaults</button>
+          </div>
+        </div>
+
+        <!-- Language Switcher [ EN | AR ] -->
+
+        <!-- Page Tour & Mission Guide button ("?"): replays guided tour or opens guide -->
+        <button class="btn-control tour-help-btn" id="tourGuideBtn" title="Page Tour & Guide / دليل وجولة الصفحة" aria-label="Page Tour">?</button>
+
+        <!-- User Profile Badge & Dropdown -->
+        <div class="user-profile-container">
+          <!-- Guest Sign In / Register Button (Visible when not logged in) -->
+          <a href="login.html" class="nav-auth-login-btn" id="navAuthLoginBtn">
+            <span class="auth-btn-text auth-btn-text-full" data-i18n="auth.nav_login_btn">تسجيل الدخول / إنشاء حساب</span>
+            <span class="auth-btn-text auth-btn-text-short" data-i18n="auth.nav_login_btn_short">دخول</span>
+          </a>
+
+          <!-- User Profile Badge & Dropdown (Visible only when logged in) -->
+          <button class="user-profile-btn" id="userProfileBtn" aria-haspopup="true" aria-expanded="false" title="Researcher Profile" style="display: none;">
+            <div class="user-avatar-badge">
+              <span class="user-status-dot" title="Status: Online"></span>
+            </div>
+            <div class="user-meta-text">
+              <span class="user-display-name" data-i18n="nav.user_name">Dr. Researcher</span>
+            </div>
+            <span class="profile-chevron">▼</span>
+          </button>
+          
+          <div class="user-profile-dropdown" id="userProfileDropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar"></div>
+              <div class="user-dropdown-info">
+                <div class="user-dropdown-name" data-i18n="nav.user_name">Dr. Researcher</div>
+                <div class="user-dropdown-role">Planetary Analog Specialist</div>
+                <div class="user-dropdown-email">researcher@terratwin.space</div>
+              </div>
+            </div>
+            <div class="user-dropdown-badge-strip">
+              <span class="sci-badge validated">LEVEL-4 ACCESS</span>
+              <span class="sci-badge mars">ORBITAL DATA</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-row">
+              <span class="dropdown-row-label">Assigned Mission:</span>
+              <span class="dropdown-row-val" id="userProfileActiveMission">Analog Field Recon</span>
+            </div>
+            <div class="user-dropdown-row">
+              <span class="dropdown-row-label">Data Clearance:</span>
+              <span class="dropdown-row-val" style="color:var(--accent-green);">NASA PDS / ESA Sentinel</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-links">
+              <a href="finder.html" class="user-dropdown-link">🗺️ Site Finder Dashboard</a>
+              <a href="compare.html" class="user-dropdown-link">⚖️ Benchmark Comparison</a>
+              <a href="evidence.html#dataCatalogSection" class="user-dropdown-link">📑 Catalog & Datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Dots Quick Settings Menu [ ⋮ ] (De-clutter top bar) -->
+        <div class="kebab-menu-container">
+          <button class="btn-control btn-kebab" id="kebabMenuBtn" aria-haspopup="true" aria-expanded="false" title="More Quick Controls">
+            <span class="kebab-icon-dots">⋮</span>
+          </button>
+          
+          <div class="kebab-dropdown-panel" id="kebabDropdownPanel">
+            <div class="kebab-panel-header" data-i18n="nav.kebab_header">Quick Controls</div>
+            <button class="kebab-item-btn" id="kebabProfileBtn" style="display: none;">
+              <span class="kebab-item-icon">👤</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_profile">Researcher Profile & Level</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabTourBtn">
+              <span class="kebab-item-icon">🧭</span>
+              <span class="kebab-item-text" data-i18n="nav.tour_btn">? Page Guided Tour</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabContactBtn">
+              <span class="kebab-item-icon">📬</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_contact">Contact Science Team</span>
+            </button>
+            <div class="kebab-divider"></div>
+            <button class="kebab-item-btn" id="kebabChatbotBtn">
+              <span class="kebab-item-icon">🤖</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_ai">AI Science Assistant</span>
+            </button>
+            <a href="login.html" class="kebab-item-btn" id="kebabAuthBtn">
+              <span class="kebab-item-text" data-i18n="nav.kebab_auth">Account & Sign In</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hidden Theme trigger for compatibility with existing scripts -->
+        <button class="btn-control" id="themeToggleBtn" style="display:none;" aria-hidden="true"></button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       PAGE 1 CONTENT: HOME
+       ========================================================================== -->
+  <main class="page-container" id="main-content">
+    
+    <!-- ======================================================================
+         SECTION 1: HERO + 3D EXPLORER (Full-Height Cinematic Section)
+         ====================================================================== -->
+    <section class="home-hero-section cinematic-section" id="sectionExplore">
+      
+      <!-- Intro Header Block (NASA Planetary Mission Standard) -->
+      <div class="home-intro-block">
+        <div class="home-mission-strip">
+          <span class="home-kicker" data-i18n="home.hero_kicker">Multi-Attribute Planetary Surface Matching</span>
+        </div>
+
+        <div class="home-title-container">
+          <h1 class="home-title" data-i18n="home.hero_title">Matching Earth Analogs to the Moon & Mars</h1>
+        </div>
+
+        <p class="home-desc" data-i18n="home.hero_desc">
+          Empirical remote sensing fusion comparing 421,800 terrestrial candidate cells to extraterrestrial mission targets with physical fidelity.
+        </p>
+      </div>
+
+      <!-- ======================================================================
+           3D INTERACTIVE PLANETARY EXPLORER (Earth, Mars, Moon)
+           ====================================================================== -->
+      <div class="planet-explorer-station" id="planetExplorerStation">
+        <div class="planet-station-header">
+          <div class="planet-header-titles">
+            <div class="planet-station-kicker">
+              <span class="planet-station-kicker-dot"></span>
+              <span id="hudPlanetKicker">Terrestrial Analog Host</span>
+            </div>
+            <div class="planet-station-title" id="hudPlanetName">Earth (Terra)</div>
+          </div>
+        </div>
+
+        <!-- 3D Viewport Stage with Minimal Side Arrows & Flanking Thumbnail Switchers -->
+        <div class="planet-3d-stage">
+          
+          <!-- Side Navigation Arrows [ ❮ | ❯ ] -->
+          <button class="planet-nav-arrow prev" id="planetNavPrev" title="Previous Celestial Body" aria-label="Previous Body">❮</button>
+          <button class="planet-nav-arrow next" id="planetNavNext" title="Next Celestial Body" aria-label="Next Body">❯</button>
+
+          <!-- Planet Selector Tabs [ Earth | Mars | Moon ] - Round Realistic Thumbnails -->
+          <div class="planet-tabs-group" role="tablist" aria-label="Celestial Body Selector">
+            <button class="planet-tab-btn active" data-planet="earth" role="tab" aria-selected="true" title="Earth / الأرض">
+              <span class="planet-tab-orb earth-orb" aria-hidden="true"></span>
+              <span class="planet-tab-name" data-i18n="planet.tab_earth">الأرض</span>
+            </button>
+            <button class="planet-tab-btn" data-planet="mars" role="tab" aria-selected="false" title="Mars / المريخ">
+              <span class="planet-tab-orb mars-orb" aria-hidden="true"></span>
+              <span class="planet-tab-name" data-i18n="planet.tab_mars">المريخ</span>
+            </button>
+            <button class="planet-tab-btn" data-planet="moon" role="tab" aria-selected="false" title="Moon / القمر">
+              <span class="planet-tab-orb moon-orb" aria-hidden="true"></span>
+              <span class="planet-tab-name" data-i18n="planet.tab_moon">القمر</span>
+            </button>
+          </div>
+
+          <!-- Orbital ring: back arc sits behind the globe, front arc passes in front of it -->
+          <svg class="orbit-ring orbit-ring--back" id="orbitRingBack" aria-hidden="true" focusable="false"><path class="orbit-path"/></svg>
+          <svg class="orbit-ring orbit-ring--front" id="orbitRingFront" aria-hidden="true" focusable="false"><path class="orbit-path"/></svg>
+
+          <!-- Planet Glow Backdrop (Tracks active planet color) -->
+          <div class="globe-glow-backdrop" id="globeGlowBackdrop"></div>
+
+          <!-- Three.js WebGL Container -->
+          <div id="planet3dCanvasContainer"></div>
+
+          <!-- Bottom Interaction Hint Pill -->
+          <div class="planet-hint-pill">
+            <span>🖱️ <span class="hint-highlight">Drag</span> to rotate 360°</span>
+            <span>🔍 <span class="hint-highlight">Scroll</span> to zoom</span>
+            <span>📍 <span class="hint-highlight">Click pins</span> to inspect analog telemetry</span>
+          </div>
+
+          <!-- Selected Pin Popup Dialog -->
+          <div class="planet-site-popup" id="planetSiteSelectedPopup"></div>
+        </div>
+
+        <!-- Clean Horizontal Telemetry Strip (Direct Physical Metrics from Dataset) -->
+        <div class="planet-telemetry-strip">
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_slope">Surface Slope & Class</span>
+            <span class="telemetry-cell-val" id="hudSlope">6.8° Mean (Flat &lt;2° to Steep &gt;12°)</span>
+          </div>
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_roughness">Surface Roughness (m)</span>
+            <span class="telemetry-cell-val" id="hudRoughness">12.4 m (Geomorpho90m Multi-Scale)</span>
+          </div>
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_albedo">Optical Albedo</span>
+            <span class="telemetry-cell-val" id="hudAlbedo">0.26 (NASA MODIS MCD43A3)</span>
+          </div>
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_temp_swing">Thermal Swing (ΔT °C)</span>
+            <span class="telemetry-cell-val" id="hudTempSwing">Δ44.5°C (NASA MODIS LST)</span>
+          </div>
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_ndvi">Abiotic NDVI Filter</span>
+            <span class="telemetry-cell-val highlight" id="hudNdviGate">Passed (NDVI ≤ 0.20 Abiotic Gate)</span>
+          </div>
+          <div class="telemetry-cell">
+            <span class="telemetry-cell-label" data-i18n="planet.col_targets">Cataloged Benchmarks</span>
+            <span class="telemetry-cell-val highlight" id="hudCatalogedSites">53 Sites (47 Analogs + 6 Controls)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: DYNAMIC "TWIN PAIR" HERO SHOWCASE (Full Width, Generous Spacing)
+         ====================================================================== -->
+    <section class="twin-showcase-container cinematic-section" id="twinShowcase">
+        
+      <!-- Showcase Interactive Header -->
+      <div class="showcase-header">
+        <div class="showcase-header-title">
+          <span class="sci-badge validated" id="showcaseLiveBadge">
+            <span class="telemetry-live-dot"></span>
+            <span data-i18n="home.twin_pair_title">Planetary Twin Analysis // Interactive Telemetry Sync</span>
+          </span>
+        </div>
+        
+        <!-- Cycling & Interaction Controls -->
+        <div class="showcase-cycle-controls">
+          <span class="showcase-sync-hint" data-i18n="home.twin_hint">Click any pin on the 3D globe to lock telemetry</span>
+          <button class="cycle-btn" id="cyclePairPrev" title="Previous Benchmark Twin" aria-label="Previous Pair">❮</button>
+          <div class="cycle-indicators" id="cycleIndicators"></div>
+          <button class="cycle-btn" id="cyclePairNext" title="Next Benchmark Twin" aria-label="Next Pair">❯</button>
+        </div>
+      </div>
+
+      <!-- Split Grid: Site A (Left) <-> Animated Ring <-> Matched Twin (Right) with SVG Orbit Arc -->
+      <div class="twin-split-grid">
+        
+        <!-- Signature SVG Orbit Arc Connecting Target to Earth Analog passing behind Ring -->
+        <svg class="twin-orbit-svg" viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <filter id="orbitCyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <path id="twinOrbitArc" class="twin-orbit-arc" d="M 120,130 C 340,10 660,10 880,130" fill="none" />
+          <circle id="twinOrbitDot" class="twin-orbit-dot" r="6" cx="120" cy="130" filter="url(#orbitCyanGlow)" />
+        </svg>
+
+        <!-- Site A: Selected Site (Left) -->
+        <div class="twin-site-card target-side" id="cardSiteA">
+          <div class="site-card-top">
+            <div>
+              <span class="sci-badge mars" id="siteABadge">Martian Target</span>
+              <div class="site-card-name" id="heroTargetName">Jezero Crater Delta, Mars</div>
+              <div class="site-card-region" id="heroTargetRegion">18.41° N, 77.69° E • Elevation -2646m</div>
+            </div>
+          </div>
+
+          <!-- Remote Sensing Texture Visual -->
+          <div class="site-visual-preview">
+            <div class="site-visual-bg" id="heroTargetVisualBg"></div>
+            <div class="site-visual-overlay"></div>
+            <span class="site-visual-badge" id="heroTargetSensor" style="display: none;"></span>
+          </div>
+
+          <div class="site-card-insight" id="heroTargetInsight">
+            Ancient fluvio-lacustrine sedimentary delta with clay-perchlorate dryness limits.
+          </div>
+
+          <!-- Quick Physical Spec Grid for Site A -->
+          <div class="site-spec-mini-grid" id="siteAMiniSpecs">
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_slope">Slope:</span>
+              <span class="spec-mini-val" id="siteASlope">0.12° (Flat)</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_roughness">Roughness:</span>
+              <span class="spec-mini-val" id="siteARoughness">11.0 m</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_albedo">Albedo:</span>
+              <span class="spec-mini-val" id="siteAAlbedo">0.173</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_temp_swing">Temp Swing:</span>
+              <span class="spec-mini-val" id="siteATempSwing">Δ78.7°C</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Central Animated Similarity Ring Panel -->
+        <div class="twin-center-ring-panel" id="twinRingSpotlight">
+          <div class="ring-svg-container">
+            <svg class="ring-svg" viewBox="0 0 160 160">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#a0b2cc" />
+                  <stop offset="50%" stop-color="#d9b77e" />
+                  <stop offset="100%" stop-color="#86c4a0" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg-circle" cx="80" cy="80" r="70" />
+              <circle class="ring-progress-circle" id="heroRingProgressCircle" cx="80" cy="80" r="70" />
+            </svg>
+
+            <div class="ring-content-inner">
+              <div class="ring-score-number">
+                <span id="heroRingScoreNum">95.8</span><span class="ring-score-unit">%</span>
+              </div>
+              <div class="ring-score-label" data-i18n="home.similarity_label">Overall Similarity</div>
+            </div>
+          </div>
+
+          <div class="ring-uncertainty" id="heroRingUncertainty">±1.8% Benchmark Leader</div>
+          <div class="ring-status-pill" id="heroRingStatusPill">Cleared Abiotic Gate</div>
+        </div>
+
+        <!-- Site B: Matched Twin Site (Right) -->
+        <div class="twin-site-card earth-side" id="cardSiteB">
+          <div class="site-card-top">
+            <div>
+              <span class="sci-badge validated" id="siteBBadge">Matched Analog Twin</span>
+              <div class="site-card-name" id="heroEarthName">Mafraq Basalt Plain, Jordan</div>
+              <div class="site-card-region" id="heroEarthRegion">32.00° N, 37.50° E • Elevation 697m</div>
+            </div>
+          </div>
+
+          <!-- Remote Sensing Texture Visual -->
+          <div class="site-visual-preview">
+            <div class="site-visual-bg" id="heroEarthVisualBg"></div>
+            <div class="site-visual-overlay"></div>
+            <span class="site-visual-badge" id="heroEarthSensor" style="display: none;"></span>
+          </div>
+
+          <div class="site-card-insight" id="heroEarthInsight">
+            Top verified analog for Jezero Delta; flat basalt sheets replicate landing terrain bearing capacity.
+          </div>
+
+          <!-- Quick Physical Spec Grid for Site B -->
+          <div class="site-spec-mini-grid" id="siteBMiniSpecs">
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_slope">Slope:</span>
+              <span class="spec-mini-val" id="siteBSlope">1.96° (Flat)</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_roughness">Roughness:</span>
+              <span class="spec-mini-val" id="siteBRoughness">4.51 m</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_albedo">Albedo:</span>
+              <span class="spec-mini-val" id="siteBAlbedo">0.210</span>
+            </div>
+            <div class="spec-mini-item">
+              <span class="spec-mini-label" data-i18n="planet.col_temp_swing">Temp Swing:</span>
+              <span class="spec-mini-val" id="siteBTempSwing">Δ49.3°C</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: TOP-LEVEL KPI COUNTER BAR (3 Columns Separated by Thin Lines)
+         ====================================================================== -->
+    <section class="kpi-counter-bar cinematic-section" id="kpiBarSpotlight">
+      
+      <!-- 1. Scanned Earth Cells -->
+      <div class="kpi-card">
+        <div class="kpi-card-header">
+          <span class="kpi-card-label kpi-card-title" data-i18n="home.kpi_cells_label">Scanned Earth Cells</span>
+          <div class="kpi-card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </div>
+        </div>
+        <div class="kpi-card-number" id="kpiScannedCells">0</div>
+        <div class="kpi-card-desc" data-i18n="home.kpi_cells_desc">Global raster coverage evaluated at 30m resolution</div>
+      </div>
+
+      <!-- 2. Known Analog Recall Rate -->
+      <div class="kpi-card">
+        <div class="kpi-card-header">
+          <span class="kpi-card-label kpi-card-title" data-i18n="home.kpi_recall_label">Known Analog Recall Rate</span>
+          <div class="kpi-card-icon" style="color:var(--accent-green); background:rgba(134, 196, 160,0.1); border-color:rgba(134, 196, 160,0.3);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div class="kpi-card-number" id="kpiRecallRate" style="color:var(--accent-green);">0%</div>
+        <div class="kpi-card-desc" data-i18n="home.kpi_recall_desc">Verified against 49 historical Apollo & rover field test sites</div>
+      </div>
+
+      <!-- 3. New Validated Candidates -->
+      <div class="kpi-card">
+        <div class="kpi-card-header">
+          <span class="kpi-card-label kpi-card-title" data-i18n="home.kpi_candidates_label">New Validated Candidates</span>
+          <div class="kpi-card-icon" style="color:var(--accent-gold); background:rgba(222, 160, 98,0.1); border-color:rgba(222, 160, 98,0.3);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+        </div>
+        <div class="kpi-card-number" id="kpiNewCandidates" style="color:var(--accent-gold);">0</div>
+        <div class="kpi-card-desc" data-i18n="home.kpi_candidates_desc">Novel high-fidelity analog sites discovered by algorithm</div>
+      </div>
+
+    </section>
+
+    <!-- Fixed Dot Navigation (Explore / Twin pair / Results) -->
+    <nav class="section-dot-nav" id="sectionDotNav" aria-label="Page Sections Navigation">
+      <a href="#sectionExplore" class="section-dot active" data-target="sectionExplore" title="Explore" aria-label="Explore Section">
+        <span class="dot-indicator"></span>
+        <span class="dot-label" id="dotLabelExplore">Explore</span>
+      </a>
+      <a href="#twinShowcase" class="section-dot" data-target="twinShowcase" title="Twin pair" aria-label="Twin Pair Section">
+        <span class="dot-indicator"></span>
+        <span class="dot-label" id="dotLabelTwin">Twin pair</span>
+      </a>
+      <a href="#kpiBarSpotlight" class="section-dot" data-target="kpiBarSpotlight" title="Results" aria-label="Results Section">
+        <span class="dot-indicator"></span>
+        <span class="dot-label" id="dotLabelResults">Results</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <!-- ==========================================================================
+       PERSISTENT SCIENTIFIC MISSION FOOTER
+       ========================================================================== -->
+  <footer class="site-footer tt-footer" id="siteFooter">
+
+    <!-- Footer horizon image goes here (real Moon / Earth / Mars terrain, coming next) -->
+    <div class="tt-footer-horizon" aria-hidden="true"></div>
+    <div class="footer-container">
+      <div class="tt-footer-grid">
+
+        <!-- Brand + mission -->
+        <div class="tt-footer-brand">
+          <a href="index.html" class="tt-footer-logo" aria-label="TerraTwin">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+              <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+            </svg>
+            <span>TerraTwin</span>
+          </a>
+          <p class="tt-footer-about" data-i18n="footer.about_desc">TerraTwin finds places on Earth that match landing and exploration sites on the Moon and Mars, using open satellite data, so missions can test on Earth before they fly.</p>
+          <p class="tt-footer-team">
+            <span class="tt-footer-team-label" data-i18n="footer.built_by">Built by</span>
+            <strong data-i18n="footer.lead_name">Astraea Science Team</strong>
+            <span class="tt-footer-team-role" data-i18n="footer.lead_role">Planetary Systems &amp; Geospatial Engineering</span>
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.contact_title">Contact</p>
+          <a class="tt-footer-link" href="mailto:astraeateam45@gmail.com" id="footerContactEmail" data-i18n="footer.contact_email">astraeateam45@gmail.com</a>
+          <a class="tt-footer-link" href="evidence.html" data-i18n="footer.docs_link">Methodology</a>
+          <button type="button" class="tt-footer-cta" id="footerContactModalLink" onclick="if(window.UserSystem){window.UserSystem.openContactModal();}">
+            <span data-i18n="footer.contact_team">Contact the team</span>
+          </button>
+        </div>
+
+        <!-- Data sources -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.sources_title">Data sources</p>
+          <ul class="tt-footer-list">
+            <li data-i18n="footer.source_nasa">NASA Planetary Data System</li>
+            <li data-i18n="footer.source_esa">ESA Copernicus (Sentinel-2)</li>
+            <li data-i18n="footer.source_usgs">USGS / NASA JPL</li>
+          </ul>
+          <a class="tt-footer-link tt-footer-more" href="evidence.html#dataCatalogSection" data-i18n="footer.view_all_sources">View all data sources</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright" data-i18n="footer.copyright">© 2026 TerraTwin · Astraea Team</div>
+        <div class="footer-badges-group">
+          <span class="footer-license" data-i18n="footer.source_textures">Planet textures: Solar System Scope (CC BY 4.0)</span>
+          <span class="footer-license">CC-BY 4.0</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Three.js (WebGL 3D Engine) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Data & Scripts -->
+  <script src="data/data-store.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/avatars.js"></script>
+  <script src="js/user-system.js"></script>
+  <script src="js/astrabot.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/tour-marker.js"></script>
+    <script src="js/rag-engine.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+  <script src="data/planetary-dataset.js"></script>
+  <script src="js/planet3d.js"></script>
+  <script src="js/planet-twins.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/deep-model.js"></script>
+  <script src="js/luxe.js" defer></script>
+</body>
+</html>

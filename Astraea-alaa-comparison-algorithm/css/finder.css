@@ -1,0 +1,1596 @@
+/* TerraTwin - Page 2: Site Finder Specific Styles */
+
+.finder-dashboard {
+  display: grid;
+  grid-template-columns: 310px 1fr 360px;
+  gap: 1.25rem;
+  height: calc(100vh - var(--header-height) - var(--footer-height) - 4rem);
+  min-height: 640px;
+  position: relative;
+}
+
+/* ==========================================================================
+   LEFT PANEL: CRITERIA & FILTERS
+   ========================================================================== */
+.finder-left-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  overflow-y: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-section-title {
+  font-size: 0.8rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Target Body Switcher (Moon / Mars / All) */
+.target-body-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.35rem;
+  background: var(--bg-secondary);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.body-toggle-btn {
+  padding: 0.45rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.body-toggle-btn:hover {
+  color: var(--text-primary);
+}
+
+.body-toggle-btn.active {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--accent-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.body-toggle-btn[data-body="mars"].active {
+  color: var(--accent-mars);
+  border-color: rgba(208, 112, 82, 0.4);
+}
+
+.body-toggle-btn[data-body="moon"].active {
+  color: #b0c8e6;
+  border-color: rgba(180, 200, 230, 0.4);
+}
+
+/* Profile Weights Summary Box */
+.profile-weights-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.weights-pill-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.weight-mini-pill {
+  font-size: 0.72rem;
+  background: var(--bg-card);
+  padding: 0.25rem 0.45rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.weight-mini-val {
+  font-family: var(--font-sans);
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* Terrain Classification Filter Chips */
+.terrain-chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.terrain-chip {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.terrain-chip:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.terrain-chip.active {
+  background: var(--badge-bg);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* Crucial Discovery Switch */
+.discovery-switch-box {
+  background: rgba(222, 160, 98, 0.06);
+  border: 1px solid rgba(222, 160, 98, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+}
+
+.discovery-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.discovery-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.discovery-radio-label input[type="radio"] {
+  accent-color: var(--accent-gold);
+}
+
+/* Map Legend in Left Panel */
+.map-legend-box {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.legend-symbol {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.legend-symbol.star {
+  color: var(--accent-gold);
+}
+
+.legend-symbol.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   CENTER CANVAS: INTERACTIVE GEOSPATIAL MAP
+   ========================================================================== */
+.finder-center-canvas {
+  background: #030712;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+#leafletMap {
+  width: 100%;
+  height: 100%;
+  background: #020610;
+  z-index: 1;
+}
+
+/* Custom Map Overlay Overlays */
+.map-top-bar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 500;
+  pointer-events: none;
+}
+
+.map-status-pill {
+  pointer-events: auto;
+  background: rgba(7, 7, 10, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.map-status-val {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   CREATIVE HIGH-TECH SONAR RADAR MARKERS & FLOATING SCORE PILLS
+   ========================================================================== */
+.custom-leaflet-marker {
+  /* must stay absolute (Leaflet positions every marker itself) —
+     "relative" made each marker drift further from its real location */
+  position: absolute;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  overflow: visible !important;
+}
+
+.sonar-pin-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pulsing Sonar Wave */
+.sonar-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sonarPing 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.sonar-wave.candidate {
+  border: 1.5px solid #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+.sonar-wave.known {
+  border: 1.5px solid var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(217, 183, 126, 0.7);
+}
+
+@keyframes sonarPing {
+  0% { width: 12px; height: 12px; opacity: 1; }
+  100% { width: 48px; height: 48px; opacity: 0; }
+}
+
+/* Creative Icon Core */
+.pin-core-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  position: relative;
+}
+
+.pin-core-icon.candidate {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 14px #ffd700, inset 0 0 6px #ffffff;
+}
+
+.pin-core-icon.known {
+  background: linear-gradient(135deg, #0077cc, #d9b77e);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 14px var(--accent-cyan), inset 0 0 6px #ffffff;
+}
+
+.sonar-pin-container:hover .pin-core-icon {
+  transform: scale(1.35);
+}
+
+/* Floating Match Percentage Pill hovering above pin */
+.pin-floating-score {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.pin-floating-score.high {
+  background: #86c4a0;
+  color: #030a14;
+}
+
+.pin-floating-score.med {
+  background: #a0b2cc;
+  color: #ffffff;
+}
+
+.pin-floating-score.candidate-badge {
+  background: linear-gradient(135deg, #ffd700, #ff9900);
+  color: #030a14;
+  border: 1px solid #ffffff;
+}
+
+/* Layer Switcher in Finder Map Top Bar */
+.map-layer-switcher {
+  display: flex;
+  gap: 0.35rem;
+  pointer-events: auto;
+  background: rgba(4, 9, 20, 0.88);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(10px);
+}
+
+.layer-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.layer-switch-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.layer-switch-btn.active {
+  background: rgba(160, 178, 204, 0.2);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* Custom Leaflet Tooltip */
+.leaflet-tooltip.scientific-tooltip {
+  background: rgba(5, 12, 24, 0.94);
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.8), 0 0 10px rgba(217, 183, 126, 0.3);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  font-family: var(--font-sans);
+}
+
+/* ==========================================================================
+   RIGHT PANEL: SITE DETAIL CARD
+   ========================================================================== */
+.finder-right-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.panel-placeholder-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem 1rem;
+  gap: 1rem;
+}
+
+.placeholder-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.detail-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.85rem;
+}
+
+.detail-site-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.detail-score-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.detail-score-val {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.detail-score-uncertainty {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Radar Chart Canvas Container */
+.radar-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.radar-title {
+  font-size: 0.76rem;
+  text-transform: none;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+#radarCanvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Why It Matches & Scientific Divergences */
+.detail-bullet-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.detail-bullet-title {
+  font-size: 0.78rem;
+  text-transform: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.detail-bullet-title.matches {
+  color: var(--accent-green);
+}
+
+.detail-bullet-title.divergences {
+  color: var(--accent-mars);
+}
+
+.detail-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.detail-bullet-list li {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  position: relative;
+  padding-left: 0.85rem;
+}
+
+[dir="rtl"] .detail-bullet-list li {
+  padding-left: 0;
+  padding-right: 0.85rem;
+}
+
+.detail-bullet-list li::before {
+  content: '▪';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+
+[dir="rtl"] .detail-bullet-list li::before {
+  left: auto;
+  right: 0;
+}
+
+/* Detail Card Action Buttons */
+.detail-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-detail-action {
+  flex: 1;
+  padding: 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-detail-compare {
+  background: var(--accent-blue);
+  color: #ffffff;
+  border: 1px solid var(--accent-blue);
+}
+
+.btn-detail-compare:hover {
+  background: #0088dd;
+  box-shadow: 0 0 12px rgba(160, 178, 204, 0.4);
+}
+
+.btn-detail-export {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.btn-detail-export:hover {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+
+/* Target-aware Mission Profile chips & criteria sliders */
+.finder-profile-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.finder-profile-chip {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.finder-profile-chip:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.finder-profile-chip.active {
+  background: var(--badge-bg);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.finder-criteria-box .weights-reset-btn {
+  margin-top: 0.2rem;
+}
+
+.finder-target-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+
+/* Banner on top of the map: what is being shown (Moon / Mars / Both) */
+.map-target-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+/* Let the map top bar wrap to a 2nd line instead of overflowing */
+.map-top-bar {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.layer-switch-btn {
+  white-space: nowrap;
+}
+
+/* Medium screens: the banner matters more than the datum pill */
+@media (max-width: 1400px) {
+  .map-top-bar .map-status-pill {
+    display: none;
+  }
+}
+
+.map-target-banner[data-body="mars"] {
+  border-color: var(--accent-mars);
+}
+
+.map-target-banner[data-body="moon"] {
+  border-color: #b0c8e6;
+}
+
+.map-target-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.map-target-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.map-target-text strong {
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.map-target-count {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+}
+
+.map-target-banner[data-body="mars"] .map-target-count {
+  color: var(--accent-mars);
+}
+
+.map-target-banner[data-body="moon"] .map-target-count {
+  color: #b0c8e6;
+}
+
+/* Heat legend (glow colour = similarity) */
+.heat-legend {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.heat-legend-title {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.heat-legend-bar {
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, rgb(160, 178, 204), rgb(245, 214, 35), rgb(255, 59, 31));
+}
+
+[dir="rtl"] .heat-legend-bar {
+  background: linear-gradient(270deg, rgb(160, 178, 204), rgb(245, 214, 35), rgb(255, 59, 31));
+}
+
+.heat-legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}
+
+/* Moon | Mars toggle (2 buttons) */
+.target-body-toggle.two-col {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Reference site dropdown */
+.finder-select-label {
+  display: block;
+  margin: 0.8rem 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.finder-select {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.finder-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+/* Read-only active weights */
+.active-profile-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.weights-pill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.profile-weights-box .finder-target-hint {
+  margin-top: 0.2rem;
+}
+
+/* Card: info sections (most similar + site facts) */
+.detail-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.detail-info-title {
+  font-size: 0.75rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.most-similar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.most-similar-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: start;
+  transition: all var(--transition-fast);
+}
+
+.most-similar-item:hover,
+.most-similar-item.active {
+  border-color: var(--accent-blue);
+}
+
+.most-similar-item.active {
+  background: var(--badge-bg);
+}
+
+.most-similar-score {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.site-facts-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.site-fact {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.55rem;
+}
+
+.site-fact dt {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.site-fact dd {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Closest Earth sites to the reference (left panel) */
+.closest-earth-box {
+  margin-top: 0.7rem;
+  padding: 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.closest-earth-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.closest-earth-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.closest-earth-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.76rem;
+  text-align: start;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.closest-earth-item:hover,
+.closest-earth-item.active {
+  border-color: var(--accent-blue);
+}
+
+.closest-earth-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.closest-earth-list {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.closest-earth-rank {
+  display: inline-block;
+  min-width: 1.6em;
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+}
+
+.closest-earth-more {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.35rem;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.74rem;
+  cursor: pointer;
+}
+
+.closest-earth-more:hover {
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.closest-earth-score {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+/* Selected site: red "dropped pin" above the marker */
+.selected-site-pin {
+  background: transparent;
+  border: none;
+}
+
+.selected-pin-svg {
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.6));
+  animation: pinDrop 0.35s ease-out;
+}
+
+@keyframes pinDrop {
+  from { transform: translateY(-18px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.radar-note,
+.ndvi-note {
+  display: block;
+  margin: 0.3rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* Mobile-only sheet elements: hidden on desktop */
+.sheet-header,
+.mobile-filters-btn,
+.sheet-backdrop {
+  display: none;
+}
+
+/* ==========================================================================
+   MOBILE BOTTOM SHEET RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .finder-dashboard {
+    grid-template-columns: 260px 1fr;
+    height: auto;
+  }
+  .finder-right-panel {
+    grid-column: 1 / -1;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .finder-dashboard {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .finder-center-canvas {
+    order: 1;
+    height: 70vh;
+    min-height: 420px;
+  }
+
+  /* Leave room so the peeking card never hides the footer */
+  body {
+    padding-bottom: 56px;
+  }
+
+  /* --- Shared bottom-sheet look --- */
+  .finder-left-panel,
+  .finder-right-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 78vh;
+    overflow-y: auto;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding-top: 0;
+    transition: transform 0.3s ease;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: 0 -1.25rem;
+    padding: 1.1rem 1.25rem 0.6rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sheet-header-btn {
+    width: calc(100% + 2.5rem);
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .sheet-grabber {
+    position: absolute;
+    top: 0.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--border-color);
+  }
+
+  .sheet-header-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text-primary);
+  }
+
+  .sheet-close-btn,
+  .sheet-toggle-icon {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  /* --- Filters sheet: fully hidden until opened --- */
+  .finder-left-panel {
+    z-index: 1002;
+    transform: translateY(105%);
+  }
+  .finder-left-panel.sheet-open {
+    transform: translateY(0);
+  }
+
+  /* --- Site card sheet: header peeks from the bottom --- */
+  .finder-right-panel {
+    z-index: 1001;
+    transform: translateY(calc(100% - 52px));
+  }
+  .finder-right-panel.sheet-expanded {
+    transform: translateY(0);
+  }
+  .finder-right-panel.sheet-expanded .sheet-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* --- Floating "Filters" button on the map --- */
+  .mobile-filters-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--accent-blue);
+    background: var(--bg-card);
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+  }
+
+  /* Lift the chatbot above the peeking card, hide it while a sheet is open */
+  .chatbot-widget-container {
+    bottom: 68px;
+  }
+  body.finder-sheet-open .chatbot-widget-container {
+    display: none;
+  }
+
+  /* Phones zoom with two fingers, so hide the +/- buttons */
+  .finder-center-canvas .leaflet-control-zoom {
+    display: none;
+  }
+
+  /* Map banner: keep only the banner on small screens */
+  .map-top-bar .map-layer-switcher,
+  .map-top-bar .map-status-pill {
+    display: none;
+  }
+
+  /* Guided tour: keep sheets fixed while highlighted */
+  .finder-left-panel.tour-highlighted,
+  .finder-right-panel.tour-highlighted {
+    position: fixed !important;
+  }
+
+  /* --- Backdrop behind an open sheet --- */
+  .sheet-backdrop.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+
+/* ==========================================================================
+   PRINT / "EXPORT SITE BRIEF": one clean page with the site card only
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+
+  /* Hide everything except the site card */
+  .site-header,
+  .site-footer,
+  .footer-mission-boundary,
+  .chatbot-widget-container,
+  .tour-overlay,
+  .tour-card,
+  .finder-left-panel,
+  .finder-center-canvas,
+  .sheet-header,
+  .sheet-backdrop,
+  .mobile-filters-btn,
+  .detail-card-actions,
+  .panel-placeholder-state {
+    display: none !important;
+  }
+
+  .page-container {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .finder-dashboard {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* The card: static, full width, light colours for paper */
+  .finder-right-panel {
+    --bg-card: #ffffff;
+    --bg-secondary: #f3f6fa;
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-muted: #6b7280;
+    --border-color: #d1d5db;
+    position: static !important;
+    transform: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .finder-right-panel #finderDetailContent {
+    display: flex !important;
+    height: auto !important;
+  }
+
+  /* Report title on top + data line at the bottom */
+  .finder-right-panel::before {
+    content: "TerraTwin — Site Brief";
+    display: block;
+    font-family: var(--font-display);
+    font-size: 14pt;
+    font-weight: 700;
+    color: #111827;
+    padding-bottom: 6pt;
+    margin-bottom: 10pt;
+    border-bottom: 2px solid #a0b2cc;
+  }
+
+  .finder-right-panel::after {
+    content: "Data: NASA PDS • ESA Copernicus Sentinel-2 • USGS  |  TerraTwin by Astraea Team  |  CC-BY 4.0";
+    display: block;
+    margin-top: 12pt;
+    padding-top: 6pt;
+    border-top: 1px solid #d1d5db;
+    font-size: 8pt;
+    color: #6b7280;
+  }
+
+  [dir="rtl"] .finder-right-panel::before {
+    content: "TerraTwin — ملخص الموقع";
+  }
+
+  [dir="rtl"] .finder-right-panel::after {
+    content: "البيانات: NASA PDS • ESA Copernicus Sentinel-2 • USGS  |  TerraTwin - فريق Astraea  |  CC-BY 4.0";
+  }
+
+  .radar-chart-container,
+  .detail-score-banner,
+  .detail-info-section {
+    break-inside: avoid;
+  }
+
+  /* Keep the brief on ONE page */
+  .finder-right-panel #finderDetailContent {
+    gap: 0.55rem !important;
+  }
+
+  .site-facts-list {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .radar-chart-container canvas {
+    max-height: 170px;
+    width: auto !important;
+  }
+
+  .detail-bullet-list li {
+    font-size: 9pt;
+  }
+}
+
+
+/* ==========================================================================
+   OPEN LAYOUT — same space theme as Home, no boxes around text.
+   Side panels sit straight on the living background; sections are separated
+   by thin lines and spacing. Only the map keeps a frame (it is content).
+   Desktop/tablet only: the mobile bottom-sheets keep their own surfaces.
+   ========================================================================== */
+.page-container { background: transparent !important; }
+
+@media (min-width: 1025px) {
+  .finder-left-panel,
+  .finder-right-panel {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  /* section separators instead of boxes */
+  .finder-left-panel > * + *,
+  #finderDetailContent > * + * {
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+}
+
+.profile-weights-box,
+.discovery-switch-box,
+.closest-earth-box,
+.detail-score-banner {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.closest-earth-box { margin-top: 0.9rem; }
+
+/* list rows: lines, not cards */
+.closest-earth-item,
+.most-similar-item {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 0 !important;
+  padding: 0.55rem 0.15rem !important;
+}
+
+.closest-earth-item:hover,
+.closest-earth-item.active,
+.most-similar-item:hover,
+.most-similar-item.active {
+  background: linear-gradient(90deg, rgba(217, 183, 126, 0.10), transparent) !important;
+  border-bottom-color: rgba(217, 183, 126, 0.45) !important;
+}
+
+[dir="rtl"] .closest-earth-item:hover,
+[dir="rtl"] .closest-earth-item.active,
+[dir="rtl"] .most-similar-item:hover,
+[dir="rtl"] .most-similar-item.active {
+  background: linear-gradient(270deg, rgba(217, 183, 126, 0.10), transparent) !important;
+}
+
+.most-similar-list,
+.closest-earth-list { gap: 0 !important; }
+
+/* big similarity score reads like the home page numbers */
+.detail-score-val {
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem) !important;
+  line-height: 1.1;
+}
+
+/* map: keep a clean frame that glows softly, blending with the theme */
+.finder-center-canvas {
+  border: 1px solid rgba(217, 183, 126, 0.18) !important;
+  box-shadow: 0 0 40px rgba(217, 183, 126, 0.06), 0 20px 60px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* dark, thin scrollbars instead of the white ones */
+.finder-left-panel,
+.finder-right-panel,
+.closest-earth-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(217, 183, 126, 0.35) transparent;
+}
+.finder-left-panel::-webkit-scrollbar,
+.finder-right-panel::-webkit-scrollbar,
+.closest-earth-list::-webkit-scrollbar { width: 6px; }
+.finder-left-panel::-webkit-scrollbar-track,
+.finder-right-panel::-webkit-scrollbar-track,
+.closest-earth-list::-webkit-scrollbar-track { background: transparent; }
+.finder-left-panel::-webkit-scrollbar-thumb,
+.finder-right-panel::-webkit-scrollbar-thumb,
+.closest-earth-list::-webkit-scrollbar-thumb {
+  background: rgba(217, 183, 126, 0.3);
+  border-radius: 999px;
+}
+
+[data-theme="light"] .finder-left-panel > * + *,
+[data-theme="light"] #finderDetailContent > * + *,
+[data-theme="light"] .closest-earth-item,
+[data-theme="light"] .most-similar-item {
+  border-color: rgba(14, 14, 20, 0.08) !important;
+}
+
+@media (min-width: 1025px) {
+  .finder-left-panel > .sheet-header + * {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+/* ==========================================================================
+   DECLUTTER — fewer things on screen at once
+   ========================================================================== */
+
+/* Map title banner repeats the first item of the "closest" list */
+.map-target-banner { display: none !important; }
+
+/* Folded filters (terrain + new/known) */
+.finder-filters {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 0.9rem;
+}
+.finder-filters[open] > :not(summary) { margin-top: 0.9rem; }
+.finder-filters > div + div { margin-top: 0.9rem; }
+.finder-filters-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+.finder-filters-summary::-webkit-details-marker { display: none; }
+.finder-filters-summary::after {
+  content: '▾';
+  margin-inline-start: auto;
+  color: var(--accent-cyan);
+  transition: transform 0.2s ease;
+}
+.finder-filters[open] > .finder-filters-summary::after { transform: rotate(180deg); }
+.finder-filters-hint {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.finder-filters-summary:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 4px; border-radius: 4px; }
+
+/* Legend floats on the map, bottom corner */
+.finder-center-canvas { position: relative; }
+.map-legend-overlay {
+  position: absolute;
+  inset-inline-end: 12px;
+  bottom: 28px;
+  z-index: 500;
+  margin: 0 !important;
+  padding: 0.6rem 0.8rem !important;
+  border: none !important;
+  border-radius: 10px;
+  background: rgba(2, 6, 16, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.72rem;
+  gap: 0.3rem !important;
+  max-width: 210px;
+}
+.map-legend-overlay .filter-section-title { display: none; }
+.map-legend-overlay .heat-legend { margin-top: 0.15rem; }
+
+.ndvi-info { position: relative; display: flex; justify-content: flex-end; }
+.ndvi-info-btn {
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: help;
+  padding: 0.1rem;
+}
+.ndvi-info-btn:hover,
+.ndvi-info-btn:focus-visible { color: var(--accent-cyan); outline: none; }
+.ndvi-info .ndvi-note {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  inset-inline-end: 0;
+  width: 240px;
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(2, 6, 16, 0.95);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+.ndvi-info:hover .ndvi-note,
+.ndvi-info:focus-within .ndvi-note { opacity: 1; visibility: visible; transform: none; }
+.ndvi-info:has(.ndvi-note:empty) { display: none; }
+
+[data-theme="light"] .map-legend-overlay,
+[data-theme="light"] .ndvi-info .ndvi-note { background: rgba(255, 255, 255, 0.9); }
+
+/* Right panel tabs: Chart / Why it matches / Facts */
+.detail-tabs {
+  display: flex;
+  gap: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.1rem;
+}
+.detail-tab {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0 0 0.6rem;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.detail-tab:hover { color: var(--text-primary); }
+.detail-tab.active { color: var(--accent-cyan); }
+.detail-tab.active::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(217, 183, 126, 0.6);
+}
+.detail-tab:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; border-radius: 4px; }
+@media (min-width: 1025px) {
+  #finderDetailContent > .detail-tab-panels { border-top: none !important; padding-top: 0.9rem !important; }
+}
+.detail-tab-panel { display: flex; flex-direction: column; gap: 1rem; }
+.detail-tab-panel[hidden] { display: none; }
+.detail-tab-panel > * { border-top: none !important; padding-top: 0 !important; }
+[data-theme="light"] .detail-tabs { border-bottom-color: rgba(14, 14, 20, 0.1); }
+
+@media (max-width: 768px) {
+  .map-legend-overlay { bottom: 70px; max-width: 170px; }
+}
+
+/* Map: deep-space colour behind tiles, and the dashboard never stretches taller
+   than a comfortable screen (stays proportional when the browser is zoomed out) */
+#leafletMap { background: #03060d !important; }
+@media (min-width: 1025px) {
+  .finder-dashboard {
+    max-height: 900px;
+    width: 100%;
+    max-width: 1520px;
+    margin-inline: auto;
+  }
+}

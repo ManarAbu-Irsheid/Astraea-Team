@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraTwin — Evidence & Method (Validation & Data Catalog)</title>
+  <meta name="description" content="Technical walkthrough, empirical validation rankings, sensitivity matrix, and open data catalog for TerraTwin.">
+  
+  <!-- Typography (Orbitron, IBM Plex Sans Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/astrabot.css">
+  <link rel="stylesheet" href="css/evidence.css">
+  <link rel="stylesheet" href="css/space-bg.css">
+  <link rel="stylesheet" href="css/section-dots.css">
+  <link rel="stylesheet" href="css/luxe.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body>
+  <!-- Visually hidden skip link for keyboard accessibility -->
+  <a href="#main-content" class="skip-link" data-i18n="nav.skip_link">Skip to main content</a>
+
+  <!-- ==========================================================================
+       PERSISTENT NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link" title="TerraTwin Home">
+        <div class="brand-logo-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+            <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-title">TerraTwin<span class="brand-dot"></span></span>
+          <span class="brand-subtitle" data-i18n="nav.brand_subtitle">Planetary Analog Intelligence</span>
+        </div>
+      </a>
+
+      <!-- Page Links (5 Pages) -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-page="home" data-i18n="nav.home">Home</a>
+        <a href="finder.html" class="nav-link" data-page="finder" data-i18n="nav.finder">Site Finder</a>
+        <a href="compare.html" class="nav-link" data-page="compare" data-i18n="nav.compare">Compare Sites</a>
+        <a href="evidence.html" class="nav-link" data-page="evidence" data-i18n="nav.evidence">Evidence & Method</a>
+        <a href="guide.html" class="nav-link" data-page="guide" data-i18n="nav.guide">Guide</a>
+      </nav>
+
+      <!-- Header Controls: Mission Profile, Lang, Tour, Theme -->
+      <div class="header-actions">
+        
+        <!-- Mission Profile Selector Badge & Dropdown -->
+        <div class="profile-selector-container">
+          <button class="profile-badge-btn" id="profileBadgeBtn" aria-haspopup="true" aria-expanded="false" title="Configure Mission Profile & Weights">
+            <span class="profile-indicator-dot"></span>
+            <span id="activeProfileLabel">TASI Baseline</span>
+            <span class="profile-chevron">▼</span>
+          </button>
+
+          <!-- Dropdown Panel (Internal weights sliders editable exclusively inside) -->
+          <div class="profile-dropdown-panel" id="profileDropdownPanel">
+            <div class="profile-panel-header">
+              <span class="profile-panel-title" id="profilePanelTitle">Mission Profile</span>
+            </div>
+
+            <p class="caption" id="profilePanelSubtitle" data-i18n="nav.profile_helper">Choose a mission type — it changes how much each criterion counts in every score.</p>
+            <div class="profile-options-grid">
+              <button class="profile-option-btn active" data-profile="tasi">TASI Baseline</button>
+              <button class="profile-option-btn" data-profile="rover">Rover Traverse</button>
+              <button class="profile-option-btn" data-profile="landing">Landing Site</button>
+              <button class="profile-option-btn" data-profile="thermal">Habitat &amp; Thermal</button>
+              <button class="profile-option-btn" data-profile="optics">Optics &amp; Solar</button>
+            </div>
+
+            <div class="weights-section-title">
+              <span id="weightsSectionTitle">Criteria Weights</span>
+            </div>
+
+            <!-- Weight sliders: the 4 criteria available in the real dataset -->
+            <div class="weight-slider-group" id="weightGroup_slope">
+              <div class="weight-slider-header">
+                <span id="weightLabel_slope">Slope</span>
+                <span class="weight-val" id="weightVal_slope">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_slope" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_roughness">
+              <div class="weight-slider-header">
+                <span id="weightLabel_roughness">Roughness</span>
+                <span class="weight-val" id="weightVal_roughness">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_roughness" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_albedo">
+              <div class="weight-slider-header">
+                <span id="weightLabel_albedo">Albedo (brightness)</span>
+                <span class="weight-val" id="weightVal_albedo">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_albedo" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_thermal">
+              <div class="weight-slider-header">
+                <span id="weightLabel_thermal">Thermal Swing</span>
+                <span class="weight-val" id="weightVal_thermal">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_thermal" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <button class="weights-reset-btn" id="resetWeightsBtn">Reset Defaults</button>
+          </div>
+        </div>
+
+        <!-- Language Switcher [ EN | AR ] -->
+
+        <!-- Page Tour & Mission Guide button ("?"): replays guided tour or opens guide -->
+        <button class="btn-control tour-help-btn" id="tourGuideBtn" title="Page Tour & Guide / دليل وجولة الصفحة" aria-label="Page Tour">?</button>
+
+        <!-- User Profile Badge & Dropdown -->
+        <div class="user-profile-container">
+          <!-- Guest Sign In / Register Button (Visible when not logged in) -->
+          <a href="login.html" class="nav-auth-login-btn" id="navAuthLoginBtn">
+            <span class="auth-btn-text auth-btn-text-full" data-i18n="auth.nav_login_btn">تسجيل الدخول / إنشاء حساب</span>
+            <span class="auth-btn-text auth-btn-text-short" data-i18n="auth.nav_login_btn_short">دخول</span>
+          </a>
+
+          <!-- User Profile Badge & Dropdown (Visible only when logged in) -->
+          <button class="user-profile-btn" id="userProfileBtn" aria-haspopup="true" aria-expanded="false" title="Researcher Profile" style="display: none;">
+            <div class="user-avatar-badge">
+              <span class="user-status-dot" title="Status: Online"></span>
+            </div>
+            <div class="user-meta-text">
+              <span class="user-display-name" data-i18n="nav.user_name">Dr. Researcher</span>
+              <span class="user-role-tag" data-i18n="nav.user_role">TERRATWIN RESEARCH</span>
+            </div>
+            <span class="profile-chevron">▼</span>
+          </button>
+          
+          <div class="user-profile-dropdown" id="userProfileDropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar"></div>
+              <div class="user-dropdown-info">
+                <div class="user-dropdown-name" data-i18n="nav.user_name">Dr. Researcher</div>
+                <div class="user-dropdown-role">Planetary Analog Specialist</div>
+                <div class="user-dropdown-email">researcher@astraea.space</div>
+              </div>
+            </div>
+            <div class="user-dropdown-badge-strip">
+              <span class="sci-badge validated">LEVEL-4 ACCESS</span>
+              <span class="sci-badge mars">ORBITAL DATA</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            
+            <div class="user-dropdown-row">
+              <span class="dropdown-row-label">Data Clearance:</span>
+              <span class="dropdown-row-val" style="color:var(--accent-green);">NASA PDS / ESA Sentinel</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-links">
+              <a href="finder.html" class="user-dropdown-link">🗺️ Site Finder Dashboard</a>
+              <a href="compare.html" class="user-dropdown-link">⚖️ Benchmark Comparison</a>
+              <a href="evidence.html#dataCatalogSection" class="user-dropdown-link">📑 Catalog & Datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Dots Quick Settings Menu [ ⋮ ] (De-clutter top bar) -->
+        <div class="kebab-menu-container">
+          <button class="btn-control btn-kebab" id="kebabMenuBtn" aria-haspopup="true" aria-expanded="false" title="More Quick Controls">
+            <span class="kebab-icon-dots">⋮</span>
+          </button>
+          
+          <div class="kebab-dropdown-panel" id="kebabDropdownPanel">
+            <div class="kebab-panel-header" data-i18n="nav.kebab_header">Quick Controls</div>
+            <button class="kebab-item-btn" id="kebabProfileBtn" style="display: none;">
+              <span class="kebab-item-icon">👤</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_profile">Researcher Profile & Level</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabTourBtn">
+              <span class="kebab-item-icon">🧭</span>
+              <span class="kebab-item-text" data-i18n="nav.tour_btn">? Page Guided Tour</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabContactBtn">
+              <span class="kebab-item-icon">📬</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_contact">Contact Science Team</span>
+            </button>
+            <div class="kebab-divider"></div>
+            <button class="kebab-item-btn" id="kebabChatbotBtn">
+              <span class="kebab-item-icon">🤖</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_ai">AI Science Assistant</span>
+            </button>
+            <a href="login.html" class="kebab-item-btn" id="kebabAuthBtn">
+              <span class="kebab-item-text" data-i18n="nav.kebab_auth">Account & Sign In</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hidden Theme trigger for compatibility with existing scripts -->
+        <button class="btn-control" id="themeToggleBtn" style="display:none;" aria-hidden="true"></button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       PAGE 4 CONTENT: EVIDENCE & METHOD (3 VERTICAL SECTIONS)
+       ========================================================================== -->
+  <main class="page-container" id="main-content">
+    <div class="evidence-page-layout">
+      
+      <!-- ======================================================================
+           SECTION 1: VIDEO DEMONSTRATION (TOP) - HERO VIDEO
+           ====================================================================== -->
+      <section class="video-section-card" id="evidenceVideoSpotlight" data-dot-en="Demo" data-dot-ar="العرض">
+        <h1 class="visually-hidden" data-i18n="evidence.sec1_title">Video Demonstration & Technical Walkthrough</h1>
+
+        <!-- Dedicated 16:9 Hero Video Container -->
+        <div class="video-responsive-wrapper" id="videoResponsiveWrapper">
+          <video id="demoVideo" autoplay muted loop playsinline tabindex="-1" aria-hidden="true" preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback">
+            <source src="assets/demo_video.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SECTION 2: DATA DASHBOARD (MIDDLE GRID) - REDESIGNED MODERN ANALYTICS
+           ====================================================================== -->
+      <section class="data-dashboard-grid" id="evidenceDashboardSpotlight" data-dot-en="Validation" data-dot-ar="التحقق">
+        
+        <!-- Global Shared SVG Gradient & Glow Definitions for Section 2 Charts (NO Pink, Magenta, or Purple) -->
+        <svg width="0" height="0" class="svg-defs-hidden" aria-hidden="true" style="position:absolute; width:0; height:0; pointer-events:none;">
+          <defs>
+            <!-- Blue Gradient: Main Data, KPI Rings, Validated Sites -->
+            <linearGradient id="svgGradMain" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#8498b8"/>
+              <stop offset="100%" stop-color="#e2c492"/>
+            </linearGradient>
+
+            <!-- Yellow -> Orange Gradient: New Candidates -->
+            <linearGradient id="svgGradCandidate" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FFE53B"/>
+              <stop offset="100%" stop-color="#d68c54"/>
+            </linearGradient>
+
+            <!-- Orange -> Red Gradient: Failure Cases & Negative Shifts -->
+            <linearGradient id="svgGradAlert" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#d68c54"/>
+              <stop offset="100%" stop-color="#cd5c50"/>
+            </linearGradient>
+
+            <!-- Soft Glow Filters (35% Opacity Matching Stroke) -->
+            <filter id="svgGlowMain" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#8498b8" flood-opacity="0.35"/>
+            </filter>
+            <filter id="svgGlowCandidate" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#d68c54" flood-opacity="0.35"/>
+            </filter>
+            <filter id="svgGlowAlert" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#cd5c50" flood-opacity="0.35"/>
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="section-header-block">
+          <h2 class="section-main-title" data-i18n="evidence.sec2_title">Data Dashboard & Model Validation</h2>
+          <p class="section-sub-desc" data-i18n="evidence.sec2_subtitle">
+            Empirical ranking, sensitivity analysis under weight perturbations, and data catalog provenance.
+          </p>
+        </div>
+
+        <!-- 1. KPI Strip: 4 Compact Horizontal Cards (3 with Blue Ring Gauge, 1 with Yellow->Orange Number) -->
+        <div class="evidence-kpi-strip" id="evidenceKpiStrip">
+          
+          <!-- KPI 1: Recall@10% -->
+          <div class="evidence-kpi-card">
+            <div class="kpi-ring-side">
+              <svg class="kpi-ring-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="40" cy="40" r="32" class="kpi-ring-bg"></circle>
+                <circle cx="40" cy="40" r="32" class="kpi-ring-fill ring-main" id="ringRecall" style="stroke-dasharray: 201.06; stroke-dashoffset: 17.3;"></circle>
+              </svg>
+            </div>
+            <div class="kpi-info-side">
+              <div class="evidence-kpi-val kpi-val-main" id="evKpiRecall10">91.4%</div>
+              <div class="evidence-kpi-label" data-i18n="evidence.kpi_recall10">Recall@10%</div>
+              <div class="evidence-kpi-desc" data-i18n="evidence.kpi_recall10_desc">Known analogs ranked in the top 10% of all Earth sites</div>
+            </div>
+          </div>
+
+          <!-- KPI 2: ROC-AUC Score -->
+          <div class="evidence-kpi-card">
+            <div class="kpi-ring-side">
+              <svg class="kpi-ring-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="40" cy="40" r="32" class="kpi-ring-bg"></circle>
+                <circle cx="40" cy="40" r="32" class="kpi-ring-fill ring-main" id="ringRocAuc" style="stroke-dasharray: 201.06; stroke-dashoffset: 7.2;"></circle>
+              </svg>
+            </div>
+            <div class="kpi-info-side">
+              <div class="evidence-kpi-val kpi-val-main" id="evKpiRocAuc">0.964</div>
+              <div class="evidence-kpi-label" data-i18n="evidence.kpi_rocauc">ROC-AUC Score</div>
+              <div class="evidence-kpi-desc" data-i18n="evidence.kpi_rocauc_desc">Known analogs vs negative-control sites (Amazon, cities, farmland)</div>
+            </div>
+          </div>
+
+          <!-- KPI 3: Known Sites Validated -->
+          <div class="evidence-kpi-card">
+            <div class="kpi-ring-side">
+              <svg class="kpi-ring-svg" viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="40" cy="40" r="32" class="kpi-ring-bg"></circle>
+                <circle cx="40" cy="40" r="32" class="kpi-ring-fill ring-main" id="ringValidated" style="stroke-dasharray: 201.06; stroke-dashoffset: 12.3;"></circle>
+              </svg>
+            </div>
+            <div class="kpi-info-side">
+              <div class="evidence-kpi-val kpi-val-main" id="evKpiValidated">46 / 49</div>
+              <div class="evidence-kpi-label" data-i18n="evidence.kpi_validated">Known Sites Validated</div>
+              <div class="evidence-kpi-desc" data-i18n="evidence.kpi_validated_desc">Known analogs ranked in the top 25% of all Earth sites</div>
+            </div>
+          </div>
+
+          <!-- KPI 4: New Candidates Discovered (No ring, yellow->orange gradient big number) -->
+          <div class="evidence-kpi-card kpi-card-candidate">
+            <div class="kpi-info-side full-width">
+              <div class="evidence-kpi-val kpi-val-candidate" id="evKpiDiscovered">38</div>
+              <div class="evidence-kpi-label" data-i18n="evidence.kpi_discovered">New Candidates Discovered</div>
+              <div class="evidence-kpi-desc" data-i18n="evidence.kpi_discovered_desc">Uncatalogued candidate cells meeting strict tolerance</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. Main Analytics Split Grid: Ranking Chart (Left 2.6fr) + 2 Donut Cards (Right 1fr) -->
+        <div class="analytics-split-grid">
+          
+          <!-- Left: Validation Rank Plot Card (13 Horizontal Bars, Scale 50%->100%, Expandable Rows) -->
+          <div class="validation-plot-card">
+            <div class="card-header-row">
+              <div>
+                <h3 class="dashboard-card-title" data-i18n="evidence.rank_plot_title">Known Analog Validation Rankings & Failure Cases</h3>
+                <p class="dashboard-card-sub" data-i18n="evidence.rank_plot_desc">
+                  Ranked benchmark scores. Red-bordered items indicate intentional failure-case investigations with physical justification.
+                </p>
+              </div>
+            </div>
+
+            <!-- Ranking Bars Container (With Legend, Scale Axis & Expandable Rows rendered via JS) -->
+            <div class="rank-bars-container" id="validationRankBars"></div>
+          </div>
+
+          <!-- Right Column: Stack of Analytics Cards -->
+          <div class="donuts-stacked-column">
+            
+            <!-- Card 1: Site Details (Selected Site) -->
+            <div class="donut-card site-details-card" id="siteDetailsCard">
+              <div class="donut-card-header">
+                <h4 class="donut-card-title" data-i18n="evidence.site_details_title">Site Details</h4>
+                <span class="site-details-rank-badge mono" id="siteDetailsRankBadge">#1</span>
+              </div>
+              <div class="site-details-container" id="siteDetailsContainer"></div>
+            </div>
+
+            <!-- Card 2: Sites by Status -->
+            <div class="donut-card" id="sitesStatusDonutCard">
+              <div class="donut-card-header">
+                <h4 class="donut-card-title">Sites by Status</h4>
+              </div>
+              <div class="donut-visual-container" id="sitesStatusDonutContainer"></div>
+            </div>
+
+            <!-- Card 3: Base Weights -->
+            <div class="donut-card" id="baseWeightsDonutCard">
+              <div class="donut-card-header">
+                <h4 class="donut-card-title">Base Parameter Weights</h4>
+              </div>
+              <div class="donut-visual-container" id="baseWeightsDonutContainer"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Analytics 2-Column Grid: Box Plot & Histogram -->
+        <div class="charts-2col-grid">
+          
+          <!-- Box Plot Card -->
+          <div class="boxplot-card" id="evidenceBoxplotCard" data-dot-en="Attributes" data-dot-ar="الخصائص">
+            <div class="card-header-row">
+              <div>
+                <h3 class="dashboard-card-title" data-i18n="evidence.boxplot_title">How sites score on each attribute</h3>
+                <p class="dashboard-card-sub" data-i18n="evidence.boxplot_subtitle">Statistical distribution of analog fidelity across five radar attributes.</p>
+              </div>
+            </div>
+            <div class="boxplot-visual-wrapper" id="boxplotContainer"></div>
+          </div>
+
+          <!-- How to read the box plot -->
+          <aside class="boxplot-guide" aria-labelledby="boxplotGuideTitle">
+            <h4 id="boxplotGuideTitle" data-i18n="evidence.how_read_title">How to read this chart</h4>
+            <ul>
+              <li><span class="bg-icon bg-box" aria-hidden="true"></span><span data-i18n="evidence.how_read_box">The box holds the middle half of all Earth sites.</span></li>
+              <li><span class="bg-icon bg-line" aria-hidden="true"></span><span data-i18n="evidence.how_read_line">The white line and its number are the median: the site in the middle.</span></li>
+              <li><span class="bg-icon bg-whisk" aria-hidden="true"></span><span data-i18n="evidence.how_read_whiskers">The thin lines reach the lowest and highest sites.</span></li>
+              <li><span class="bg-icon bg-scale" aria-hidden="true">0–100</span><span data-i18n="evidence.how_read_scale">0–100 is a site's relative level inside its own world, so Earth, Mars and the Moon are compared fairly.</span></li>
+            </ul>
+            <p class="bg-takeaway" data-i18n="evidence.how_read_takeaway">A tall box means sites differ a lot on that attribute, which gives TASI room to tell good matches from poor ones.</p>
+          </aside>
+
+          <!-- Histogram Card -->
+          <div class="histogram-card" id="evidenceHistogramCard" hidden>
+            <div class="card-header-row">
+              <div>
+                <h3 class="dashboard-card-title" data-i18n="evidence.histogram_title">Score distribution</h3>
+                <p class="dashboard-card-sub" data-i18n="evidence.histogram_subtitle">Distribution of benchmarked validation and failure scores in 5-point bins.</p>
+              </div>
+              <div class="histogram-legend">
+                <span class="hist-legend-item"><span class="hist-dot dot-val"></span><span data-i18n="evidence.legend_validated">Validated</span></span>
+                <span class="hist-legend-item"><span class="hist-dot dot-cand"></span><span data-i18n="evidence.legend_candidate">New candidate</span></span>
+                <span class="hist-legend-item"><span class="hist-dot dot-fail"></span><span data-i18n="evidence.legend_failure">Failure case</span></span>
+              </div>
+            </div>
+            <div class="histogram-visual-wrapper" id="histogramContainer"></div>
+          </div>
+
+        </div>
+
+        <!-- 3. Methodology & Weight Sensitivity Matrix Card (4 Parameter Stability Cards + Collapsible MathML Formula) -->
+        <div class="methodology-card" id="evidenceMethodSection" data-dot-en="Stability" data-dot-ar="الثبات">
+          <div class="card-header-row">
+            <div>
+              <h3 class="dashboard-card-title" data-i18n="evidence.sensitivity_title">Method &amp; ranking stability</h3>
+            </div>
+          </div>
+
+          <!-- Main Takeaway Box (One-line takeaway with soft blue glow) -->
+          <div class="sensitivity-takeaway-box" id="sensitivityTakeawayBox">
+            <div class="sensitivity-takeaway-main">
+              <span class="takeaway-check-icon" aria-hidden="true">✓</span>
+              <span class="takeaway-text" id="sensitivitySubtitle" data-i18n="evidence.sensitivity_subtitle">
+                Rankings stay at least 94% stable even when any weight changes by ±25%.
+              </span>
+            </div>
+          </div>
+
+          <!-- 4 Parameter Stability Cards (Replaces the old table, id sensitivityTableBody preserved as a div) -->
+          <div class="sensitivity-cards-grid" id="sensitivityTableBody"></div>
+
+          <!-- Collapsible Formula & Key Section (Collapsed by default) -->
+          <div class="formula-collapsible-wrapper">
+            <button type="button" class="btn-formula-toggle" id="btnFormulaToggle" aria-expanded="false" aria-controls="formulaDisplayBanner">
+              <span class="formula-toggle-icon" aria-hidden="true">📐</span>
+              <span class="formula-toggle-text" data-i18n="evidence.btn_show_formula">Show formula</span>
+              <span class="formula-toggle-chevron" aria-hidden="true">▾</span>
+            </button>
+
+            <!-- Formula Display Banner (Real MathML) -->
+            <div class="formula-display-banner collapsed" id="formulaDisplayBanner">
+              <div class="formula-mathml-box">
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                  <mrow>
+                    <mi>TASI</mi>
+                    <mo>=</mo>
+                    <mn>100</mn>
+                    <mo>&#x00D7;</mo>
+                    <mo>(</mo>
+                    <mn>1</mn>
+                    <mo>&#x2212;</mo>
+                    <msqrt>
+                      <mfrac>
+                        <mrow>
+                          <munder><mo>&#x2211;</mo><mi>k</mi></munder>
+                          <msub><mi>w</mi><mi>k</mi></msub>
+                          <msup><mrow><mo>(</mo><msub><mi>e</mi><mi>k</mi></msub><mo>&#x2212;</mo><msub><mi>t</mi><mi>k</mi></msub><mo>)</mo></mrow><mn>2</mn></msup>
+                        </mrow>
+                        <mrow>
+                          <munder><mo>&#x2211;</mo><mi>k</mi></munder>
+                          <msub><mi>w</mi><mi>k</mi></msub>
+                        </mrow>
+                      </mfrac>
+                    </msqrt>
+                    <mo>)</mo>
+                  </mrow>
+                </math>
+              </div>
+              <div class="formula-key-grid">
+                <div class="formula-key-item" tabindex="0"><span class="formula-sym mono">wₖ</span> = <span data-i18n="evidence.key_weight">weight</span></div>
+                <div class="formula-key-item" tabindex="0"><span class="formula-sym mono">eₖ</span> = <span data-i18n="evidence.key_earth_level">Earth site level (0–1)</span></div>
+                <div class="formula-key-item" tabindex="0"><span class="formula-sym mono">tₖ</span> = <span data-i18n="evidence.key_target_level">Moon / Mars site level (0–1)</span></div>
+                <div class="formula-key-item" tabindex="0"><span class="formula-sym mono">NDVI</span> &gt; 0.20 = <span data-i18n="evidence.key_ndvi_gate">rejected (vegetation)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================================
+           SECTION 3: FUTURE VISION & ROADMAP (BOTTOM)
+           ====================================================================== -->
+      <!-- DATA CATALOG: every dataset behind the scores (searchable, sortable) -->
+      <section class="data-catalog-section" id="dataCatalogSection" data-dot-en="Data" data-dot-ar="البيانات">
+        <h2 class="section-main-title" data-i18n="evidence.catalog_title">Data Catalog</h2>
+        <p class="section-sub-desc" data-i18n="evidence.catalog_desc">The open datasets behind every score — search or sort by any column.</p>
+        <div id="dataCatalogTable"></div>
+      </section>
+
+      <!-- Roadmap hidden for now (claims not yet confirmed by the team). Remove "hidden" to show it again. -->
+      <section class="roadmap-section-card" id="evidenceRoadmapSpotlight" hidden>
+        <div class="section-header-block" style="border:none; margin-bottom:0.25rem;">
+          <h2 class="section-main-title" data-i18n="evidence.sec3_title">Future Vision & Strategic Roadmap</h2>
+          <p class="section-sub-desc" data-i18n="evidence.sec3_subtitle">
+            Our trajectory towards autonomous planetary mission planning.
+          </p>
+        </div>
+
+        <div class="roadmap-timeline-grid" id="roadmapTimelineGrid"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       PERSISTENT SCIENTIFIC MISSION FOOTER
+       ========================================================================== -->
+  <footer class="site-footer tt-footer" id="siteFooter">
+
+    <!-- Footer horizon image goes here (real Moon / Earth / Mars terrain, coming next) -->
+    <div class="tt-footer-horizon" aria-hidden="true"></div>
+    <div class="footer-container">
+      <div class="tt-footer-grid">
+
+        <!-- Brand + mission -->
+        <div class="tt-footer-brand">
+          <a href="index.html" class="tt-footer-logo" aria-label="TerraTwin">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+              <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+            </svg>
+            <span>TerraTwin</span>
+          </a>
+          <p class="tt-footer-about" data-i18n="footer.about_desc">TerraTwin finds places on Earth that match landing and exploration sites on the Moon and Mars, using open satellite data, so missions can test on Earth before they fly.</p>
+          <p class="tt-footer-team">
+            <span class="tt-footer-team-label" data-i18n="footer.built_by">Built by</span>
+            <strong data-i18n="footer.lead_name">Astraea Science Team</strong>
+            <span class="tt-footer-team-role" data-i18n="footer.lead_role">Planetary Systems &amp; Geospatial Engineering</span>
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.contact_title">Contact</p>
+          <a class="tt-footer-link" href="mailto:astraeateam45@gmail.com" id="footerContactEmail" data-i18n="footer.contact_email">astraeateam45@gmail.com</a>
+          <a class="tt-footer-link" href="evidence.html" data-i18n="footer.docs_link">Methodology</a>
+          <button type="button" class="tt-footer-cta" id="footerContactModalLink" onclick="if(window.UserSystem){window.UserSystem.openContactModal();}">
+            <span data-i18n="footer.contact_team">Contact the team</span>
+          </button>
+        </div>
+
+        <!-- Data sources -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.sources_title">Data sources</p>
+          <ul class="tt-footer-list">
+            <li data-i18n="footer.source_nasa">NASA Planetary Data System</li>
+            <li data-i18n="footer.source_esa">ESA Copernicus (Sentinel-2)</li>
+            <li data-i18n="footer.source_usgs">USGS / NASA JPL</li>
+          </ul>
+          <a class="tt-footer-link tt-footer-more" href="evidence.html#dataCatalogSection" data-i18n="footer.view_all_sources">View all data sources</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright" data-i18n="footer.copyright">© 2026 TerraTwin · Astraea Team</div>
+        <div class="footer-badges-group">
+          <span class="footer-license" data-i18n="footer.source_textures">Planet textures: Solar System Scope (CC BY 4.0)</span>
+          <span class="footer-license">CC-BY 4.0</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Data & Scripts -->
+  <script src="data/data-store.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/avatars.js"></script>
+  <script src="js/user-system.js"></script>
+  <script src="js/astrabot.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/tour-marker.js"></script>
+    <script src="js/rag-engine.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/evidence.js"></script>
+  <script src="js/data-catalog.js"></script>
+  <script src="js/space-bg.js"></script>
+  <script src="js/section-dots.js"></script>
+  <script src="js/luxe.js" defer></script>
+  <script src="js/cinema-bg.js"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-12T15:03:55.152Z",
+  "users": [
+    {
+      "id": "usr_seed_manar",
+      "name": "Manar",
+      "nameAr": "منار",
+      "email": "manar@astraea.space",
+      "phone": "+962 7 9888 7777",
+      "passwordHash": "20905192dabcb5aca8ac786caf92a5dedfaafee501b8beba9ab694f5a220b6be",
+      "salt": "astraea_salt_2026_manar",
+      "avatar": "👩‍🚀",
+      "gender": "female",
+      "role": "Mission Commander & Lead Astrobiologist",
+      "roleAr": "قائدة البعثة وكبيرة علماء الكواكب",
+      "bio": "Planetary Researcher & Lead Commander",
+      "xp": 1305,
+      "level": {
+        "level": 5,
+        "minXp": 1051,
+        "maxXp": 99999,
+        "titleEn": "Chief Astrobiologist",
+        "titleAr": "كبير علماء الكواكب"
+      },
+      "visitedPages": [
+        "home",
+        "finder",
+        "compare",
+        "evidence",
+        "guide"
+      ],
+      "discoveredSites": [
+        "atacama_yungay",
+        "antarctica_dryvalleys",
+        "lanzarote_tubes",
+        "hawaii_maunakea",
+        "namib_dunes",
+        "iceland_askja",
+        "jordan_wadirum"
+      ],
+      "searchesCount": 18,
+      "comparisonsCount": 12,
+      "researchFindings": [
+        {
+          "id": "rf_manar_01",
+          "siteId": "atacama_yungay",
+          "siteName": "Atacama Yungay Basin",
+          "siteNameAr": "حوض يونغاي - صحراء أتاكاما",
+          "target": "Jezero Crater Delta (Mars)",
+          "targetAr": "دلتا فوهة جيزيرو (المريخ)",
+          "similarity": 91.2,
+          "date": "2026-11-11T10:15:00.000Z",
+          "notes": "Hyper-arid terrain with extreme perchlorate soil matching Jezero delta geology."
+        },
+        {
+          "id": "rf_manar_02",
+          "siteId": "lanzarote_tubes",
+          "siteName": "Lanzarote Lava Tubes",
+          "siteNameAr": "أنابيب الحمم في لانزاروتي",
+          "target": "Marius Hills Lava Tube (Moon)",
+          "targetAr": "أنبوب حمم تلال ماريوس (القمر)",
+          "similarity": 88.7,
+          "date": "2026-11-11T11:40:00.000Z",
+          "notes": "Subsurface basaltic structures verified for lunar underground shelter simulations."
+        },
+        {
+          "id": "rf_1794397800752_u6m8",
+          "siteId": "jordan_wadirum",
+          "siteName": "Wadi Rum Martian Desert",
+          "siteNameAr": "Wadi Rum Martian Desert",
+          "target": "General Planetary Target",
+          "targetAr": "General Planetary Target",
+          "similarity": 93.8,
+          "date": "2026-11-11T11:50:00.752Z",
+          "notes": "Discovered during active mission exploration."
+        }
+      ],
+      "sessionToken": "ast_8e71a5ac84222478594319f9dad2af97efa6ef915846a49fad9963a4d255bc19",
+      "createdAt": "2026-11-01T08:00:00.000Z",
+      "updatedAt": "2026-11-11T11:50:00.752Z",
+      "lastLoginAt": "2026-11-11T11:50:00.735Z"
+    },
+    {
+      "id": "usr_seed_researcher",
+      "name": "Dr. Researcher",
+      "nameAr": "د. باحث",
+      "email": "researcher@terratwin.space",
+      "phone": "+962 7 9000 0000",
+      "passwordHash": "65e28559881588b3e9186c20dc586788543e01a7a0c419e132241af3fb6c0702",
+      "salt": "astraea_salt_2026_demo",
+      "avatar": "👨‍🚀",
+      "gender": "male",
+      "role": "Astraea Science Team",
+      "roleAr": "فريق Astraea العلمي",
+      "bio": "Planetary Analog Specialist at TerraTwin Labs",
+      "xp": 420,
+      "level": {
+        "level": 3,
+        "titleEn": "Analog Specialist",
+        "titleAr": "اختصاصي مواقع شبيهة"
+      },
+      "visitedPages": [
+        "home",
+        "finder",
+        "guide"
+      ],
+      "discoveredSites": [
+        "atacama_yungay",
+        "antarctica_dryvalleys",
+        "moon-shackleton"
+      ],
+      "searchesCount": 6,
+      "comparisonsCount": 4,
+      "researchFindings": [
+        {
+          "id": "rf_demo_01",
+          "siteId": "antarctica_dryvalleys",
+          "siteName": "McMurdo Dry Valleys",
+          "siteNameAr": "وديان ماكموردو الجافة",
+          "target": "Shackleton Crater Rim (Moon)",
+          "targetAr": "حافة فوهة شاكلتون (القمر)",
+          "similarity": 86.4,
+          "date": "2026-11-10T14:00:00.000Z",
+          "notes": "Extreme cold and dry permafrost terrain analogous to south pole PSR conditions."
+        }
+      ],
+      "sessionToken": null,
+      "createdAt": "2026-11-01T08:00:00.000Z",
+      "updatedAt": "2026-11-11T14:20:00.000Z",
+      "lastLoginAt": null
+    },
+    {
+      "id": "usr_1794397800761_536dae4b",
+      "email": "astro_1794397800755@astraea.space",
+      "name": "Dr. Test Explorer",
+      "nameAr": "Dr. Test Explorer",
+      "phone": "",
+      "passwordHash": "a5959ae69e24914dc5c883a697805c397fd5edf5cb1d2116d675567a0c5b1c94",
+      "salt": "9a650ab39d51d7512dd73c63569c4b3f",
+      "avatar": "👨‍🚀",
+      "gender": "male",
+      "role": "Analog Surveyor",
+      "roleAr": "باحث في النظائر الكوكبية",
+      "bio": "Scientific researcher contributing to Astraea planetary analog matching.",
+      "xp": 200,
+      "level": {
+        "level": 2,
+        "minXp": 151,
+        "maxXp": 350,
+        "titleEn": "Planetary Surveyor",
+        "titleAr": "مسّاح كوكبي"
+      },
+      "visitedPages": [
+        "home"
+      ],
+      "discoveredSites": [
+        "atacama_yungay",
+        "antarctica_dryvalleys"
+      ],
+      "searchesCount": 0,
+      "comparisonsCount": 0,
+      "researchFindings": [
+        {
+          "id": "rf_1794397800761",
+          "siteId": "atacama_yungay",
+          "siteName": "Atacama Yungay Basin",
+          "siteNameAr": "حوض يونغاي - صحراء أتاكاما",
+          "target": "Jezero Crater Delta (Mars)",
+          "targetAr": "دلتا فوهة جيزيرو (المريخ)",
+          "similarity": 91.2,
+          "date": "2026-11-11T11:50:00.761Z",
+          "notes": "Initial mission briefing discovery."
+        }
+      ],
+      "sessionToken": "ast_e71a31d34058baf6f88416b95b6f8bf22dc71cce1d0387f8915a6cb585c218ec",
+      "createdAt": "2026-11-11T11:50:00.761Z",
+      "updatedAt": "2026-11-11T11:50:00.761Z",
+      "lastLoginAt": "2026-11-11T11:50:00.761Z"
+    },
+    {
+      "id": "usr_1794490266546_bf190782",
+      "email": "manarabuirsheid@gmail.com",
+      "name": "منار",
+      "nameAr": "منار",
+      "phone": "",
+      "passwordHash": "213f9b6b7451209d5471ad785d1842d92e0e9812cdd5aa900dae6eadd47f1626",
+      "salt": "1e33f232e153910f05df8682e4930c8b",
+      "avatar": "👩‍🚀",
+      "gender": "female",
+      "role": "Planetary Geospatial Engineering",
+      "roleAr": "باحث في النظائر الكوكبية",
+      "bio": "Scientific researcher contributing to Astraea planetary analog matching.",
+      "xp": 250,
+      "level": {
+        "level": 2,
+        "minXp": 151,
+        "maxXp": 350,
+        "titleEn": "Planetary Surveyor",
+        "titleAr": "مسّاح كوكبي"
+      },
+      "visitedPages": [
+        "home",
+        "guide",
+        "profile"
+      ],
+      "discoveredSites": [
+        "atacama_yungay",
+        "antarctica_dryvalleys"
+      ],
+      "searchesCount": 0,
+      "comparisonsCount": 0,
+      "researchFindings": [
+        {
+          "id": "rf_1794490266546",
+          "siteId": "atacama_yungay",
+          "siteName": "Atacama Yungay Basin",
+          "siteNameAr": "حوض يونغاي - صحراء أتاكاما",
+          "target": "Jezero Crater Delta (Mars)",
+          "targetAr": "دلتا فوهة جيزيرو (المريخ)",
+          "similarity": 91.2,
+          "date": "2026-11-12T13:31:06.546Z",
+          "notes": "Initial mission briefing discovery."
+        }
+      ],
+      "sessionToken": null,
+      "createdAt": "2026-11-12T13:31:06.546Z",
+      "updatedAt": "2026-11-12T15:03:55.152Z",
+      "lastLoginAt": "2026-11-12T13:31:06.546Z"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TerraTwin — Planetary Analog Matching Platform</title>
+<meta name="description" content="TerraTwin finds places on Earth that match landing and exploration sites on the Moon and Mars, using open satellite data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/home-widgets.css">
+<link rel="stylesheet" href="css/astrabot.css">
+<link rel="stylesheet" href="css/home-cinema.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body class="is-loading">
+
+<!-- Live 3D space (js/home-cinema.js) -->
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Start screen -->
+<div id="loader">
+  <div class="ld-top"></div><div class="ld-bot"></div>
+  <div class="ld-in">
+    <div class="ld-brand"><i class="mark"></i>TerraTwin</div>
+    <div class="ld-count mono"><span id="ldNum">000</span><small>%</small></div>
+    <div class="ld-bar"><i id="ldBar"></i></div>
+    <p class="mono dim" id="ldMsg">Calibrating orbit · loading planet textures</p>
+    <div class="ld-btns" id="ldBtns">
+      <button class="btn" id="goBtn"><span>Begin mission</span></button>
+      <button class="btn ghost" id="goTour"><span>Take the 30-second tour</span></button>
+    </div>
+  </div>
+</div>
+
+<header id="hdr">
+  <a class="brand" href="index.html"><i class="mark"></i><span>TerraTwin<small>Planetary Analog Intelligence</small></span></a>
+  <nav id="nav">
+    <a class="on" href="index.html">Home</a>
+    <a data-link="finder" href="#">Site Finder</a>
+    <a data-link="compare" href="#">Compare Sites</a>
+    <a data-link="evidence" href="#">Evidence &amp; Method</a>
+    <a data-link="guide" href="#">Guide</a>
+  </nav>
+  <div class="ctrl">
+    <span class="pill mono" title="Active scoring profile"><i class="dot"></i>TASI Baseline</span>
+    <button class="pill round" id="tourBtn" aria-label="Page tour">?</button>
+    <a class="pill" id="homeSignIn" data-link="login" href="#">Sign In</a>
+    <a class="pill solid" id="homeSignUp" data-link="register" href="#">Sign Up</a>
+    <a class="havatar" id="homeAvatar" href="profile.html" hidden aria-label="Researcher Profile" title="Researcher Profile"></a>
+    <div class="hmenu">
+      <button class="pill round hmenu-btn" id="homeMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="homeMenu" aria-label="More">⋮</button>
+      <div class="hmenu-pop" id="homeMenu" role="menu" hidden>
+        <div class="hmenu-head">Quick Controls</div>
+        <a role="menuitem" id="homeMenuProfile" href="profile.html" hidden><i aria-hidden="true">👤</i><span>Researcher Profile &amp; Level</span></a>
+        <button role="menuitem" type="button" data-act="tour"><i aria-hidden="true">🧭</i><span>? Page Tour</span></button>
+        <button role="menuitem" type="button" data-act="contact"><i aria-hidden="true">📬</i><span>Contact Science Team</span></button>
+        <div class="hmenu-div" role="separator"></div>
+        <button role="menuitem" type="button" data-act="chat"><i aria-hidden="true">🤖</i><span>AI Science Assistant</span></button>
+        <a role="menuitem" id="homeMenuAuth" class="hmenu-plain" href="login.html"><span>Account &amp; Sign In</span></a>
+        <button role="menuitem" type="button" id="homeMenuOut" class="hmenu-plain" data-act="signout" hidden><span>Sign Out</span></button>
+      </div>
+    </div>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><i></i><i></i></button>
+</header>
+
+<!-- Side chapter nav -->
+<nav class="chap" id="chap" aria-label="Page sections">
+  <a href="#explore" data-sec="explore"><span>Explore</span><i></i></a>
+  <a href="#twin" data-sec="twin"><span>Twin pair</span><i></i></a>
+  <a href="#results" data-sec="results"><span>Results</span><i></i></a>
+</nav>
+
+<!-- Hover label for 3D pins -->
+<div id="pinTip" class="pin-tip mono" hidden></div>
+
+<main id="main">
+
+  <!-- 00 HERO -->
+  <section class="sec hero" id="hero" data-scene="hero">
+    <div class="hero-in">
+      <p class="eyebrow mono reveal-up">Multi-Attribute Planetary Surface Matching</p>
+      <h1 class="h-display split">Matching Earth Analogs<br>to the <em>Moon</em> &amp; <em class="mars">Mars</em></h1>
+      <p class="lead reveal-up">We use satellite data to find places on Earth that match exploration sites on the Moon and Mars — comparing slope, albedo and thermal swing, and keeping only barren sites (NDVI gate).</p>
+      <div class="hero-cta reveal-up">
+        <a class="btn magnetic" href="#explore"><span>Explore the worlds</span></a>
+        <a class="link-arrow" data-link="finder" href="#">Open Site Finder <b>→</b></a>
+      </div>
+    </div>
+    <div class="scroll-cue mono"><span>Scroll</span><i></i></div>
+    <div class="hero-coords mono dim" id="heroCoords">EARTH · 0.00° N 0.00° E</div>
+  </section>
+
+  <!-- 01 EXPLORE -->
+  <section class="sec explore" id="explore" data-scene="explore">
+    <div class="ex-in">
+      <p class="eyebrow mono"><b>01</b> — Explore</p>
+      <div class="worlds" id="worlds" role="tablist" aria-label="Celestial Body Selector">
+        <button role="tab" data-w="earth" class="on">Earth</button>
+        <button role="tab" data-w="mars">Mars</button>
+        <button role="tab" data-w="moon">Moon</button>
+      </div>
+      <p class="host mono" id="hostLabel"><span class="dim">Terrestrial Analog Host</span> Earth (Terra)</p>
+      <dl class="readout" id="readout"></dl>
+      <ul class="hints mono dim" id="hints">
+        <li>Drag to rotate 360°</li>
+        <li>Click pins to inspect analog telemetry</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 02 TWIN PAIR -->
+  <section class="sec twin" id="twin" data-scene="twin">
+    <div class="tw-head">
+      <p class="eyebrow mono"><b>02</b> — Planetary Twin Analysis <span class="dim">// Interactive Telemetry Sync</span></p>
+      <p class="tw-sub dim" id="twLive">Rotate the 3D celestial bodies above and click any pin to inspect real multi-criteria physical similarity below.</p>
+    </div>
+    <div class="tw-grid">
+      <div class="tw-side tw-a">
+        <span class="badge mono" id="aBadge">Martian Target</span>
+        <h3 class="tw-name scramble" id="aName">—</h3>
+        <p class="mono dim" id="aMeta">—</p>
+        <p class="tw-desc" id="aDesc"></p>
+      </div>
+      <div class="tw-score" id="twScore">
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle cx="110" cy="110" r="100" class="ring-bg"/>
+          <circle cx="110" cy="110" r="100" class="ring-fg" id="ringFg"/>
+          <circle cx="110" cy="110" r="88" class="ring-tick"/>
+        </svg>
+        <div class="score-in">
+          <div class="score-num"><span id="scoreNum">0.0</span><small>%</small></div>
+          <div class="mono dim">Overall Similarity</div>
+          <div class="mono ok" id="gate">Cleared Abiotic Gate</div>
+        </div>
+      </div>
+      <div class="tw-side tw-b">
+        <span class="badge mono earth">Matched Analog Twin</span>
+        <h3 class="tw-name scramble" id="bName">—</h3>
+        <p class="mono dim" id="bMeta">—</p>
+        <p class="tw-desc" id="bDesc"></p>
+      </div>
+    </div>
+    <div class="matrix" id="matrix"></div>
+    <div class="tw-ctrl">
+      <button class="arrow magnetic" id="prevPair" aria-label="Previous Pair">←</button>
+      <div class="pair-dots" id="pairDots"></div>
+      <button class="arrow magnetic" id="nextPair" aria-label="Next Pair">→</button>
+    </div>
+  </section>
+
+  <!-- 03 RESULTS -->
+  <section class="sec results" id="results" data-scene="results">
+    <p class="eyebrow mono"><b>03</b> — Results</p>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-num" id="kpi1" data-fmt="int">0</div>
+        <div class="kpi-lab">Scanned Earth Cells</div>
+        <p class="dim" id="kpi1sub">Barren and ice regions picked from NASA MODIS land cover, about 17 km each</p>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num" id="kpi2" data-fmt="pct">0%</div>
+        <div class="kpi-lab" id="kpi2lab">Known Analog Recall Rate</div>
+        <p class="dim" id="kpi2sub">Known analog sites found in the top 25%</p>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num" id="kpi3" data-fmt="int">0</div>
+        <div class="kpi-lab">New Validated Candidates</div>
+        <p class="dim">Novel high-fidelity analog sites discovered by algorithm</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data sources strip + next pages -->
+  <section class="sec outro" id="outro" data-scene="outro">
+    <div class="marquee mono" aria-hidden="true"><div class="mq-track" id="mq"></div></div>
+    <div class="next">
+      <p class="eyebrow mono">Continue the mission</p>
+      <a class="next-link" data-link="finder" href="#"><span>Site Finder</span><b>→</b></a>
+      <a class="next-link" data-link="compare" href="#"><span>Compare Sites</span><b>→</b></a>
+      <a class="next-link" data-link="evidence" href="#"><span>Evidence &amp; Method</span><b>→</b></a>
+    </div>
+  </section>
+
+  <footer id="ftr">
+    <div class="f-cols">
+      <div>
+        <a class="brand" href="index.html"><i class="mark"></i><span>TerraTwin</span></a>
+        <p>TerraTwin finds places on Earth that match landing and exploration sites on the Moon and Mars, using open satellite data, so missions can test on Earth before they fly.</p>
+        <p class="dim">Built by <strong>Astraea Science Team</strong> · Planetary Systems &amp; Geospatial Engineering</p>
+      </div>
+      <div>
+        <h6 class="mono">Contact</h6>
+        <p><a href="mailto:astraeateam45@gmail.com">astraeateam45@gmail.com</a><br><a data-link="evidence" href="#">Methodology</a></p>
+        <button type="button" class="f-cta" onclick="window.UserSystem && window.UserSystem.openContactModal()">Contact the team</button>
+      </div>
+      <div>
+        <h6 class="mono">Data sources</h6>
+        <p>NASA Earthdata · MODIS (MOD11C3, MCD43C3, MCD12C1, MOD13A3)<br>NASADEM · USGS GMTED2010<br>NASA PDS · MGS MOLA · Mars Odyssey GRS<br>LRO LOLA · LRO Diviner · LRO LEND<br>JAXA G-Portal · GSMaP<br><a data-link="evidence" href="#">View all data sources</a></p>
+      </div>
+    </div>
+    <div class="f-sub mono dim"><span>© 2026 TerraTwin · Astraea Team</span><span>Planet textures: NASA Blue Marble via three.js examples · CC-BY 4.0</span></div>
+  </footer>
+</main>
+
+<!-- Guided tour: the guide card flies to each element -->
+<div id="tourRing" class="tour-ring" hidden></div>
+<div id="tour" class="tour" hidden>
+  <p class="mono dim" id="tourStep">Step 1 / 1</p>
+  <h4 id="tourTitle"></h4>
+  <p id="tourText"></p>
+  <div class="tour-btns"><button class="mono dim" id="tourSkip">Skip</button><button class="btn sm" id="tourNext"><span>Next</span></button></div>
+</div>
+
+<div class="cursor" id="cur" aria-hidden="true"><i></i></div>
+
+<!-- Data: the team's generated file first (if present), then the fallback copy -->
+<script src="data/terratwin-real.js"></script>
+<script src="js/data-fallback.js"></script>
+<!-- shared site widgets: language, AstraBot, chatbot -->
+<script src="data/data-store.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/avatars.js"></script>
+<script src="js/user-system.js"></script>
+<script src="js/astrabot.js"></script>
+<script src="js/rag-engine.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/home-i18n.js"></script>
+<script src="assets/home-cinema/vendor/gsap.min.js"></script>
+<script src="assets/home-cinema/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/home-cinema/vendor/lenis.min.js"></script>
+<script type="importmap">{ "imports": { "three": "./assets/home-cinema/vendor/three.module.min.js" } }</script>
+<script type="module" src="js/home-cinema.js"></script>
+<script src="js/home-menu.js"></script>
+</body>
+</html>

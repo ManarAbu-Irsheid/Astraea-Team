@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Section dots — same look as the home page (shared: evidence, guide)
+   ========================================================================== */
+.section-dot-nav {
+  position: fixed; inset-inline-end: 1.75rem; top: 50%; transform: translateY(-50%);
+  z-index: 900; display: flex; flex-direction: column; gap: 1.35rem;
+}
+.section-dot {
+  display: flex; align-items: center; gap: .75rem; text-decoration: none;
+  flex-direction: row-reverse; cursor: pointer; padding: .25rem;
+}
+[dir="rtl"] .section-dot { flex-direction: row-reverse; }
+.dot-indicator {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.45);
+  transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section-dot:hover .dot-indicator,
+.section-dot.active .dot-indicator {
+  background: var(--accent-cyan, #d9b77e); border-color: var(--accent-cyan, #d9b77e);
+  box-shadow: 0 0 12px var(--accent-cyan, #d9b77e); transform: scale(1.35);
+}
+.dot-label {
+  font-size: .875rem; font-weight: 600; color: var(--text-secondary, #9fb3c8);
+  opacity: 0; transform: translateX(6px); transition: all .2s ease;
+  white-space: nowrap;
+}
+[dir="rtl"] .dot-label { transform: translateX(-6px); }
+.section-dot:hover .dot-label,
+.section-dot.active .dot-label { opacity: 1; transform: translateX(0); color: #fff; }
+.section-dot:focus-visible { outline: 2px solid #d9b77e; outline-offset: 3px; border-radius: 6px; }
+[data-theme="light"] .section-dot:hover .dot-label,
+[data-theme="light"] .section-dot.active .dot-label { color: #0e0e14; }
+[data-theme="light"] .dot-indicator { background: rgba(14, 14, 20, 0.2); border-color: rgba(14, 14, 20, 0.35); }
+@media (max-width: 1100px) { .section-dot-nav { display: none; } }
+@media print { .section-dot-nav { display: none !important; } }
+
+/* dots must not sit on the content on ~1366px screens */
+@media (max-width: 1500px) {
+  .section-dot-nav { inset-inline-end: .55rem; }
+  .section-dot.active:not(:hover) .dot-label { opacity: 0; }
+  .section-dot:hover .dot-label {
+    background: rgba(3, 7, 16, 0.85); padding: .2rem .55rem; border-radius: 6px;
+  }
+}

@@ -1,0 +1,229 @@
+/* ==========================================================================
+   TerraTwin - Shared living space background
+   Same nebula, drifting stars, twinkles and shooting stars as the Home page.
+   js/space-bg.js injects the markup on pages that do not have it.
+   ========================================================================== */
+:root { --planet-glow: #a0b2cc; }
+
+body {
+  background-color: #03060d !important;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.space-living-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Drifting Nebula Clouds (Soft blurred gradients drifting over 60s) */
+.nebula-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.nebula-blue {
+  width: 820px;
+  height: 820px;
+  top: -10%;
+  left: -15%;
+  background: radial-gradient(circle, #0b3a6e 0%, rgba(11, 58, 110, 0.45) 50%, transparent 70%);
+  animation: driftNebulaBlue 60s ease-in-out infinite alternate;
+}
+
+.nebula-teal {
+  width: 780px;
+  height: 720px;
+  bottom: 5%;
+  right: -12%;
+  background: radial-gradient(circle, #d9b77e 0%, rgba(217, 183, 126, 0.35) 45%, transparent 70%);
+  opacity: 0.28;
+  animation: driftNebulaTeal 60s ease-in-out infinite alternate;
+}
+
+.nebula-planet-tint {
+  width: 850px;
+  height: 850px;
+  top: 25%;
+  left: 20%;
+  background: radial-gradient(circle, var(--planet-glow, #a0b2cc) 0%, rgba(160, 178, 204, 0.2) 45%, transparent 68%);
+  opacity: 0.25;
+  transition: background 1s ease;
+  animation: driftNebulaTint 60s ease-in-out infinite alternate;
+}
+
+@keyframes driftNebulaBlue {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 90px) scale(1.12); }
+}
+
+@keyframes driftNebulaTeal {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-90px, -70px) scale(1.08); }
+}
+
+@keyframes driftNebulaTint {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -60px) scale(0.96); }
+}
+
+/* Two Starfield Layers (Far 0.1x parallax, Near 0.3x parallax) */
+.starfield-layer {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: calc(100vh + 1600px);
+  will-change: transform;
+}
+
+.starfield-far {
+  opacity: 0.65;
+  background-image:
+    radial-gradient(1px 1px at 35px 25px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 120px 85px, rgba(160, 220, 255, 0.7), transparent),
+    radial-gradient(1.2px 1.2px at 240px 180px, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(0.8px 0.8px at 360px 95px, rgba(180, 230, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 480px 260px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 610px 140px, rgba(200, 240, 255, 0.7), transparent),
+    radial-gradient(0.8px 0.8px at 730px 320px, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 850px 190px, rgba(160, 220, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 970px 410px, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(0.8px 0.8px at 1120px 220px, rgba(190, 235, 255, 0.5), transparent);
+  background-repeat: repeat;
+  background-size: 520px 520px;
+}
+
+.starfield-near {
+  opacity: 0.9;
+  background-image:
+    radial-gradient(1.8px 1.8px at 75px 120px, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(2px 2px at 210px 340px, rgba(140, 225, 255, 0.9), transparent),
+    radial-gradient(1.6px 1.6px at 390px 160px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(2.2px 2.2px at 540px 420px, rgba(200, 245, 255, 0.95), transparent),
+    radial-gradient(1.8px 1.8px at 690px 250px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 860px 480px, rgba(160, 230, 255, 0.95), transparent),
+    radial-gradient(1.6px 1.6px at 1020px 130px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(2px 2px at 1180px 360px, rgba(220, 250, 255, 0.9), transparent);
+  background-repeat: repeat;
+  background-size: 640px 640px;
+}
+
+/* Staggered Twinkling Star Dots (3s to 6s animation) */
+.twinkle-stars-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.twinkle-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 14px rgba(217, 183, 126, 0.6);
+}
+
+.tk-1 { top: 14%; left: 22%; animation: starTwinkle 4.2s ease-in-out infinite; }
+.tk-2 { top: 26%; left: 78%; animation: starTwinkle 5.4s ease-in-out infinite 1.2s; }
+.tk-3 { top: 44%; left: 16%; animation: starTwinkle 3.8s ease-in-out infinite 0.6s; }
+.tk-4 { top: 58%; left: 86%; animation: starTwinkle 5.8s ease-in-out infinite 2.1s; }
+.tk-5 { top: 72%; left: 28%; animation: starTwinkle 4.5s ease-in-out infinite 1.7s; }
+.tk-6 { top: 82%; left: 72%; animation: starTwinkle 3.6s ease-in-out infinite 2.4s; }
+.tk-7 { top: 18%; left: 58%; animation: starTwinkle 5.0s ease-in-out infinite 3.0s; }
+.tk-8 { top: 90%; left: 42%; animation: starTwinkle 4.7s ease-in-out infinite 0.4s; }
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+
+[data-theme="light"] body {
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light"] .starfield-layer,
+[data-theme="light"] .twinkle-stars-layer {
+  display: none !important;
+}
+
+[data-theme="light"] .nebula-blue {
+  background: radial-gradient(circle, rgba(11, 58, 110, 0.12) 0%, transparent 70%);
+  opacity: 0.15;
+}
+
+[data-theme="light"] .nebula-teal {
+  background: radial-gradient(circle, rgba(217, 183, 126, 0.1) 0%, transparent 70%);
+  opacity: 0.12;
+}
+
+[data-theme="light"] .nebula-planet-tint {
+  opacity: 0.14;
+}
+
+
+/* ==========================================================================
+   MOVING STARS
+   The two star layers drift slowly (background-position, so it does not
+   clash with the scroll parallax that uses transform). Near stars move faster
+   than far ones for depth. Shooting stars are added by js/home.js.
+   ========================================================================== */
+.starfield-far {
+  animation: starDriftFar 240s linear infinite;
+}
+
+.starfield-near {
+  animation: starDriftNear 140s linear infinite;
+}
+
+@keyframes starDriftFar {
+  from { background-position: 0 0; }
+  to   { background-position: -520px 260px; }
+}
+
+@keyframes starDriftNear {
+  from { background-position: 0 0; }
+  to   { background-position: -640px 320px; }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(217, 183, 126, 0.45) 40%, transparent);
+  filter: drop-shadow(0 0 6px rgba(160, 230, 255, 0.8));
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+  animation: shootingStar 1.3s ease-out forwards;
+}
+
+@keyframes shootingStar {
+  0%   { opacity: 0; transform: rotate(var(--angle, 155deg)) translateX(0) scaleX(0.3); }
+  12%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--angle, 155deg)) translateX(var(--distance, 420px)) scaleX(1); }
+}
+
+[data-theme="light"] .shooting-star { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield-far,
+  .starfield-near { animation: none; }
+  .shooting-star { display: none; }
+}

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astraea — Researcher Profile & Level</title>
+  <meta name="description" content="Full researcher profile, account settings, level progression, and saved planetary analog discoveries on Astraea.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/astrabot.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="css/luxe.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body data-page="profile">
+
+  <!-- Global Scientific Navigation Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-link" title="TerraTwin Home">
+        <div class="brand-logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d9b77e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+            <circle cx="12" cy="12" r="2.5" fill="#a0b2cc"></circle>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-title">TerraTwin<span class="brand-dot"></span></span>
+          <span class="brand-subtitle" data-i18n="app.subtitle">Planetary Analog Explorer</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link" data-page="home" data-i18n="nav.home">Home</a>
+        <a href="finder.html" class="nav-link" data-page="finder" data-i18n="nav.finder">Site Finder</a>
+        <a href="compare.html" class="nav-link" data-page="compare" data-i18n="nav.compare">Compare Sites</a>
+        <a href="evidence.html" class="nav-link" data-page="evidence" data-i18n="nav.evidence">Evidence & Method</a>
+        <a href="guide.html" class="nav-link" data-page="guide" data-i18n="nav.kebab_ethics">Guide & Ethics</a>
+      </nav>
+
+      <div class="header-actions" id="headerControlsSpotlight">
+        <button class="btn-control tour-help-btn" id="tourGuideBtn" title="Page Tour & Guide / دليل وجولة الصفحة" aria-label="Page Tour">?</button>
+
+        <div class="user-profile-container">
+          <a href="login.html" class="nav-auth-login-btn" id="navAuthLoginBtn">
+            <span class="auth-btn-text" data-i18n="auth.nav_login_btn">تسجيل الدخول</span>
+          </a>
+          <a href="register.html" class="nav-auth-register-btn" id="navAuthRegisterBtn">
+            <span class="auth-btn-text" data-i18n="auth.nav_register_btn">إنشاء حساب</span>
+          </a>
+
+          <button class="user-profile-btn" id="userProfileBtn" aria-haspopup="true" aria-expanded="false" title="Researcher Profile" style="display: none;">
+            <div class="user-avatar-badge">
+              <span class="user-status-dot" title="Status: Online"></span>
+            </div>
+            <div class="user-meta-text">
+              <span class="user-display-name">Researcher</span>
+            </div>
+            <span class="profile-chevron">▼</span>
+          </button>
+
+          <div class="user-profile-dropdown" id="userProfileDropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar"></div>
+              <div class="user-dropdown-info">
+                <div class="user-dropdown-name">Researcher</div>
+                <div class="user-dropdown-role">Planetary Analog Specialist</div>
+                <div class="user-dropdown-email">researcher@astraea.space</div>
+              </div>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-links">
+              <a href="finder.html" class="user-dropdown-link">Site Finder Dashboard</a>
+              <a href="compare.html" class="user-dropdown-link">Benchmark Comparison</a>
+              <a href="evidence.html#dataCatalogSection" class="user-dropdown-link">Catalog & Datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="kebab-menu-container">
+          <button class="btn-control btn-kebab" id="kebabMenuBtn" aria-haspopup="true" aria-expanded="false" title="More Quick Controls">
+            <span class="kebab-icon-dots">⋮</span>
+          </button>
+
+          <div class="kebab-dropdown-panel" id="kebabDropdownPanel">
+            <div class="kebab-panel-header" data-i18n="nav.kebab_header">Quick Controls</div>
+            <button class="kebab-item-btn" id="kebabProfileBtn" style="display: none;">
+              <span class="kebab-item-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_profile">Researcher Profile & Level</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabTourBtn">
+              <span class="kebab-item-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </span>
+              <span class="kebab-item-text" data-i18n="nav.tour_btn">Page Guided Tour</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabContactBtn">
+              <span class="kebab-item-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_contact">Contact Science Team</span>
+            </button>
+            <div class="kebab-divider"></div>
+            <a href="login.html" class="kebab-item-btn" id="kebabAuthBtn">
+              <span class="kebab-item-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              </span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_auth">Account & Sign In</span>
+            </a>
+          </div>
+        </div>
+
+        <button class="btn-control" id="themeToggleBtn" style="display:none;" aria-hidden="true"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="profile-page-main">
+
+    <!-- Gate for Guests (Not Logged In) -->
+    <section class="profile-auth-gate" id="profileAuthGate" style="display: none;">
+      <div class="profile-gate-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h1 class="profile-gate-title" id="gateTitle">الملف الشخصي متاح فقط لأصحاب الحسابات</h1>
+      <p class="profile-gate-desc" id="gateDesc">
+        سجّل الدخول أو أنشئ حساب باحث جديد للوصول إلى ملفك الشخصي الكامل، وتتبع مستوياتك واكتشافاتك العلمية المحفوظة.
+      </p>
+      <div class="profile-gate-actions">
+        <a href="login.html" class="profile-btn-primary" id="gateSignInBtn">تسجيل الدخول</a>
+        <a href="register.html" class="profile-btn-secondary" id="gateRegisterBtn">إنشاء حساب جديد</a>
+        <a href="index.html" class="profile-btn-secondary" id="gateHomeBtn">العودة للمنصة</a>
+      </div>
+    </section>
+
+    <!-- Full Profile Dashboard (Logged In Only) -->
+    <div class="profile-dashboard" id="profileDashboard" style="display: none;">
+
+      <!-- Hero Identity Card -->
+      <section class="profile-hero-card">
+        <div class="profile-hero-top">
+          <div class="profile-identity-wrap">
+            <div class="profile-hero-avatar" id="profHeroAvatar"></div>
+            <div class="profile-hero-info">
+              <div class="profile-hero-name-row">
+                <h1 class="profile-hero-name" id="profHeroName">Researcher</h1>
+                <span class="profile-level-pill" id="profHeroLevelPill">LVL 1 • 0 XP</span>
+              </div>
+              <div class="profile-hero-role" id="profHeroRole">Planetary Analog Researcher</div>
+              <div class="profile-hero-meta">
+                <span id="profHeroEmail">researcher@astraea.space</span>
+                <span id="profHeroPhone"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-hero-actions">
+            <a href="finder.html" class="profile-btn-secondary" id="profGoFinderBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span>استكشاف المواقع</span>
+            </a>
+            <button type="button" class="profile-btn-danger" id="profileSignOutBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span id="profileSignOutText">تسجيل الخروج</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-progress-strip">
+          <div class="profile-prog-box">
+            <div class="profile-prog-header">
+              <span id="profXpTitle">مستوى التقدم العلمي (XP)</span>
+              <span class="profile-prog-val" id="profXpVal">0 XP</span>
+            </div>
+            <div class="profile-prog-track">
+              <div class="profile-prog-fill" id="profXpBar" style="width: 0%;"></div>
+            </div>
+            <div class="profile-prog-sub" id="profXpNextSub">المستوى التالي: 150 XP</div>
+          </div>
+
+          <div class="profile-prog-box">
+            <div class="profile-prog-header">
+              <span id="profExpTitle">نسبة استكشاف المنصة</span>
+              <span class="profile-prog-val" id="profExpVal">0%</span>
+            </div>
+            <div class="profile-prog-track">
+              <div class="profile-prog-fill exploration" id="profExpBar" style="width: 0%;"></div>
+            </div>
+            <div class="profile-prog-sub" id="profExpSub">الأقسام والمواقع والبحث والمقارنات</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Strip -->
+      <section class="profile-stats-grid">
+        <div class="profile-stat-card">
+          <span class="profile-stat-val" id="statSitesVal">0</span>
+          <span class="profile-stat-label" id="statSitesLbl">مواقع نظيرة مكتشفة</span>
+        </div>
+        <div class="profile-stat-card">
+          <span class="profile-stat-val" id="statSearchesVal">0</span>
+          <span class="profile-stat-label" id="statSearchesLbl">عمليات البحث والاستعلام</span>
+        </div>
+        <div class="profile-stat-card">
+          <span class="profile-stat-val" id="statComparisonsVal">0</span>
+          <span class="profile-stat-label" id="statComparisonsLbl">مقارنات علمية منجزة</span>
+        </div>
+        <div class="profile-stat-card">
+          <span class="profile-stat-val" id="statFindingsVal">0</span>
+          <span class="profile-stat-label" id="statFindingsLbl">تقارير ونتائج محفوظة</span>
+        </div>
+      </section>
+
+      <!-- Main Workspace -->
+      <div class="profile-workspace-grid">
+
+        <!-- Left: Full Edit Profile Form -->
+        <section class="profile-panel-card">
+          <h2 class="profile-panel-title" id="editSectionTitle">تعديل معلومات الحساب والشخصية</h2>
+
+          <div class="profile-save-alert" id="profSaveAlert"></div>
+
+          <form class="profile-form" id="fullProfileForm">
+            <div class="profile-field">
+              <label id="lblAvatarPick">اختر الشخصية العلمية الاحترافية:</label>
+              <div class="profile-avatar-grid" id="profAvatarGrid"></div>
+            </div>
+
+            <div class="profile-form-row">
+              <div class="profile-field">
+                <label for="profName" id="lblFullName">الاسم الكامل للباحث:</label>
+                <input type="text" id="profName" class="profile-input" required>
+              </div>
+              <div class="profile-field">
+                <label for="profEmail" id="lblEmail">البريد الإلكتروني المعتمد:</label>
+                <input type="email" id="profEmail" class="profile-input" required>
+              </div>
+            </div>
+
+            <div class="profile-form-row">
+              <div class="profile-field">
+                <label for="profPhone" id="lblPhone">رقم الهاتف أو المعرّف:</label>
+                <input type="tel" id="profPhone" class="profile-input" placeholder="+962 7 9000 0000">
+              </div>
+              <div class="profile-field">
+                <label for="profRole" id="lblRole">التخصص العلمي:</label>
+                <select id="profRole" class="profile-select">
+                  <option value="Planetary Geospatial Engineering">هندسة تضاريس الكواكب</option>
+                  <option value="Field Rover Autonomous Navigation">ملاحة الروبوتات الفضائية الميدانية</option>
+                  <option value="Astrobiology & Extremophile Analogs">علم الأحياء الفلكية والبيئات المتطرفة</option>
+                  <option value="In-Situ Resource Utilization (ISRU)">استغلال الموارد الفضائية الموضعية (ISRU)</option>
+                  <option value="Comparative Field Analog Geology">جيولوجيا النظائر الميدانية المقارنة</option>
+                  <option value="Mission Commander & Lead Astrobiologist">قائد بعثة وكبير علماء الكواكب</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="profile-field">
+              <label for="profBio" id="lblBio">النبذة العلمية والاهتمامات البحثية:</label>
+              <textarea id="profBio" class="profile-textarea" rows="3"></textarea>
+            </div>
+
+            <div class="profile-form-actions-bar">
+              <button type="submit" class="profile-btn-primary" id="profSaveBtn">حفظ التعديلات في قاعدة البيانات</button>
+              <button type="button" class="profile-btn-danger" id="profileFormSignOutBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span id="profileFormSignOutText">تسجيل الخروج من الحساب</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Right: Levels & Discovered Findings -->
+        <aside class="profile-side-stack">
+          <section class="profile-panel-card">
+            <h2 class="profile-panel-title" id="levelsSectionTitle">مسار الرتب والمستويات (Levels 1–5)</h2>
+            <div class="levels-roadmap" id="levelsRoadmap"></div>
+          </section>
+
+          <section class="profile-panel-card">
+            <h2 class="profile-panel-title" id="findingsSectionTitle">سجل الاكتشافات والتقارير المحفوظة</h2>
+            <div class="findings-list" id="profFindingsList"></div>
+          </section>
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="data/data-store.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/avatars.js"></script>
+  <script src="js/user-system.js"></script>
+  <script src="js/astrabot.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/tour-marker.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/profile-page.js"></script>
+  <script src="js/luxe.js" defer></script>
+  <script src="js/cinema-bg.js"></script>
+</body>
+</html>

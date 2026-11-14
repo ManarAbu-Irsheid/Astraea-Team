@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "description": "Platform guide used by the TerraTwin AI chatbot (js/rag-engine.js). Explains the website itself, its pages, metrics and the assistant. Facts about sites, scores and methods live in terratwin-knowledge.json.",
+  "pages": [
+    {
+      "id": "home",
+      "file": "index.html",
+      "title_en": "Home page: 3D Interactive Explorer & Twin Pair Showcase",
+      "title_ar": "الصفحة الرئيسية: المستكشف ثلاثي الأبعاد وعرض التوأم الكوكبي",
+      "keywords": "home main page globe 3d explorer twin pair pins showcase rotate zoom earth mars moon tabs",
+      "text_en": "The Home page shows interactive 3D globes of Earth, Mars and the Moon. Use the Earth / Mars / Moon tabs to switch the active globe, drag to rotate and scroll or pinch to zoom. Clicking a site pin (for example Jezero on Mars, Shackleton on the Moon or Mafraq in Jordan) shows its real coordinates and elevation, and locks the Twin Pair Showcase below, which displays the overall similarity score and a 5-metric comparison (slope, roughness, albedo, thermal swing and the NDVI abiotic gate). The page also summarizes the headline KPIs: 421,800 Earth cells scanned, 94.2% recall of known analog sites and the catalog size.",
+      "text_ar": "تعرض الصفحة الرئيسية مجسمات تفاعلية ثلاثية الأبعاد للأرض والمريخ والقمر. استخدم أزرار الأرض / المريخ / القمر للتبديل بينها، واسحب للتدوير واستخدم عجلة التمرير أو القرص للتكبير. عند النقر على دبوس موقع (مثل جيزيرو على المريخ أو شاكلتون على القمر أو المفرق في الأردن) تظهر إحداثياته الحقيقية وارتفاعه، وتُقفل لوحة التوأم الكوكبي في الأسفل لتعرض نسبة التطابق الكلية ومقارنة بخمسة معايير (الانحدار، الخشونة، البياض، التباين الحراري، وبوابة NDVI). كما تلخص الصفحة المؤشرات الرئيسية: 421,800 خلية أرضية ممسوحة، ونسبة استرجاع 94.2% للمواقع النظيرة المعروفة، وحجم الكتالوج."
+    },
+    {
+      "id": "finder",
+      "file": "finder.html",
+      "title_en": "Site Finder page (finder.html)",
+      "title_ar": "صفحة مستكشف المواقع (Site Finder)",
+      "keywords": "site finder search filter map target body moon mars mission profile weights export csv closest earth analog list card",
+      "text_en": "The Site Finder is a map-based search over the catalog (53 Earth benchmark sites and the 421,800 scanned candidate cells). You can filter by target body (Moon or Mars), choose a mission profile (Rover Testing, Human Base, ISRU & Resources, or Lava Tube Shelters) which re-weights the internal criteria (Slope & Roughness, Ice & Volatiles, Regolith Mechanics, Volcanic / Cavities), open a site card to see its measurements and closest Earth analogs, and export field telemetry as a CSV file for mission planning.",
+      "text_ar": "مستكشف المواقع هو أداة بحث على الخريطة ضمن الكتالوج (53 موقعاً أرضياً معيارياً و421,800 خلية مرشحة ممسوحة). يمكنك الفلترة حسب الجرم المستهدف (القمر أو المريخ)، واختيار ملف المهمة (اختبار المركبات، القاعدة البشرية، استغلال الموارد ISRU، أو ملاجئ الأنابيب البركانية) الذي يعيد ضبط أوزان المعايير الداخلية (الانحدار والخشونة، الجليد والمواد المتطايرة، ميكانيكا الحطام الصخري، التضاريس البركانية والكهوف)، وفتح بطاقة الموقع لرؤية قياساته وأقرب نظائره الأرضية، وتصدير البيانات الميدانية بصيغة CSV لتخطيط المهمات."
+    },
+    {
+      "id": "compare",
+      "file": "compare.html",
+      "title_en": "Compare Sites page (compare.html)",
+      "title_ar": "صفحة مقارنة المواقع (Compare Sites)",
+      "keywords": "compare sites comparison side by side site a site b target radar polygon delta table difference 3d terrain viewer cannot simulate",
+      "text_en": "Compare Sites is a head-to-head comparison between two sites (Site A and Site B) against a selected Moon or Mars target. It shows a multi-axis radar polygon that overlays the target, the established benchmark and the candidate analog on slope, roughness, albedo and thermal extremes; a delta telemetry table with the exact numerical differences; a 3D terrain viewer with spectral, natural-color and elevation views; and a panel listing what Earth sites can never simulate (gravity, radiation, vacuum, biological contamination).",
+      "text_ar": "صفحة مقارنة المواقع تقارن موقعين (الموقع A والموقع B) وجهاً لوجه مقابل هدف مختار على القمر أو المريخ. تعرض مخطط رادار متعدد المحاور يضع الهدف والموقع المعياري والمرشح الجديد فوق بعضها حسب الانحدار والخشونة والبياض والتطرف الحراري، وجدول فروقات رقمية دقيق، وعارض تضاريس ثلاثي الأبعاد بأنماط طيفية وطبيعية وارتفاعات، ولوحة توضح ما لا تستطيع المواقع الأرضية محاكاته أبداً (الجاذبية، الإشعاع، الفراغ، التلوث الحيوي)."
+    },
+    {
+      "id": "evidence",
+      "file": "evidence.html",
+      "title_en": "Evidence & Method page (evidence.html)",
+      "title_ar": "صفحة المنهجية والأدلة (Evidence & Method)",
+      "keywords": "evidence method validation ranking failure cases sensitivity analysis boxplot histogram sensor catalog video demo recall roc auc reliable reliability accurate accuracy trust stable robust",
+      "text_en": "Evidence & Method documents how the results were validated: a short demo video, known-analog validation rankings including intentional failure cases (red-bordered), a box plot of analog fidelity across five radar attributes, a histogram of benchmark scores, a sensitivity analysis showing rankings stay at least 94% stable when any weight changes by plus or minus 25%, and the planetary sensor catalog listing the NASA, ESA and USGS data sources. Headline validation figures: recall of 46 of 49 peer-reviewed analog sites (94.2%) and ROC-AUC 0.964.",
+      "text_ar": "توثق صفحة المنهجية والأدلة كيفية التحقق من النتائج: فيديو تعريفي قصير، وترتيب المواقع النظيرة المعروفة مع حالات فشل مدروسة (بحدود حمراء)، ومخطط صندوقي لتطابق المواقع عبر خمس خصائص، ومدرج تكراري لدرجات المقارنة، وتحليل حساسية يبين أن الترتيب يبقى ثابتاً بنسبة 94% على الأقل عند تغيير أي وزن بنسبة ±25%، وكتالوج المستشعرات الذي يسرد مصادر بيانات ناسا ووكالة الفضاء الأوروبية وهيئة المساحة الأمريكية. أرقام التحقق الرئيسية: استرجاع 46 من 49 موقعاً موثقاً (94.2%) وقيمة ROC-AUC تساوي 0.964."
+    },
+    {
+      "id": "guide",
+      "file": "guide.html",
+      "title_en": "Mission Purpose, Ethics & Platform Guide page (guide.html)",
+      "title_ar": "صفحة أهداف المشروع والأخلاقيات ودليل الاستخدام",
+      "keywords": "guide mission purpose ethics charter open data license cc-by planetary protection cospar leave no trace team glossary how to use",
+      "text_en": "The Guide page explains why TerraTwin was created (testing hardware on Earth before risky off-world missions), the scientific ethics (100% public peer-reviewed data from NASA PDS, ESA Copernicus and USGS; percentile normalization within each body; COSPAR planetary protection and Leave No Trace field ethics), the physical abiotic NDVI gate, a step-by-step walkthrough of every page, a glossary of the physical metrics, and the team and license. All datasets and methodology are licensed CC-BY 4.0.",
+      "text_ar": "تشرح صفحة الدليل سبب إنشاء TerraTwin (اختبار المعدات على الأرض قبل المهمات الفضائية الخطرة)، والأخلاقيات العلمية (بيانات عامة موثقة 100% من NASA PDS وESA Copernicus وUSGS، وتوحيد القياسات بالرتب المئوية داخل كل جرم، والالتزام بحماية الكواكب COSPAR ومبدأ Leave No Trace)، وبوابة NDVI غير الحيوية، وشرحاً خطوة بخطوة لكل صفحة، ودليلاً للمعايير الفيزيائية، والفريق والرخصة. جميع البيانات والمنهجيات مرخصة بموجب CC-BY 4.0."
+    }
+  ],
+  "metrics": [
+    {
+      "id": "slope",
+      "title_en": "Metric: Surface slope (degrees)",
+      "title_ar": "المعيار: الانحدار السطحي (بالدرجات)",
+      "keywords": "slope inclination degrees flat moderate steep hazard lander rover roll-over",
+      "text_en": "Surface slope is the terrain inclination from horizontal, in degrees. It governs rover roll-over limits and lander stability. Classes used by TerraTwin: Flat < 2°, Moderate 2°-12°, Steep/Hazard > 12°. In the similarity score it is used as an intra-body percentile.",
+      "text_ar": "الانحدار السطحي هو زاوية ميل التضاريس عن المستوى الأفقي بالدرجات، وهو مؤشر حاسم لسلامة هبوط المركبات ومنع انقلاب الروفر. الفئات المستخدمة: مستوٍ أقل من 2°، معتدل 2°-12°، وعر/خطر أكثر من 12°. يُستخدم في درجة التشابه كرتبة مئوية داخل كل جرم."
+    },
+    {
+      "id": "roughness",
+      "title_en": "Metric: Surface roughness (meters)",
+      "title_ar": "المعيار: الخشونة السطحية (بالمتر)",
+      "keywords": "roughness micro topography height variance geomorpho90m wheel traction suspension",
+      "text_en": "Surface roughness is the micro-topographic height variance in meters (Geomorpho90m multi-scale roughness on Earth, LRO LOLA LDRM on the Moon). It dictates rover wheel traction, suspension stress and mobility hazard. It is used as an intra-body percentile in the similarity score.",
+      "text_ar": "الخشونة السطحية هي مقدار التباين الدقيق في ارتفاعات السطح بالمتر (مقياس Geomorpho90m على الأرض وLRO LOLA LDRM على القمر). تحدد قوة احتكاك العجلات وإجهاد نظام التعليق ومخاطر الحركة، وتُستخدم كرتبة مئوية في درجة التشابه."
+    },
+    {
+      "id": "albedo",
+      "title_en": "Metric: Optical albedo (0-1)",
+      "title_ar": "المعيار: البياض الضوئي (من 0 إلى 1)",
+      "keywords": "albedo reflectance reflected sunlight solar panels computer vision mcd43a3",
+      "text_en": "Albedo is the fraction of incoming sunlight reflected by the surface (0 to 1). It affects photovoltaic power budgets and optical computer vision. Earth values come from NASA MODIS MCD43A3; the Moon uses 1064 nm LOLA reflectance; Mars uses TES / Mars Climate Database values. TerraTwin compares a normalized albedo (albedo_norm).",
+      "text_ar": "البياض (الألبيدو) هو نسبة ضوء الشمس المنعكس عن السطح (من 0 إلى 1)، ويؤثر على كفاءة الألواح الشمسية وأنظمة الرؤية الحاسوبية. قيم الأرض من NASA MODIS MCD43A3، والقمر من انعكاس LOLA عند 1064 نانومتر، والمريخ من TES وقاعدة بيانات مناخ المريخ. تقارن TerraTwin قيمة بياض موحدة (albedo_norm)."
+    },
+    {
+      "id": "thermal",
+      "title_en": "Metric: Thermal swing (°C)",
+      "title_ar": "المعيار: التباين الحراري (°C)",
+      "keywords": "thermal swing temperature day night diurnal delta lst battery material fatigue",
+      "text_en": "Thermal swing is the diurnal temperature difference between solar noon and night (°C). It matters for material fatigue and rover battery survival. Earth values come from MODIS Land Surface Temperature (surface skin temperature, not air temperature). It is used for Mars similarity but excluded for the Moon because the lunar vacuum makes the thermal regime physically incomparable.",
+      "text_ar": "التباين الحراري هو الفرق بين حرارة ذروة النهار وبرودة الليل (°C)، وهو مهم لاختبار إجهاد المواد وعمر بطاريات المركبات. قيم الأرض من حرارة سطح الأرض MODIS LST (حرارة السطح وليس الهواء). يُستخدم في تشابه المريخ ويُستبعد في تشابه القمر لأن الفراغ القمري يجعل النظام الحراري غير قابل للمقارنة فيزيائياً."
+    },
+    {
+      "id": "similarity",
+      "title_en": "How to read a TerraTwin similarity score",
+      "title_ar": "كيف تُقرأ درجة التشابه في TerraTwin",
+      "keywords": "similarity score percent match how calculated read interpret weights parameters influence",
+      "text_en": "A similarity score (0-100%) measures how closely an Earth site's physical surface matches a Moon or Mars target after passing the NDVI gate. For Mars, slope percentile, roughness percentile, normalized albedo and normalized thermal swing are weighted equally (25% each). For the Moon, slope, roughness and albedo are weighted equally (33.3% each). Distances use a Mahalanobis covariance-weighted metric with cosine kernels so correlated variables such as slope and roughness do not dominate. A high score means physical surface similarity only; Earth sites still cannot reproduce gravity, radiation, vacuum or sterility.",
+      "text_ar": "درجة التشابه (0-100%) تقيس مدى تطابق الخصائص الفيزيائية لسطح موقع أرضي مع هدف على القمر أو المريخ بعد اجتياز بوابة NDVI. للمريخ تُوزن أربعة معايير بالتساوي (25% لكل منها): رتبة الانحدار، رتبة الخشونة، البياض الموحد، والتباين الحراري الموحد. وللقمر ثلاثة معايير بالتساوي (33.3% لكل منها): الانحدار والخشونة والبياض. وتُحسب المسافات بمقياس ماهالانوبيس الموزون بالتغاير مع نوى جيب التمام حتى لا تطغى المتغيرات المترابطة مثل الانحدار والخشونة. الدرجة العالية تعني تشابهاً سطحياً فيزيائياً فقط؛ فالأرض لا تحاكي الجاذبية أو الإشعاع أو الفراغ أو التعقيم."
+    },
+    {
+      "id": "mission_profiles",
+      "title_en": "Mission profiles and internal weights",
+      "title_ar": "ملفات المهمة والأوزان الداخلية",
+      "keywords": "mission profile rover testing human base isru resources lava tube shelters caves weights tuning reset defaults",
+      "text_en": "The Mission Profile selector (Rover Testing, Human Base, ISRU & Resources, Lava Tube Shelters) changes the internal weights used to rank sites: Slope & Roughness, Ice & Volatiles, Regolith Mechanics and Volcanic / Cavities. Weights can be tuned manually in the Internal Weight Tuning panel and restored with Reset Defaults.",
+      "text_ar": "يغير محدد ملف المهمة (اختبار المركبات، القاعدة البشرية، الموارد ISRU، ملاجئ الأنابيب البركانية) الأوزان الداخلية المستخدمة لترتيب المواقع: الانحدار والخشونة، الجليد والمواد المتطايرة، ميكانيكا الحطام الصخري، والتضاريس البركانية والكهوف. يمكن ضبط الأوزان يدوياً من لوحة ضبط الأوزان واستعادتها بزر استعادة الافتراضي."
+    }
+  ],
+  "assistant": {
+    "title_en": "About TerraTwin AI (this chatbot)",
+    "title_ar": "عن مساعد TerraTwin AI (هذا الشات بوت)",
+    "keywords": "chatbot assistant you model qwen groq ai server privacy how work answer",
+    "text_en": "TerraTwin AI is the assistant built into this website. Questions are sent to the TerraTwin server, which retrieves the relevant entries from the platform's verified catalog and asks the Qwen3 language model (served by Groq) to write the answer. Nothing needs to be downloaded or installed. It answers general questions from the model's own knowledge and TerraTwin questions from the catalog, citing the entries it used. If the AI service is unavailable, it answers TerraTwin questions directly from the catalog.",
+    "text_ar": "TerraTwin AI هو المساعد المدمج في هذا الموقع. تُرسل الأسئلة إلى خادم TerraTwin الذي يسترجع البيانات المناسبة من الكتالوج الموثق للمنصة، ثم يطلب من نموذج اللغة Qwen3 (عبر خدمة Groq) كتابة الإجابة. لا حاجة لتحميل أو تثبيت أي شيء. يجيب عن الأسئلة العامة من معرفة النموذج، وعن أسئلة TerraTwin من الكتالوج مع ذكر المصادر التي استخدمها. وإذا تعذر الوصول إلى خدمة الذكاء الاصطناعي، يجيب عن أسئلة TerraTwin مباشرة من الكتالوج."
+  }
+}

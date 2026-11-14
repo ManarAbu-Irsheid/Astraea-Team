@@ -1,0 +1,1933 @@
+/* ==========================================================================
+   TerraTwin - Living Cinematic Space Redesign (Home Page)
+   Living background with parallax starfields, drifting nebula clouds,
+   dynamic active-planet glow, razor-sharp typography, real satellite textures,
+   and responsive cinematic layout.
+   ========================================================================== */
+
+:root {
+  --planet-glow: #a0b2cc;
+}
+
+#sectionExplore {
+  --planet-glow: #a0b2cc;
+  transition: --planet-glow 1s ease;
+}
+
+/* ==========================================================================
+   1. LIVING SPACE BACKGROUND (Fixed, Pointer-Events None, Parallax Layers)
+   ========================================================================== */
+body {
+  background-color: #03060d !important;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.space-living-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Drifting Nebula Clouds (Soft blurred gradients drifting over 60s) */
+.nebula-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.nebula-blue {
+  width: 820px;
+  height: 820px;
+  top: -10%;
+  left: -15%;
+  background: radial-gradient(circle, #0b3a6e 0%, rgba(11, 58, 110, 0.45) 50%, transparent 70%);
+  animation: driftNebulaBlue 60s ease-in-out infinite alternate;
+}
+
+.nebula-teal {
+  width: 780px;
+  height: 720px;
+  bottom: 5%;
+  right: -12%;
+  background: radial-gradient(circle, #d9b77e 0%, rgba(217, 183, 126, 0.35) 45%, transparent 70%);
+  opacity: 0.28;
+  animation: driftNebulaTeal 60s ease-in-out infinite alternate;
+}
+
+.nebula-planet-tint {
+  width: 850px;
+  height: 850px;
+  top: 25%;
+  left: 20%;
+  background: radial-gradient(circle, var(--planet-glow, #a0b2cc) 0%, rgba(160, 178, 204, 0.2) 45%, transparent 68%);
+  opacity: 0.25;
+  transition: background 1s ease;
+  animation: driftNebulaTint 60s ease-in-out infinite alternate;
+}
+
+@keyframes driftNebulaBlue {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 90px) scale(1.12); }
+}
+
+@keyframes driftNebulaTeal {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-90px, -70px) scale(1.08); }
+}
+
+@keyframes driftNebulaTint {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -60px) scale(0.96); }
+}
+
+/* Two Starfield Layers (Far 0.1x parallax, Near 0.3x parallax) */
+.starfield-layer {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: calc(100vh + 1600px);
+  will-change: transform;
+}
+
+.starfield-far {
+  opacity: 0.65;
+  background-image:
+    radial-gradient(1px 1px at 35px 25px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 120px 85px, rgba(160, 220, 255, 0.7), transparent),
+    radial-gradient(1.2px 1.2px at 240px 180px, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(0.8px 0.8px at 360px 95px, rgba(180, 230, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 480px 260px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 610px 140px, rgba(200, 240, 255, 0.7), transparent),
+    radial-gradient(0.8px 0.8px at 730px 320px, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 850px 190px, rgba(160, 220, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 970px 410px, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(0.8px 0.8px at 1120px 220px, rgba(190, 235, 255, 0.5), transparent);
+  background-repeat: repeat;
+  background-size: 520px 520px;
+}
+
+.starfield-near {
+  opacity: 0.9;
+  background-image:
+    radial-gradient(1.8px 1.8px at 75px 120px, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(2px 2px at 210px 340px, rgba(140, 225, 255, 0.9), transparent),
+    radial-gradient(1.6px 1.6px at 390px 160px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(2.2px 2.2px at 540px 420px, rgba(200, 245, 255, 0.95), transparent),
+    radial-gradient(1.8px 1.8px at 690px 250px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 860px 480px, rgba(160, 230, 255, 0.95), transparent),
+    radial-gradient(1.6px 1.6px at 1020px 130px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(2px 2px at 1180px 360px, rgba(220, 250, 255, 0.9), transparent);
+  background-repeat: repeat;
+  background-size: 640px 640px;
+}
+
+/* Staggered Twinkling Star Dots (3s to 6s animation) */
+.twinkle-stars-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.twinkle-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 14px rgba(217, 183, 126, 0.6);
+}
+
+.tk-1 { top: 14%; left: 22%; animation: starTwinkle 4.2s ease-in-out infinite; }
+.tk-2 { top: 26%; left: 78%; animation: starTwinkle 5.4s ease-in-out infinite 1.2s; }
+.tk-3 { top: 44%; left: 16%; animation: starTwinkle 3.8s ease-in-out infinite 0.6s; }
+.tk-4 { top: 58%; left: 86%; animation: starTwinkle 5.8s ease-in-out infinite 2.1s; }
+.tk-5 { top: 72%; left: 28%; animation: starTwinkle 4.5s ease-in-out infinite 1.7s; }
+.tk-6 { top: 82%; left: 72%; animation: starTwinkle 3.6s ease-in-out infinite 2.4s; }
+.tk-7 { top: 18%; left: 58%; animation: starTwinkle 5.0s ease-in-out infinite 3.0s; }
+.tk-8 { top: 90%; left: 42%; animation: starTwinkle 4.7s ease-in-out infinite 0.4s; }
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* Base Page Container */
+.page-container {
+  background: transparent !important;
+  max-width: 1520px;
+  width: min(94%, 1520px);
+  padding: 1rem 1.5rem 3rem 1.5rem;
+  overflow-x: visible;
+}
+
+/* Section Resets (Borderless, transparent, no boxes) */
+.home-hero-section,
+.planet-explorer-station,
+.twin-showcase-container,
+.twin-site-card,
+.twin-comparative-matrix-bar,
+.matrix-metric-item,
+.kpi-counter-bar,
+.kpi-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+
+.planet-explorer-station::before,
+.twin-showcase-container::before,
+.kpi-card::before {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. HERO + 3D EXPLORER (Full-Height Section: min-height 100vh)
+   ========================================================================== */
+.home-hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  padding: 1rem 0 2.5rem 0;
+  position: relative;
+}
+
+/* Intro Header Block */
+.home-intro-block {
+  text-align: center;
+  max-width: 920px;
+  margin: 0 auto 1rem auto;
+  position: relative;
+  z-index: 10;
+}
+
+.home-mission-strip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.home-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 1;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.home-title-container {
+  margin: 0.35rem auto 0.75rem auto;
+}
+
+.home-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.5rem + 2.4vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.18;
+  margin: 0;
+  text-transform: none;
+  /* Holographic gradient + glow, same tokens as every page title */
+  background: var(--heading-gradient) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  filter: var(--heading-glow) !important;
+}
+
+.home-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  opacity: 1;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Planet Station Header (Centered plain text above globe, no box) */
+.planet-explorer-station {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.planet-station-header {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  margin: 1rem 0 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
+}
+
+.planet-header-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.planet-station-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 1;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.planet-station-kicker-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.planet-station-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2vw, 1.95rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  /* Same holographic gradient + glow as the page titles (tokens from main.css) */
+  background: var(--heading-gradient) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  filter: var(--heading-glow);
+  margin: 0;
+  text-transform: none !important;
+}
+
+/* 3D Viewport Stage */
+.planet-3d-stage {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 520px;
+  background: transparent !important;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SIGNATURE: Large Soft Planet Glow Backdrop (Tracks Active Planet) */
+.globe-glow-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  max-width: 82vw;
+  max-height: 82vw;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--planet-glow, #a0b2cc) 0%, rgba(160, 178, 204, 0.22) 42%, transparent 70%);
+  filter: blur(65px);
+  opacity: 0.48;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 1s ease, filter 1s ease, opacity 1s ease;
+}
+
+/* Canvas Container with Lower Gradient Fade Mask */
+#planet3dCanvasContainer {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Planet Selector Tabs (48px Textured Circular Orbs) */
+.planet-tabs-group {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+.planet-tab-btn {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  pointer-events: auto;
+  padding: 0;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planet-tab-btn[data-planet="earth"] {
+  background-image: url('../assets/textures/earth_day_2k.jpg'), url('../assets/textures/earth_atmos_2048.jpg');
+  inset-inline-start: 4.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.planet-tab-btn[data-planet="mars"] {
+  background-image: url('../assets/textures/mars_2k_hd.jpg'), url('../assets/textures/mars_2k.jpg');
+  inset-inline-end: 4.5rem;
+  top: calc(50% - 36px);
+  transform: translateY(-50%);
+}
+
+.planet-tab-btn[data-planet="moon"] {
+  background-image: url('../assets/textures/moon_2k.jpg'), url('../assets/textures/moon_1024.jpg');
+  inset-inline-end: 4.5rem;
+  top: calc(50% + 36px);
+  transform: translateY(-50%);
+}
+
+.planet-tab-btn:hover {
+  transform: translateY(-50%) scale(1.15);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+.planet-tab-btn.active {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(217, 183, 126, 0.35), 0 0 20px rgba(217, 183, 126, 0.7);
+  transform: translateY(-50%) scale(1.12);
+}
+
+.planet-tab-orb {
+  display: none !important;
+}
+
+.planet-tab-name {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.planet-tab-btn:hover .planet-tab-name,
+.planet-tab-btn.active .planet-tab-name {
+  color: var(--accent-cyan);
+}
+
+/* Minimal Side Navigation Arrows (Thin Outline Circles) */
+.planet-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 25;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  padding: 0;
+  box-shadow: none;
+}
+
+.planet-nav-arrow.prev {
+  inset-inline-start: 1rem;
+}
+
+.planet-nav-arrow.next {
+  inset-inline-end: 1rem;
+}
+
+.planet-nav-arrow:hover {
+  background: rgba(217, 183, 126, 0.08) !important;
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 14px rgba(217, 183, 126, 0.4);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Hint Pill */
+.planet-hint-pill {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(3, 7, 16, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  z-index: 15;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.hint-highlight {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* Selected Pin Popup */
+.planet-site-popup {
+  position: absolute;
+  bottom: 2rem;
+  inset-inline-end: 2rem;
+  width: 320px;
+  background: rgba(5, 12, 24, 0.96);
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  z-index: 35;
+  display: none;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), 0 0 24px rgba(217, 183, 126, 0.25);
+  backdrop-filter: blur(16px);
+  animation: popupSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popupSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popup-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.popup-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.popup-close:hover {
+  color: #ffffff;
+}
+
+.popup-site-name {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #e8f4fc !important;
+  margin-bottom: 0.25rem;
+}
+
+.popup-site-coords {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--accent-cyan);
+  margin-bottom: 0.65rem;
+}
+
+.popup-site-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  opacity: 1;
+  margin-bottom: 0.95rem;
+  padding: 0.65rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.popup-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-popup-action {
+  flex: 1;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-popup-action.primary {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.btn-popup-action:hover {
+  border-color: var(--accent-cyan);
+  color: #ffffff;
+}
+
+/* Telemetry Strip Under Globe (Labels 0.8rem, Values 1.1rem in ONE color var(--text-primary)) */
+.planet-telemetry-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  background: transparent !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  margin-top: 1.25rem;
+  padding: 1.5rem 0;
+}
+
+.telemetry-cell {
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  background: transparent !important;
+}
+
+.telemetry-cell:last-child {
+  border-right: none !important;
+}
+
+[dir="rtl"] .telemetry-cell {
+  border-right: none !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[dir="rtl"] .telemetry-cell:last-child {
+  border-left: none !important;
+}
+
+.telemetry-cell-label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem !important;
+  color: var(--text-secondary) !important;
+  opacity: 1 !important;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+.telemetry-cell-val {
+  font-family: var(--font-sans);
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.telemetry-cell-val.highlight {
+  color: var(--text-primary) !important;
+}
+
+/* Small Green Dot before "Passed" Abiotic Gate instead of green text */
+#hudNdviGate::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #86c4a0;
+  box-shadow: 0 0 6px #86c4a0;
+  margin-inline-end: 0.45rem;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   3. TWIN PAIR SECTION (min-height: auto, generous spacing)
+   ========================================================================== */
+.twin-showcase-container {
+  min-height: auto;
+  padding: 48px 0 32px 0;
+  position: relative;
+  overflow: visible;
+  backdrop-filter: none;
+}
+
+.showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.showcase-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sci-badge {
+  font-family: var(--font-sans);
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.showcase-cycle-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.showcase-sync-hint {
+  font-family: var(--font-sans);
+  font-size: 0.875rem !important;
+  color: var(--accent-cyan);
+  background: rgba(217, 183, 126, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(217, 183, 126, 0.25);
+  margin-inline-end: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cycle-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cycle-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(217, 183, 126, 0.4);
+}
+
+.cycle-indicators {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0 0.5rem;
+}
+
+.cycle-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.cycle-indicator-dot.active {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  width: 22px;
+  border-radius: var(--radius-full);
+}
+
+/* Split Grid: Target <-> Central Ring <-> Earth Analog */
+.twin-split-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px minmax(0, 1fr);
+  align-items: center;
+  gap: 2.75rem;
+  position: relative;
+}
+
+/* Signature SVG Orbit Arc (1.5px, rgba(217, 183, 126,0.6), dashed, soft glow) */
+.twin-orbit-svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 240px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.twin-orbit-arc {
+  stroke: rgba(217, 183, 126, 0.6);
+  stroke-width: 1.5px;
+  stroke-dasharray: 6 6;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px rgba(217, 183, 126, 0.8)) drop-shadow(0 0 14px rgba(217, 183, 126, 0.4));
+}
+
+.twin-orbit-dot {
+  fill: #d9b77e;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px #d9b77e) drop-shadow(0 0 18px rgba(217, 183, 126, 0.95));
+}
+
+/* Twin Site Cards - Clean Borderless Layout */
+.twin-site-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.site-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.site-card-name {
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.15rem, 1.4vw, 1.45rem) !important;
+  font-weight: 700 !important;
+  color: #e8f4fc !important;
+  margin-top: 0.25rem;
+}
+
+.site-card-region {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+/* Large Rounded Image with Real Textures & Body Glow */
+.site-visual-preview {
+  height: 240px;
+  border-radius: 20px;
+  background: #020712;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.15rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.target-side .site-visual-preview {
+  border-color: rgba(255, 106, 43, 0.4);
+  box-shadow: 0 14px 44px -10px rgba(255, 106, 43, 0.4), 0 0 24px rgba(255, 106, 43, 0.2);
+}
+
+.earth-side .site-visual-preview {
+  border-color: rgba(160, 178, 204, 0.4);
+  box-shadow: 0 14px 44px -10px rgba(160, 178, 204, 0.4), 0 0 24px rgba(160, 178, 204, 0.2);
+}
+
+.twin-site-card:hover .site-visual-preview {
+  transform: translateY(-4px);
+}
+
+.site-visual-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.twin-site-card:hover .site-visual-bg {
+  transform: scale(1.06);
+}
+
+/* Soft Vignette Overlay */
+.site-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 30%, rgba(2, 7, 18, 0.72) 100%),
+              linear-gradient(180deg, transparent 40%, rgba(2, 7, 18, 0.95) 100%);
+  pointer-events: none;
+}
+
+.site-visual-badge {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.site-card-insight {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  opacity: 1;
+  padding: 0.95rem 0;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Specs Mini Rows: Labels 0.875rem, Values 1rem weight 600, 12px Row Spacing */
+.site-spec-mini-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.25rem;
+  padding: 0;
+}
+
+.spec-mini-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.spec-mini-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 1;
+  font-weight: 500;
+}
+
+.spec-mini-val {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Central Animated Similarity Ring Panel */
+.twin-center-ring-panel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+}
+
+.ring-svg-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.ring-svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.ring-bg-circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 9;
+}
+
+.ring-progress-circle {
+  fill: none;
+  stroke: url(#ringGrad);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 0 10px rgba(217, 183, 126, 0.7));
+}
+
+.ring-content-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-score-number {
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-family: var(--font-sans);
+  color: #ffffff;
+  line-height: 1;
+}
+
+.ring-score-unit {
+  font-size: 1.2rem;
+  color: var(--accent-cyan);
+}
+
+.ring-score-label {
+  font-size: 0.875rem;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  opacity: 1;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.ring-uncertainty {
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem !important;
+  color: var(--accent-cyan);
+  background: rgba(217, 183, 126, 0.1);
+  border: 1px solid rgba(217, 183, 126, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.ring-status-pill {
+  margin-top: 0.65rem;
+  font-size: 0.875rem !important;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  background: rgba(134, 196, 160, 0.12);
+  color: var(--accent-green);
+  border: 1px solid rgba(134, 196, 160, 0.35);
+  border-radius: var(--radius-full);
+}
+
+/* Comparative Physical Alignment Matrix (Labels 0.875rem, Values 1rem weight 600, 12px Spacing) */
+.twin-comparative-matrix-bar {
+  margin-top: 3.5rem;
+  padding: 2.25rem 0 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.matrix-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.matrix-title {
+  font-family: var(--font-display) !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  color: #e8f4fc !important;
+}
+
+.matrix-note {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 1;
+  font-family: var(--font-sans);
+}
+
+.matrix-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+
+.matrix-metric-item {
+  padding: 0 1.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease;
+}
+
+.matrix-metric-item:first-child {
+  padding-inline-start: 0;
+}
+
+.matrix-metric-item:last-child {
+  border-right: none !important;
+  padding-inline-end: 0;
+}
+
+[dir="rtl"] .matrix-metric-item {
+  border-right: none !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[dir="rtl"] .matrix-metric-item:last-child {
+  border-left: none !important;
+}
+
+.metric-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-item-name {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+.metric-match-tag {
+  font-size: 0.875rem !important;
+  font-family: var(--font-sans);
+  color: #86c4a0;
+  font-weight: 700;
+  background: rgba(134, 196, 160, 0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(134, 196, 160, 0.3);
+}
+
+.metric-bar-dual {
+  display: flex;
+  gap: 2px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar-fill.site-a {
+  background: #a0b2cc;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-fill.site-b {
+  background: #d9b77e;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-fill.gate-passed {
+  background: linear-gradient(90deg, #86c4a0, #d9b77e);
+}
+
+.metric-item-vals {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   4. KPI SECTION (Padding ~96px top/bottom, 0.95rem max-width 30ch descriptions)
+   ========================================================================== */
+.kpi-counter-bar {
+  min-height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 96px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.kpi-card {
+  padding: 0 2.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  animation: none !important;
+}
+
+.kpi-card:first-child {
+  padding-inline-start: 0;
+}
+
+.kpi-card:last-child {
+  border-right: none !important;
+  padding-inline-end: 0;
+}
+
+[dir="rtl"] .kpi-card {
+  border-right: none !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[dir="rtl"] .kpi-card:last-child {
+  border-left: none !important;
+}
+
+.kpi-card-number {
+  order: 1;
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 5vw, 4.2rem) !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: none !important;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-card-header {
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  padding: 0 !important;
+}
+
+.kpi-card-label {
+  font-family: var(--font-display) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.kpi-card-icon {
+  width: 22px;
+  height: 22px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  opacity: 0.65;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.kpi-card-desc {
+  order: 3;
+  font-size: 0.95rem !important;
+  line-height: 1.6;
+  max-width: 30ch;
+  color: var(--text-secondary) !important;
+  opacity: 1 !important;
+}
+
+/* ==========================================================================
+   5. MOTION & FIXED DOT NAVIGATION
+   ========================================================================== */
+.cinematic-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fixed Section Dot Navigation */
+.section-dot-nav {
+  position: fixed;
+  inset-inline-end: 1.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  pointer-events: auto;
+}
+
+.section-dot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-direction: row-reverse;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+[dir="rtl"] .section-dot {
+  flex-direction: row;
+}
+
+.dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-dot:hover .dot-indicator,
+.section-dot.active .dot-indicator {
+  background: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+  transform: scale(1.35);
+}
+
+.dot-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .dot-label {
+  transform: translateX(-6px);
+}
+
+.section-dot:hover .dot-label,
+.section-dot.active .dot-label {
+  opacity: 1;
+  transform: translateX(0);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVE (Under 760px)
+   ========================================================================== */
+@media (max-width: 760px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    padding: 0.75rem 1rem 2rem 1rem;
+    overflow-x: hidden;
+  }
+
+  .home-hero-section {
+    min-height: auto;
+    padding: 1rem 0 2rem 0;
+    gap: 1.25rem;
+  }
+
+  .home-title {
+    font-size: 1.75rem !important;
+    line-height: 1.25;
+  }
+
+  .home-desc {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* Globe 50vh */
+  .planet-3d-stage {
+    height: 50vh;
+    min-height: 320px;
+  }
+
+  .globe-glow-backdrop {
+    width: 320px;
+    height: 320px;
+    filter: blur(45px);
+  }
+
+  /* Planet thumbnails in a row under it */
+  .planet-tabs-group {
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    margin: 1.25rem auto 0 auto !important;
+    width: auto !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  .planet-tab-btn {
+    position: static !important;
+    transform: none !important;
+  }
+
+  .planet-tab-btn:hover,
+  .planet-tab-btn.active {
+    transform: scale(1.08) !important;
+  }
+
+  .planet-tab-name {
+    display: none !important;
+  }
+
+  .planet-nav-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.875rem;
+  }
+
+  .planet-nav-arrow.prev { inset-inline-start: 0.5rem; }
+  .planet-nav-arrow.next { inset-inline-end: 0.5rem; }
+
+  .planet-hint-pill {
+    font-size: 0.875rem;
+    padding: 0.35rem 0.85rem;
+    bottom: 0.75rem;
+    gap: 0.5rem;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .planet-site-popup {
+    width: calc(100% - 2rem);
+    inset-inline-end: 1rem;
+    bottom: 1rem;
+    padding: 1rem;
+  }
+
+  /* Telemetry strip: 2 columns */
+  .planet-telemetry-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 0.75rem;
+    padding: 1.25rem 0;
+  }
+
+  .telemetry-cell {
+    border-right: none !important;
+    border-left: none !important;
+    padding: 0;
+  }
+
+  /* Twin Pair Stacked: Target, Ring in middle, Earth */
+  .twin-showcase-container {
+    padding: 32px 0 20px 0;
+  }
+
+  .showcase-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .showcase-cycle-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .showcase-sync-hint {
+    margin-inline-end: 0;
+    font-size: 0.875rem !important;
+    text-align: center;
+  }
+
+  .twin-split-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  .twin-site-card.target-side {
+    order: 1;
+  }
+
+  .twin-center-ring-panel {
+    order: 2;
+    margin: 0 auto;
+  }
+
+  .twin-site-card.earth-side {
+    order: 3;
+  }
+
+  .site-visual-preview {
+    height: 180px;
+    border-radius: 16px;
+  }
+
+  /* Orbit arc hidden on mobile */
+  .twin-orbit-svg {
+    display: none !important;
+  }
+
+  /* Matrix: stacked */
+  .twin-comparative-matrix-bar {
+    margin-top: 2.5rem;
+    padding: 1.75rem 0 0.5rem 0;
+  }
+
+  .matrix-metrics-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .matrix-metric-item {
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 0 0 1rem 0 !important;
+  }
+
+  .matrix-metric-item:last-child {
+    border-bottom: none !important;
+  }
+
+  /* KPIs stacked with thin lines between */
+  .kpi-counter-bar {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 56px 0;
+  }
+
+  .kpi-card {
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 1.75rem 0 !important;
+  }
+
+  .kpi-card:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Fixed dot nav hidden on mobile */
+  .section-dot-nav {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   7. HIGH-CONTRAST PROFESSIONAL LIGHT MODE OVERRIDES
+   ========================================================================== */
+[data-theme="light"] body {
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light"] .starfield-layer,
+[data-theme="light"] .twinkle-stars-layer {
+  display: none !important;
+}
+
+[data-theme="light"] .nebula-blue {
+  background: radial-gradient(circle, rgba(11, 58, 110, 0.12) 0%, transparent 70%);
+  opacity: 0.15;
+}
+
+[data-theme="light"] .nebula-teal {
+  background: radial-gradient(circle, rgba(217, 183, 126, 0.1) 0%, transparent 70%);
+  opacity: 0.12;
+}
+
+[data-theme="light"] .nebula-planet-tint {
+  opacity: 0.14;
+}
+
+[data-theme="light"] .globe-glow-backdrop {
+  opacity: 0.18;
+  filter: blur(75px);
+}
+
+[data-theme="light"] .home-title {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .home-desc {
+  color: #1e293b !important;
+}
+
+[data-theme="light"] .planet-station-title {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .planet-station-kicker {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .planet-hint-pill {
+  background: rgba(255, 255, 255, 0.92);
+  color: #091322;
+  border-color: rgba(15, 23, 42, 0.15);
+}
+
+[data-theme="light"] .planet-telemetry-strip,
+[data-theme="light"] .telemetry-cell,
+[data-theme="light"] .showcase-header,
+[data-theme="light"] .site-card-insight,
+[data-theme="light"] .spec-mini-item,
+[data-theme="light"] .twin-comparative-matrix-bar,
+[data-theme="light"] .matrix-bar-header,
+[data-theme="light"] .matrix-metric-item,
+[data-theme="light"] .kpi-counter-bar,
+[data-theme="light"] .kpi-card {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .telemetry-cell-label {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .telemetry-cell-val {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .site-card-name {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .site-card-region {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .spec-mini-label {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .spec-mini-val {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .matrix-title {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .matrix-note {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .metric-item-name {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .metric-item-vals {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .ring-score-number {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .ring-score-label {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .ring-bg-circle {
+  stroke: rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .kpi-card-number {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .kpi-card-label {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .kpi-card-desc {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .planet-nav-arrow {
+  border-color: rgba(15, 23, 42, 0.25) !important;
+  color: #091322 !important;
+}
+
+[data-theme="light"] .planet-nav-arrow:hover {
+  border-color: var(--accent-blue) !important;
+  color: var(--accent-blue) !important;
+  background: rgba(2, 132, 199, 0.08) !important;
+}
+
+[data-theme="light"] .section-dot .dot-indicator {
+  background: rgba(15, 23, 42, 0.25);
+  border-color: rgba(15, 23, 42, 0.4);
+}
+
+[data-theme="light"] .section-dot:hover .dot-indicator,
+[data-theme="light"] .section-dot.active .dot-indicator {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.5);
+}
+
+[data-theme="light"] .section-dot:hover .dot-label,
+[data-theme="light"] .section-dot.active .dot-label {
+  color: #091322 !important;
+}
+
+[data-theme="light"] .twin-orbit-arc {
+  stroke: rgba(2, 132, 199, 0.7);
+  filter: drop-shadow(0 0 4px rgba(2, 132, 199, 0.5));
+}
+
+[data-theme="light"] .twin-orbit-dot {
+  fill: #0284c7;
+  filter: drop-shadow(0 0 6px #0284c7);
+}
+
+/* ==========================================================================
+   8. REDUCED MOTION PREFERENCES
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cinematic-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .twin-orbit-dot {
+    display: none !important;
+  }
+
+  #planet3dCanvasContainer {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .nebula-cloud,
+  .twinkle-dot {
+    animation: none !important;
+  }
+
+  .site-visual-preview,
+  .site-visual-bg,
+  .planet-tab-btn,
+  .planet-nav-arrow {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   ORBITAL PLANET CAROUSEL (desktop / tablet, 761px and up)
+   Back arc of the orbit sits behind the 3D globe, front arc passes in front.
+   The two inactive planets wait on the back of the orbit, smaller and blurred.
+   ========================================================================== */
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  display: none;
+}
+
+.orbit-ring--back { z-index: 1; }
+.orbit-ring--front { z-index: 4; }
+
+.orbit-path {
+  fill: none;
+  stroke: rgba(217, 183, 126, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 8;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(217, 183, 126, 0.55));
+  animation: orbitDashFlow 30s linear infinite;
+}
+
+.orbit-ring--front .orbit-path {
+  stroke: rgba(217, 183, 126, 0.55);
+}
+
+@keyframes orbitDashFlow {
+  to { stroke-dashoffset: -280; }
+}
+
+.planet-3d-stage.orbit-mode .orbit-ring { display: block; }
+
+.planet-3d-stage.orbit-mode .planet-tabs-group {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: auto !important;
+  display: block !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+.planet-3d-stage.orbit-mode .planet-tab-btn,
+.planet-3d-stage.orbit-mode .planet-tab-btn[data-planet] {
+  position: absolute !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: var(--orbit-size, 96px) !important;
+  height: var(--orbit-size, 96px) !important;
+  min-width: 0 !important;
+  border: none !important;
+  box-shadow: inset -14px -10px 28px rgba(0, 0, 0, 0.75), 0 0 24px rgba(0, 0, 0, 0.45) !important;
+  filter: blur(2px) brightness(0.6);
+  transition: filter 0.3s ease, box-shadow 0.3s ease !important;
+  will-change: left, top, transform, opacity;
+}
+
+.planet-3d-stage.orbit-mode .planet-tab-btn:hover,
+.planet-3d-stage.orbit-mode .planet-tab-btn:focus-visible {
+  filter: blur(0) brightness(0.92);
+  box-shadow: inset -14px -10px 28px rgba(0, 0, 0, 0.6), 0 0 22px rgba(217, 183, 126, 0.45) !important;
+  outline: none;
+}
+
+.planet-3d-stage.orbit-mode .planet-tab-name {
+  display: block !important;
+  bottom: auto;
+  top: calc(100% + 8px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.planet-3d-stage.orbit-mode .planet-tab-btn:hover .planet-tab-name,
+.planet-3d-stage.orbit-mode .planet-tab-btn:focus-visible .planet-tab-name {
+  opacity: 1;
+  color: var(--accent-cyan);
+}
+
+[data-theme="light"] .orbit-path {
+  stroke: rgba(0, 119, 204, 0.5);
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-path { animation: none; }
+}
+
+
+/* ==========================================================================
+   MOVING STARS
+   The two star layers drift slowly (background-position, so it does not
+   clash with the scroll parallax that uses transform). Near stars move faster
+   than far ones for depth. Shooting stars are added by js/home.js.
+   ========================================================================== */
+.starfield-far {
+  animation: starDriftFar 240s linear infinite;
+}
+
+.starfield-near {
+  animation: starDriftNear 140s linear infinite;
+}
+
+@keyframes starDriftFar {
+  from { background-position: 0 0; }
+  to   { background-position: -520px 260px; }
+}
+
+@keyframes starDriftNear {
+  from { background-position: 0 0; }
+  to   { background-position: -640px 320px; }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(217, 183, 126, 0.45) 40%, transparent);
+  filter: drop-shadow(0 0 6px rgba(160, 230, 255, 0.8));
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+  animation: shootingStar 1.3s ease-out forwards;
+}
+
+@keyframes shootingStar {
+  0%   { opacity: 0; transform: rotate(var(--angle, 155deg)) translateX(0) scaleX(0.3); }
+  12%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--angle, 155deg)) translateX(var(--distance, 420px)) scaleX(1); }
+}
+
+[data-theme="light"] .shooting-star { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield-far,
+  .starfield-near { animation: none; }
+  .shooting-star { display: none; }
+}
+
+/* ring glow: let the glow spread past the SVG box (it was cut into a square) */
+.ring-svg { overflow: visible; }
+
+/* prev/next arrows removed: the side planets on the orbit are the buttons */
+.planet-nav-arrow { display: none !important; }

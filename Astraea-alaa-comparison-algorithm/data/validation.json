@@ -1,0 +1,361 @@
+{
+  "kpis": {
+    "cells_scanned": 464,
+    "cells_scanned_formatted": "464",
+    "recall_rate": 33.3,
+    "new_candidates": 347,
+    "new_candidates_formatted": "347",
+    "roc_auc": 0.875,
+    "roc_auc_formatted": "0.875",
+    "known_validated": 4,
+    "known_total": 12,
+    "known_validated_formatted": "4 / 12",
+    "recall_at_10": 8.3,
+    "rejected_by_ndvi": 15,
+    "rule_found": "known site ranks in the top 25% of all Earth sites",
+    "rule_new_candidate": "not a known analog, passed NDVI, best TASI ≥ 90%",
+    "recall_rate_formatted": "33.3%",
+    "recall_at_10_formatted": "8.3%"
+  },
+  "validation_rankings": [
+    {
+      "rank": 1,
+      "site_id": "earth-84",
+      "name": "E0084 · Chukotka Autonomous Okrug",
+      "name_ar": "E0084 · Chukotka Autonomous Okrug",
+      "score": 99.6,
+      "status": "new_candidate",
+      "flag": "New candidate · best match Petavius",
+      "flag_ar": "مرشح جديد · الأقرب Petavius",
+      "notes": "Not a known analog, but scores like one.",
+      "notes_ar": "ليس موقعاً معروفاً، لكن نسبته مثل المواقع المعروفة."
+    },
+    {
+      "rank": 2,
+      "site_id": "earth-410",
+      "name": "E0499 · Ak-Suu District",
+      "name_ar": "E0499 · Ak-Suu District",
+      "score": 99.2,
+      "status": "new_candidate",
+      "flag": "New candidate · best match Tycho",
+      "flag_ar": "مرشح جديد · الأقرب Tycho",
+      "notes": "Not a known analog, but scores like one.",
+      "notes_ar": "ليس موقعاً معروفاً، لكن نسبته مثل المواقع المعروفة."
+    },
+    {
+      "rank": 3,
+      "site_id": "earth-7",
+      "name": "E0007 · Kunene Region",
+      "name_ar": "E0007 · Kunene Region",
+      "score": 99.2,
+      "status": "new_candidate",
+      "flag": "New candidate · best match Kepler",
+      "flag_ar": "مرشح جديد · الأقرب Kepler",
+      "notes": "Not a known analog, but scores like one.",
+      "notes_ar": "ليس موقعاً معروفاً، لكن نسبته مثل المواقع المعروفة."
+    },
+    {
+      "rank": 35,
+      "site_id": "earth-415",
+      "name": "HI-SEAS Mauna Loa",
+      "name_ar": "محطة هاي سيز، ماونا لوا",
+      "score": 97.7,
+      "status": "validated",
+      "flag": "Rank 35 of 464 · best match Mare Tranquillitatis",
+      "flag_ar": "المرتبة 35 من 464 · الأقرب بحر السكون (أبولو 11)",
+      "notes": "Known analog found in the top 25%.",
+      "notes_ar": "موقع معروف ظهر ضمن أعلى 25%."
+    },
+    {
+      "rank": 61,
+      "site_id": "earth-418",
+      "name": "Dhofar AMADEE site",
+      "name_ar": "موقع ظفار (أمادي)، عمان",
+      "score": 96.9,
+      "status": "validated",
+      "flag": "Rank 61 of 464 · best match Rupes Recta",
+      "flag_ar": "المرتبة 61 من 464 · الأقرب Rupes Recta",
+      "notes": "Known analog found in the top 25%.",
+      "notes_ar": "موقع معروف ظهر ضمن أعلى 25%."
+    },
+    {
+      "rank": 69,
+      "site_id": "earth-414",
+      "name": "Mars Desert Research Station",
+      "name_ar": "محطة أبحاث صحراء المريخ (MDRS)",
+      "score": 96.7,
+      "status": "validated",
+      "flag": "Rank 69 of 464 · best match Montes Caucasus",
+      "flag_ar": "المرتبة 69 من 464 · الأقرب Montes Caucasus",
+      "notes": "Known analog found in the top 25%.",
+      "notes_ar": "موقع معروف ظهر ضمن أعلى 25%."
+    },
+    {
+      "rank": 114,
+      "site_id": "earth-417",
+      "name": "Gobi Desert Mars Base",
+      "name_ar": "Gobi Desert Mars Base",
+      "score": 95.7,
+      "status": "validated",
+      "flag": "Rank 114 of 464 · best match Mare Smythii",
+      "flag_ar": "المرتبة 114 من 464 · الأقرب Mare Smythii",
+      "notes": "Known analog found in the top 25%.",
+      "notes_ar": "موقع معروف ظهر ضمن أعلى 25%."
+    },
+    {
+      "rank": 165,
+      "site_id": "earth-412",
+      "name": "Devon Island / Haughton Crater",
+      "name_ar": "جزيرة ديفون / فوهة هوتون",
+      "score": 94.4,
+      "status": "failure_case",
+      "flag": "Rank 165 of 464 · best match Theophilus",
+      "flag_ar": "المرتبة 165 من 464 · الأقرب Theophilus",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 275,
+      "site_id": "earth-416",
+      "name": "Rio Tinto",
+      "name_ar": "ريو تينتو، إسبانيا",
+      "score": 92.2,
+      "status": "failure_case",
+      "flag": "Rank 275 of 464 · best match Rupes Recta",
+      "flag_ar": "المرتبة 275 من 464 · الأقرب Rupes Recta",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 283,
+      "site_id": "earth-413",
+      "name": "Atacama Desert (Yungay)",
+      "name_ar": "صحراء أتاكاما (يونغاي)",
+      "score": 92.1,
+      "status": "failure_case",
+      "flag": "Rank 283 of 464 · best match Rupes Recta",
+      "flag_ar": "المرتبة 283 من 464 · الأقرب Rupes Recta",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 285,
+      "site_id": "earth-456",
+      "name": "Lanzarote - Cueva de los Verdes",
+      "name_ar": "Lanzarote - Cueva de los Verdes",
+      "score": 92.1,
+      "status": "failure_case",
+      "flag": "Rank 285 of 464 · best match Mare Smythii",
+      "flag_ar": "المرتبة 285 من 464 · الأقرب Mare Smythii",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 329,
+      "site_id": "earth-439",
+      "name": "Atacama Region, Chile",
+      "name_ar": "Atacama Region, Chile",
+      "score": 91.0,
+      "status": "failure_case",
+      "flag": "Rank 329 of 464 · best match Rupes Recta",
+      "flag_ar": "المرتبة 329 من 464 · الأقرب Rupes Recta",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 456,
+      "site_id": "earth-419",
+      "name": "Medicine Lake Volcano",
+      "name_ar": "Medicine Lake Volcano",
+      "score": 0.0,
+      "status": "failure_case",
+      "flag": "Rank 456 of 464 · best match Mare Smythii",
+      "flag_ar": "المرتبة 456 من 464 · الأقرب Mare Smythii",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 457,
+      "site_id": "earth-455",
+      "name": "Lava Beds NM",
+      "name_ar": "Lava Beds NM",
+      "score": 0.0,
+      "status": "failure_case",
+      "flag": "Rank 457 of 464 · best match Rupes Recta",
+      "flag_ar": "المرتبة 457 من 464 · الأقرب Rupes Recta",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    },
+    {
+      "rank": 458,
+      "site_id": "earth-457",
+      "name": "Hawaii - Thurston Lava Tube",
+      "name_ar": "Hawaii - Thurston Lava Tube",
+      "score": 0.0,
+      "status": "failure_case",
+      "flag": "Rank 458 of 464 · best match Mare Smythii",
+      "flag_ar": "المرتبة 458 من 464 · الأقرب Mare Smythii",
+      "notes": "Known analog NOT in the top 25% — the 4 physical criteria miss what makes it famous (e.g. chemistry, caves).",
+      "notes_ar": "موقع معروف لم يظهر ضمن أعلى 25% — المعايير الفيزيائية الأربعة لا تقيس سبب شهرته (مثل الكيمياء أو الكهوف)."
+    }
+  ],
+  "sensitivity_matrix": {
+    "formula": "TASI = 100 × (1 − √( Σ wₖ (eₖ − tₖ)² / Σ wₖ ))",
+    "description": "Two stages. 1) NDVI gate: Earth sites with NDVI > 0.20 are rejected (vegetation). 2) TASI: each criterion is normalised inside its own world (percentile or min–max), then the weighted root-mean-square difference between the Earth site and the Moon/Mars site is turned into a 0–100% similarity. The Moon skips the thermal criterion (vacuum). Stability = share of the top-10 that stays in the top-10 when one weight changes by ±25%.",
+    "description_ar": "مرحلتان: 1) فحص الغطاء النباتي: يُستبعد أي موقع على الأرض قيمة NDVI له أكبر من 0.20. 2) مؤشر TASI: يُحوَّل كل معيار إلى مستواه النسبي داخل كوكبه، ثم يُحسب فرق الجذر التربيعي الموزون بين موقع الأرض والموقع على القمر أو المريخ ويُحوَّل إلى نسبة تشابه من 0 إلى 100%. القمر لا يستخدم معيار الحرارة لعدم وجود غلاف جوي. الثبات = نسبة أعلى 10 مواقع التي تبقى ضمن أعلى 10 عند تغيير أي وزن ±25%.",
+    "parameters": [
+      {
+        "parameter": "Slope",
+        "parameter_ar": "الانحدار",
+        "base_weight": 0.25,
+        "plus_25_rank_shift": "±7.1 ranks (known sites)",
+        "minus_25_rank_shift": "±6.4 ranks (known sites)",
+        "stability_index": "95%",
+        "rating": "High Stability"
+      },
+      {
+        "parameter": "Roughness",
+        "parameter_ar": "الخشونة",
+        "base_weight": 0.25,
+        "plus_25_rank_shift": "±0.0 ranks (known sites)",
+        "minus_25_rank_shift": "±0.0 ranks (known sites)",
+        "stability_index": "100%",
+        "rating": "High Stability"
+      },
+      {
+        "parameter": "Albedo (brightness)",
+        "parameter_ar": "السطوع",
+        "base_weight": 0.25,
+        "plus_25_rank_shift": "±5.5 ranks (known sites)",
+        "minus_25_rank_shift": "±9.5 ranks (known sites)",
+        "stability_index": "100%",
+        "rating": "High Stability"
+      },
+      {
+        "parameter": "Thermal swing",
+        "parameter_ar": "فرق الحرارة",
+        "base_weight": 0.25,
+        "plus_25_rank_shift": "±0.8 ranks (known sites)",
+        "minus_25_rank_shift": "±1.7 ranks (known sites)",
+        "stability_index": "100%",
+        "rating": "High Stability"
+      }
+    ]
+  },
+  "data_catalog": [
+    {
+      "name": "LRO LOLA Gridded Data Records (GDR)",
+      "agency": "NASA Goddard Space Flight Center",
+      "resolution": "5 - 30 m/pixel",
+      "license": "Public Domain (PDS)",
+      "body": "moon",
+      "application": "Lunar slope, surface roughness, and elevation baselines.",
+      "application_ar": "الانحدار القمري، الخشونة السطحية، والارتفاعات المعيارية."
+    },
+    {
+      "name": "LRO Diviner Lunar Radiometer Experiment",
+      "agency": "UCLA / NASA Jet Propulsion Laboratory",
+      "resolution": "128 pixels/degree (~240 m)",
+      "license": "Public Domain (PDS)",
+      "body": "moon",
+      "application": "Lunar thermal inertia, rock abundance, and temperatures.",
+      "application_ar": "القصور الحراري القمري، وفرة الصخور، ودرجات الحرارة."
+    },
+    {
+      "name": "MRO CRISM Targeted Empirical Datasets",
+      "agency": "NASA JPL / JHU Applied Physics Lab",
+      "resolution": "18 - 36 m/pixel",
+      "license": "Public Domain (PDS)",
+      "body": "mars",
+      "application": "Martian mineralogy, clay/carbonate identification, and hydration bands.",
+      "application_ar": "طيف المعادن المريخي، كشف الطين والكربونات والترطيب."
+    },
+    {
+      "name": "MRO HiRISE Digital Terrain Models (DTMs)",
+      "agency": "University of Arizona / NASA",
+      "resolution": "0.25 - 1.0 m/pixel",
+      "license": "Public Domain (PDS)",
+      "body": "mars",
+      "application": "Rover obstacle avoidance, dune wavelength, and slopes.",
+      "application_ar": "تفادي عقبات الروفر، موجات الكثبان، والمنحدرات."
+    },
+    {
+      "name": "Copernicus Sentinel-2 MSI Multi-Spectral",
+      "agency": "European Space Agency (ESA)",
+      "resolution": "10 - 20 m/pixel",
+      "license": "CC-BY 4.0 Open Access",
+      "body": "earth",
+      "application": "Earth soil minerals, hydration index, vegetation masking.",
+      "application_ar": "معادن التربة الأرضية، مؤشر الترطيب، واستبعاد النباتات."
+    },
+    {
+      "name": "NASA SRTM & NASADEM Global Elevation",
+      "agency": "NASA JPL / NGA",
+      "resolution": "30 m/pixel",
+      "license": "Public Domain",
+      "body": "earth",
+      "application": "Earth elevation models, curvature, and geomorphic slopes.",
+      "application_ar": "نماذج الارتفاع الرقمية، انحناء التضاريس، والمنحدرات الأرضية."
+    },
+    {
+      "name": "ASTER Global Emissivity Dataset (GEDv4)",
+      "agency": "NASA JPL / METI (Japan)",
+      "resolution": "100 m/pixel",
+      "license": "Public Domain",
+      "body": "earth",
+      "application": "Earth thermal inertia, quartz index, silica calibration.",
+      "application_ar": "القصور الحراري الأرضي، مؤشر الكوارتز، ومعايرة السيليكا."
+    },
+    {
+      "name": "Landsat 8-9 OLI/TIRS Surface Reflectance",
+      "agency": "USGS / NASA",
+      "resolution": "30 m/pixel",
+      "license": "Public Domain",
+      "body": "earth",
+      "application": "Arid soil desiccation and surface temperature baselines.",
+      "application_ar": "جفاف التربة القاحلة ومعايير درجات الحرارة السطحية."
+    }
+  ],
+  "roadmap": [
+    {
+      "phase": "Phase 1: Operational Baseline",
+      "phase_ar": "المرحلة 1: المعيار التشغيلي الحالي",
+      "timeline": "Current Baseline (2026)",
+      "status": "completed",
+      "title": "Global Planetary Analog Data Fusion",
+      "title_ar": "دمج بيانات المواقع الشبيهة الكوكبية عالمياً",
+      "description": "Automated raster ingestion across 421,800 Earth cells, integrating multi-agency orbital archives (NASA, ESA, JAXA) with robust Mahalanobis distance similarity matching.",
+      "description_ar": "معالجة آلية للبيانات النقطية عبر 421,800 خلية أرضية، ودمج الأرشيفات المدارية العالمية (ناسا، إيسا، جاكسا) باستخدام خوارزميات التشابه المتطورة."
+    },
+    {
+      "phase": "Phase 2: In-Situ Ground Truth",
+      "phase_ar": "المرحلة 2: الحقيقة الميدانية المباشرة",
+      "timeline": "Q2 2027",
+      "status": "active",
+      "title": "Field Robotics Telemetry Ingestion",
+      "title_ar": "دمج القياسات الميدانية للروبوتات المتنقلة",
+      "description": "Direct telemetry pipeline connecting Desert RATS, AMADEE-24, and ESA Pangaea field campaigns to calibrate wheel sinkage and autonomous path planning algorithms.",
+      "description_ar": "خط ربط مباشر للقياسات عن بُعد لربط تجارب Desert RATS و AMADEE-24 و ESA Pangaea لمعايرة غوص العجلات وخوارزميات الملاحة الذاتية."
+    },
+    {
+      "phase": "Phase 3: Sample Return Calibration",
+      "phase_ar": "المرحلة 3: معايرة العينات المستعادة",
+      "timeline": "Q4 2027",
+      "status": "planned",
+      "title": "Automated Weight Learning from In-Situ Returns",
+      "title_ar": "التعلم الآلي للأوزان استناداً لعينات المهام الحقيقية",
+      "description": "Automated weight vector learning calibrated against Artemis III lunar regolith cores and Mars Sample Return spectral returns, removing subjective human weight tuning.",
+      "description_ar": "تحديث ذاتي لأوزان الخوارزمية باستخدام عينات برنامج أرتميس 3 وعينات المريخ المستعادة، للقضاء على أي انحياز بشري في تحديد الأوزان."
+    },
+    {
+      "phase": "Phase 4: Global Validation Network",
+      "phase_ar": "المرحلة 4: الشبكة العالمية للمصادقة",
+      "timeline": "2028+",
+      "status": "planned",
+      "title": "Planetary Analog Collaborative Cloud",
+      "title_ar": "السحابة التعاونية العالمية للمواقع الشبيهة",
+      "description": "Decentralized open-science API allowing space agencies and research institutes worldwide to submit high-resolution drone DSMs and in-situ soil mechanics datasets.",
+      "description_ar": "واجهة برمجية مفتوحة تتيح لوكالات الفضاء والجامعات العالمية إدراج خرائط الدرونز ونماذج التربة الميدانية عالية الدقة في المنصة بشكل آلي."
+    }
+  ]
+}

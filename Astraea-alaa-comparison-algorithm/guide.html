@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraTwin — Mission Purpose, Ethics & Platform Guide</title>
+  <meta name="description" content="Mission purpose, scientific ethics charter, abiotic gate framework, and comprehensive user guide for TerraTwin.">
+  
+  <!-- Typography (Orbitron, IBM Plex Sans Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/astrabot.css">
+  <link rel="stylesheet" href="css/guide.css">
+  <link rel="stylesheet" href="css/space-bg.css">
+  <link rel="stylesheet" href="css/section-dots.css">
+  <link rel="stylesheet" href="css/luxe.css">
+  <link rel="stylesheet" href="css/fonts.css">
+</head>
+<body>
+  <!-- Visually hidden skip link for keyboard accessibility -->
+  <a href="#main-content" class="skip-link" data-i18n="nav.skip_link">Skip to main content</a>
+
+  <!-- ==========================================================================
+       PERSISTENT NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link" title="TerraTwin Home">
+        <div class="brand-logo-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+            <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-title">TerraTwin<span class="brand-dot"></span></span>
+          <span class="brand-subtitle" data-i18n="nav.brand_subtitle">Planetary Analog Intelligence</span>
+        </div>
+      </a>
+
+      <!-- Page Links (5 Pages) -->
+      <nav class="main-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-page="home" data-i18n="nav.home">Home</a>
+        <a href="finder.html" class="nav-link" data-page="finder" data-i18n="nav.finder">Site Finder</a>
+        <a href="compare.html" class="nav-link" data-page="compare" data-i18n="nav.compare">Compare Sites</a>
+        <a href="evidence.html" class="nav-link" data-page="evidence" data-i18n="nav.evidence">Evidence & Method</a>
+        <a href="guide.html" class="nav-link" data-page="guide" data-i18n="nav.guide">Guide</a>
+      </nav>
+
+      <!-- Header Controls: Mission Profile, Lang, Tour, Theme -->
+      <div class="header-actions">
+        
+        <!-- Mission Profile Selector Badge & Dropdown -->
+        <div class="profile-selector-container">
+          <button class="profile-badge-btn" id="profileBadgeBtn" aria-haspopup="true" aria-expanded="false" title="Configure Mission Profile & Weights">
+            <span class="profile-indicator-dot"></span>
+            <span id="activeProfileLabel">TASI Baseline</span>
+            <span class="profile-chevron">▼</span>
+          </button>
+
+          <!-- Dropdown Panel (Internal weights sliders editable exclusively inside) -->
+          <div class="profile-dropdown-panel" id="profileDropdownPanel">
+            <div class="profile-panel-header">
+              <span class="profile-panel-title" id="profilePanelTitle">Mission Profile</span>
+            </div>
+
+            <p class="caption" id="profilePanelSubtitle" data-i18n="nav.profile_helper">Choose a mission type — it changes how much each criterion counts in every score.</p>
+            <div class="profile-options-grid">
+              <button class="profile-option-btn active" data-profile="tasi">TASI Baseline</button>
+              <button class="profile-option-btn" data-profile="rover">Rover Traverse</button>
+              <button class="profile-option-btn" data-profile="landing">Landing Site</button>
+              <button class="profile-option-btn" data-profile="thermal">Habitat &amp; Thermal</button>
+              <button class="profile-option-btn" data-profile="optics">Optics &amp; Solar</button>
+            </div>
+
+            <div class="weights-section-title">
+              <span id="weightsSectionTitle">Criteria Weights</span>
+            </div>
+
+            <!-- Weight sliders: the 4 criteria available in the real dataset -->
+            <div class="weight-slider-group" id="weightGroup_slope">
+              <div class="weight-slider-header">
+                <span id="weightLabel_slope">Slope</span>
+                <span class="weight-val" id="weightVal_slope">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_slope" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_roughness">
+              <div class="weight-slider-header">
+                <span id="weightLabel_roughness">Roughness</span>
+                <span class="weight-val" id="weightVal_roughness">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_roughness" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_albedo">
+              <div class="weight-slider-header">
+                <span id="weightLabel_albedo">Albedo (brightness)</span>
+                <span class="weight-val" id="weightVal_albedo">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_albedo" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <div class="weight-slider-group" id="weightGroup_thermal">
+              <div class="weight-slider-header">
+                <span id="weightLabel_thermal">Thermal Swing</span>
+                <span class="weight-val" id="weightVal_thermal">25%</span>
+              </div>
+              <input type="range" class="weight-slider" id="weightSlider_thermal" min="0.05" max="0.70" step="0.05" value="0.25">
+            </div>
+
+            <button class="weights-reset-btn" id="resetWeightsBtn">Reset Defaults</button>
+          </div>
+        </div>
+
+        <!-- Language Switcher [ EN | AR ] -->
+
+        <!-- Page Tour button ("?"): replays the 3-step guided tour -->
+        <button class="btn-control tour-help-btn" id="tourGuideBtn" title="Page Tour / جولة الصفحة" aria-label="Page Tour">?</button>
+
+        <!-- User Profile Badge & Dropdown -->
+        <div class="user-profile-container">
+          <!-- Guest Sign In / Register Button (Visible when not logged in) -->
+          <a href="login.html" class="nav-auth-login-btn" id="navAuthLoginBtn">
+            <span class="auth-btn-text auth-btn-text-full" data-i18n="auth.nav_login_btn">تسجيل الدخول / إنشاء حساب</span>
+            <span class="auth-btn-text auth-btn-text-short" data-i18n="auth.nav_login_btn_short">دخول</span>
+          </a>
+
+          <!-- User Profile Badge & Dropdown (Visible only when logged in) -->
+          <button class="user-profile-btn" id="userProfileBtn" aria-haspopup="true" aria-expanded="false" title="Researcher Profile" style="display: none;">
+            <div class="user-avatar-badge">
+              <span class="user-status-dot" title="Status: Online"></span>
+            </div>
+            <div class="user-meta-text">
+              <span class="user-display-name" data-i18n="nav.user_name">Dr. Researcher</span>
+            </div>
+            <span class="profile-chevron">▼</span>
+          </button>
+          
+          <div class="user-profile-dropdown" id="userProfileDropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar"></div>
+              <div class="user-dropdown-info">
+                <div class="user-dropdown-name" data-i18n="nav.user_name">Dr. Researcher</div>
+                <div class="user-dropdown-role">Planetary Analog Specialist</div>
+                <div class="user-dropdown-email">researcher@astraea.space</div>
+              </div>
+            </div>
+            <div class="user-dropdown-badge-strip">
+              <span class="sci-badge validated">LEVEL-4 ACCESS</span>
+              <span class="sci-badge mars">ORBITAL DATA</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            
+            <div class="user-dropdown-row">
+              <span class="dropdown-row-label">Data Clearance:</span>
+              <span class="dropdown-row-val" style="color:var(--accent-green);">NASA PDS / ESA Sentinel</span>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-links">
+              <a href="finder.html" class="user-dropdown-link">🗺️ Site Finder Dashboard</a>
+              <a href="compare.html" class="user-dropdown-link">⚖️ Benchmark Comparison</a>
+              <a href="evidence.html#dataCatalogSection" class="user-dropdown-link">📑 Catalog & Datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Dots Quick Settings Menu [ ⋮ ] (De-clutter top bar) -->
+        <div class="kebab-menu-container">
+          <button class="btn-control btn-kebab" id="kebabMenuBtn" aria-haspopup="true" aria-expanded="false" title="More Quick Controls">
+            <span class="kebab-icon-dots">⋮</span>
+          </button>
+          
+          <div class="kebab-dropdown-panel" id="kebabDropdownPanel">
+            <div class="kebab-panel-header" data-i18n="nav.kebab_header">Quick Controls</div>
+            <button class="kebab-item-btn" id="kebabProfileBtn" style="display: none;">
+              <span class="kebab-item-icon">👤</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_profile">Researcher Profile & Level</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabTourBtn">
+              <span class="kebab-item-icon">🧭</span>
+              <span class="kebab-item-text" data-i18n="nav.tour_btn">? Page Guided Tour</span>
+            </button>
+            <button class="kebab-item-btn" id="kebabContactBtn">
+              <span class="kebab-item-icon">📬</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_contact">Contact Science Team</span>
+            </button>
+            <div class="kebab-divider"></div>
+            <button class="kebab-item-btn" id="kebabChatbotBtn">
+              <span class="kebab-item-icon">🤖</span>
+              <span class="kebab-item-text" data-i18n="nav.kebab_ai">AI Science Assistant</span>
+            </button>
+            <a href="login.html" class="kebab-item-btn" id="kebabAuthBtn">
+              <span class="kebab-item-text" data-i18n="nav.kebab_auth">Account & Sign In</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hidden Theme trigger for compatibility with existing scripts -->
+        <button class="btn-control" id="themeToggleBtn" style="display:none;" aria-hidden="true"></button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT: GUIDE & ETHICS
+       ========================================================================== -->
+  <main class="page-container" id="main-content">
+    
+    <!-- Hero Header -->
+    <section class="guide-hero">
+      <div class="guide-twin-bg" aria-hidden="true">
+        <svg class="gt-arc" viewBox="0 0 1000 300" preserveAspectRatio="none">
+          <path id="gtPath" d="M 125 150 Q 500 330 875 150" />
+          <circle class="gt-spark" r="3.2"><animateMotion dur="5s" repeatCount="indefinite" path="M 125 150 Q 500 330 875 150" /></circle>
+        </svg>
+        <div class="gt-planet gt-earth"><div class="gt-surface"></div></div>
+        <div class="gt-planet gt-target"><div class="gt-surface gt-mars"></div><div class="gt-surface gt-moon"></div></div>
+      </div>
+      
+      <h1 class="guide-hero-title" data-i18n="guide.hero_title">
+        أهداف المشروع، الميثاق الأخلاقي، ودليل الاستخدام
+      </h1>
+
+      <p class="guide-hero-desc" data-i18n="guide.hero_desc">
+        دليل علمي مرجعي شامل يوضح الرؤية الاستكشافية التي بُنيت عليها منصة TerraTwin، معايير النزاهة وحاجز العزل غير الحيوي (Abiotic Gate)، وخطوات استخدام المنصة لاستكشاف نظائر القمر والمريخ على كوكب الأرض.
+      </p>
+
+    </section>
+
+
+    <!-- ==========================================================================
+         SECTION 1: MISSION PURPOSE & VISION
+         ========================================================================== -->
+    <section class="guide-content-section" id="secPurpose" data-dot-en="Purpose" data-dot-ar="الهدف">
+      <div class="guide-section-header">
+        <h2 class="guide-section-title">
+          <span data-i18n="guide.sec1_title">لماذا أنشأنا مشروع TerraTwin؟ وما هو هدفه؟</span>
+        </h2>
+      </div>
+
+      <div class="guide-grid-2">
+        
+        <!-- Card 1: The Challenge -->
+        <div class="guide-card accent-mars">
+          <h3 class="guide-card-title" data-i18n="guide.sec1_challenge_title">التحدي الكوكبي: خطورة الإرسال دون محاكاة أرضية</h3>
+          <p class="guide-card-text" data-i18n="guide.sec1_challenge_p1">
+            إن إرسال مركبة روبوتية متجولة (Rover) أو تجهيز بدلات رواد فضاء لمهمات القمر الكبرى (مثل برنامج NASA Artemis عند القطب الجنوبي للقمر) أو مهمات استكشاف المريخ يكلف مليارات الدولارات وسنوات من البحث الدقيق.
+          </p>
+        </div>
+
+        <!-- Card 2: The Solution -->
+        <div class="guide-card accent-cyan">
+          <h3 class="guide-card-title" data-i18n="guide.sec1_solution_title">حل TerraTwin: المطابقة الفيزيائية الرقمية المؤتمتة</h3>
+          <p class="guide-card-text" data-i18n="guide.sec1_solution_p1">
+            أنشأ فريق Astraea منصة TerraTwin لسد هذه الفجوة الاستكشافية الحرجة عبر دمج بيانات أقمار رصد الأرض مع مجسات المسبارات الكوكبية في نموذج حسابي وفيزيائي موحد.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 2: ETHICAL FRAMEWORK & ABIOTIC GATE
+         ========================================================================== -->
+    <section class="guide-content-section" id="secEthics" data-dot-en="Ethics" data-dot-ar="الأخلاقيات">
+      <div class="guide-section-header">
+        <h2 class="guide-section-title">
+          <span data-i18n="guide.sec2_title">الأخلاقيات العلمية ومعايير النزاهة وحاجز الـ NDVI</span>
+        </h2>
+      </div>
+
+      <!-- Callout: Abiotic Gate Highlight -->
+      <div class="guide-callout-box">
+        <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+                    <h3 style="font-size:1.15rem; color:#d9b77e; margin:0;" data-i18n="guide.sec2_gate_title">حاجز العزل غير الحيوي الصارم (Physical Abiotic Gate)</h3>
+        </div>
+        <p style="font-size:0.92rem; color:var(--text-secondary); line-height:1.7; margin-bottom:0.75rem;" data-i18n="guide.sec2_gate_desc">
+          أسطح القمر والمريخ خاملة تماماً وتخلو من أي غطاء نباتي أو كتلة حيوية (NDVI = 0.000). لضمان النزاهة العلمية المطلقة ومنع أي مقارنات زائفة، تُطبّق TerraTwin حاجزاً فيزيائياً حتمياً يستبعد تلقائياً أي خلية جغرافية تتجاوز عتبة الغطاء الحيوي:
+        </p>
+        <div class="guide-code-badge" data-i18n="guide.sec2_gate_badge">
+          MODIS NDVI_Threshold &le; 0.20 (Barren & Abiotic Terrain Gate)
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6; margin-bottom:0;" data-i18n="guide.sec2_gate_note">
+          هذا الحاجز يضمن استبعاد الغابات الاستوائية والمناطق الزراعية والتجمعات العمرانية كلياً استناداً إلى القياسات الفيزيائية للقمر الصناعي NASA MODIS، دون أي تدخل يدوي أو تحيز شخصي.
+        </p>
+      </div>
+
+      <div class="guide-grid-3">
+        
+        <div class="guide-card accent-green">
+          <h3 class="guide-card-title" data-i18n="guide.sec2_card1_title">البيانات المفتوحة وعدم الفبركة</h3>
+          <p class="guide-card-text" data-i18n="guide.sec2_card1_desc">
+            100% من بيانات المنصة مستخرجة من مستودعات مفتوحة وموثقة عالمياً تابعة لوكالة ناسا (NASA PDS)، وكالة الفضاء الأوروبية (ESA Copernicus)، وهيئة المساحة الجيولوجية الأمريكية (USGS). لا يوجد أي رقم عشوائي أو اختلاقي.
+          </p>
+        </div>
+
+        <div class="guide-card accent-gold">
+          <h3 class="guide-card-title" data-i18n="guide.sec2_card2_title">المقارنة المعيارية الحيادية</h3>
+          <p class="guide-card-text" data-i18n="guide.sec2_card2_desc">
+            تعتمد المنصة على الرتب المئوية الموحدة (Percentile Ranking) ضمن نطاق كل كوكب، مما يلغي أي انحياز ناتج عن اختلاف المقاييس بين الغلاف الجوي الكثيف للأرض وفراغ القمر.
+          </p>
+        </div>
+
+        <div class="guide-card accent-cyan">
+          <h3 class="guide-card-title" data-i18n="guide.sec2_card3_title">المسؤولية البيئية للأرض</h3>
+          <p class="guide-card-text" data-i18n="guide.sec2_card3_desc">
+            ندعو كافة الباحثين الميدانيين إلى الالتزام بأخلاقيات حماية الكواكب (COSPAR Planetary Protection) والحفاظ على المواقع الجيولوجية الصحراوية الحساسة على كوكب الأرض تحت شعار (Leave No Trace).
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 3: PLATFORM USER GUIDE
+         ========================================================================== -->
+    <section class="guide-content-section" id="secPlatformGuide" data-dot-en="How to use" data-dot-ar="طريقة الاستخدام">
+      <div class="guide-section-header">
+        <h2 class="guide-section-title">
+          <span data-i18n="guide.sec3_title">دليل الاستخدام الشامل لكافة صفحات المنصة</span>
+        </h2>
+      </div>
+
+      <!-- Step 1: Page 1 -->
+      <div class="guide-step-card">
+        <div class="guide-step-num">01</div>
+        <div class="guide-step-body">
+          <h3 class="guide-step-title" data-i18n="guide.sec3_step1_title">الصفحة الأولى: المستكشف ثلاثي الأبعاد والتوأم الكوكبي</h3>
+          <p class="guide-step-desc" data-i18n="guide.sec3_step1_desc">
+            تتيح لك الصفحة الأولى تجربة تفاعلية مذهلة لاستكشاف الكواكب الثلاثة ومطابقتها فورياً:
+          </p>
+          <ul class="guide-card-list">
+            <li data-i18n="guide.sec3_step1_li1"><strong>التبديل بين الكواكب:</strong> استخدم أزرار (الأرض • المريخ • القمر) في أعلى المجسم للتحكم في الجرم السماوي النشط.</li>
+            <li data-i18n="guide.sec3_step1_li2"><strong>التدوير والتكبير 360°:</strong> اسحب الفأرة أو إصبعك لتدوير الكوكب بحرية في الفضاء، واستخدم عجلة التمرير أو القرص للتكبير.</li>
+            <li data-i18n="guide.sec3_step1_li3"><strong>قفل التليميتري الفوري (3D Pin Lock):</strong> انقر على أي دبوس لموقع معين (سواء على المريخ كدلتا فوهة جيزيرو، أو القمر كفوهة شاكلتون، أو الأرض كسهل المفرق بالأردن) لترى إحداثياته الحقيقية (Lat/Lon) وارتفاعه فورياً.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 2: Site Finder -->
+      <div class="guide-step-card">
+        <div class="guide-step-num">02</div>
+        <div class="guide-step-body">
+          <h3 class="guide-step-title" data-i18n="guide.sec3_step2_title">مستكشف المواقع (Site Finder)</h3>
+          <p class="guide-step-desc" data-i18n="guide.sec3_step2_desc">
+            قاعدة بيانات بحث وفلترة متقدمة تضم أكثر من 53 موقعاً معيارياً عالمياً وأكثر من 421,800 خلية أرضية ممسوحة:
+          </p>
+          <ul class="guide-card-list">
+            <li data-i18n="guide.sec3_step2_li1"><strong>الفلترة حسب الهدف الكوكبي:</strong> اختر البحث عن نظائر القمر (Lunar) أو نظائر المريخ (Martian).</li>
+            <li data-i18n="guide.sec3_step2_li2">تخصيص أوزان التحليل وفق متطلبات مهمتك (اختبار روفر، إنشاء قاعدة بشرية، استخراج موارد ISRU، أو ملاجئ كهوف بركانية).</li>
+            <li data-i18n="guide.sec3_step2_li3">تصدير البيانات الميدانية: يمكنك تحميل تقارير مفصلة للمواقع ومشاركتها مع فريقك البحثي بصيغة CSV.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 3: Compare Sites -->
+      <div class="guide-step-card">
+        <div class="guide-step-num">03</div>
+        <div class="guide-step-body">
+          <h3 class="guide-step-title" data-i18n="guide.sec3_step3_title">أداة المقارنة المعيارية المزدوجة (Compare Sites)</h3>
+          <p class="guide-step-desc" data-i18n="guide.sec3_step3_desc">
+            مقارنة وجهاً لوجه بين موقعين محددين لتقييم مدى التطابق قبل تنظيم أي رحلة ميدانية:
+          </p>
+          <ul class="guide-card-list">
+            <li data-i18n="guide.sec3_step3_li1">رادار الأضلاع المتعدد: تمثيل بصري بياني يقارن معايير الموقعين على مضلع شعاعي واحد.</li>
+            <li data-i18n="guide.sec3_step3_li2">جدول الفروقات الفيزيائية: حساب الفروقات بدقة متناهية لكل من درجة الانحدار، المتر الخشن، انعكاس الألبيدو، والفارق الحراري.</li>
+            <li data-i18n="guide.sec3_step3_li3"></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 4: Evidence & Method -->
+      <div class="guide-step-card">
+        <div class="guide-step-num">04</div>
+        <div class="guide-step-body">
+          <h3 class="guide-step-title" data-i18n="guide.sec3_step4_title">صفحة الأدلة والكتالوج المفتوح (Evidence & Method)</h3>
+          <p class="guide-step-desc" data-i18n="guide.sec3_step4_desc">
+            المرجع الأكاديمي والتوثيقي لمنهجية الحساب ومعادلات المطابقة:
+          </p>
+          <ul class="guide-card-list">
+            <li data-i18n="guide.sec3_step4_li1">كتالوج البيانات الكوكبي: جداول مفصلة لبيانات المسبارات والأقمار الصناعية المستخدمة.</li>
+            <li data-i18n="guide.sec3_step4_li2">مصفوفة الحساسية (Sensitivity Analysis): توضيح استجابة الخوارزمية لتغيير الأوزان الهندسية.</li>
+            <li data-i18n="guide.sec3_step4_li3"></li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 4: PHYSICAL METRICS GLOSSARY
+         ========================================================================== -->
+    <section class="guide-content-section" id="secMetrics" data-dot-en="Metrics" data-dot-ar="المقاييس">
+      <div class="guide-section-header">
+        <h2 class="guide-section-title">
+          <span data-i18n="guide.sec4_title">دليل المعايير الفيزيائية وكيف تُقرأ</span>
+        </h2>
+      </div>
+
+      <div class="guide-grid-4">
+        
+        <!-- Metric 1: Slope -->
+        <div class="metric-glossary-card">
+          <div>
+            <div class="metric-header">
+              <span class="metric-name" data-i18n="guide.sec4_slope_name">الانحدار السطحي (Slope)</span>
+              <span class="metric-unit" data-i18n="guide.sec4_slope_unit">بالدرجات (°)</span>
+            </div>
+            <p class="metric-def" data-i18n="guide.sec4_slope_def">
+              زاوية ميلان التضاريس عن المستوى الأفقي. مؤشر حاسم لسلامة هبوط المركبات وحمايتها من الانقلاب أثناء الملاحة الذاتية.
+            </p>
+          </div>
+          <div class="metric-threshold" data-i18n="guide.sec4_slope_thresh">
+            مستوٍ: &lt; 2° • معتدل: 2°-12° • وعر: &gt; 12°
+          </div>
+        </div>
+
+        <!-- Metric 2: Roughness -->
+        <div class="metric-glossary-card">
+          <div>
+            <div class="metric-header">
+              <span class="metric-name" data-i18n="guide.sec4_rough_name">الخشونة السطحية (Roughness)</span>
+              <span class="metric-unit" data-i18n="guide.sec4_rough_unit">بالمتر (m)</span>
+            </div>
+            <p class="metric-def" data-i18n="guide.sec4_rough_def">
+              مقدار التباين الدقيق في ارتفاعات الصخور والعقبات السطحية. يحدد مقاومة عجلات الروفر للتآكل والتمزق.
+            </p>
+          </div>
+          <div class="metric-threshold" data-i18n="guide.sec4_rough_thresh">
+            مقياس Geomorpho90m Multi-Scale
+          </div>
+        </div>
+
+        <!-- Metric 3: Albedo -->
+        <div class="metric-glossary-card">
+          <div>
+            <div class="metric-header">
+              <span class="metric-name" data-i18n="guide.sec4_albedo_name">البياض الضوئي (Albedo)</span>
+              <span class="metric-unit" data-i18n="guide.sec4_albedo_unit">مؤشر (0 - 1)</span>
+            </div>
+            <p class="metric-def" data-i18n="guide.sec4_albedo_def">
+              نسبة الطاقة الشمسية المنعكسة عن السطح. يؤثر بشكل مباشر على كفاءة الألواح الشمسية ومستشعرات الرؤية الحاسوبية.
+            </p>
+          </div>
+          <div class="metric-threshold" data-i18n="guide.sec4_albedo_thresh">
+            NASA MODIS MCD43A3 Optical Albedo
+          </div>
+        </div>
+
+        <!-- Metric 4: Thermal Swing -->
+        <div class="metric-glossary-card">
+          <div>
+            <div class="metric-header">
+              <span class="metric-name" data-i18n="guide.sec4_temp_name">التباين الحراري (Thermal Swing)</span>
+              <span class="metric-unit" data-i18n="guide.sec4_temp_unit">ΔT مئوية (°C)</span>
+            </div>
+            <p class="metric-def" data-i18n="guide.sec4_temp_def">
+              الفارق الحراري بين ذروة النهار وبرودة الليل. معيار جوهري لاختبار الإجهاد الحراري للمواد وعمر بطاريات المركبات.
+            </p>
+          </div>
+          <div class="metric-threshold" data-i18n="guide.sec4_temp_thresh">
+            NASA MODIS Land Surface Temp (LST)
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <!-- ==========================================================================
+       PERSISTENT SCIENTIFIC MISSION FOOTER
+       ========================================================================== -->
+  <footer class="site-footer tt-footer" id="siteFooter">
+
+    <!-- Footer horizon image goes here (real Moon / Earth / Mars terrain, coming next) -->
+    <div class="tt-footer-horizon" aria-hidden="true"></div>
+    <div class="footer-container">
+      <div class="tt-footer-grid">
+
+        <!-- Brand + mission -->
+        <div class="tt-footer-brand">
+          <a href="index.html" class="tt-footer-logo" aria-label="TerraTwin">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a0b2cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+              <circle cx="12" cy="12" r="2.5" fill="#d9b77e"></circle>
+            </svg>
+            <span>TerraTwin</span>
+          </a>
+          <p class="tt-footer-about" data-i18n="footer.about_desc">TerraTwin finds places on Earth that match landing and exploration sites on the Moon and Mars, using open satellite data, so missions can test on Earth before they fly.</p>
+          <p class="tt-footer-team">
+            <span class="tt-footer-team-label" data-i18n="footer.built_by">Built by</span>
+            <strong data-i18n="footer.lead_name">Astraea Science Team</strong>
+            <span class="tt-footer-team-role" data-i18n="footer.lead_role">Planetary Systems &amp; Geospatial Engineering</span>
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.contact_title">Contact</p>
+          <a class="tt-footer-link" href="mailto:astraeateam45@gmail.com" id="footerContactEmail" data-i18n="footer.contact_email">astraeateam45@gmail.com</a>
+          <a class="tt-footer-link" href="evidence.html" data-i18n="footer.docs_link">Methodology</a>
+          <button type="button" class="tt-footer-cta" id="footerContactModalLink" onclick="if(window.UserSystem){window.UserSystem.openContactModal();}">
+            <span data-i18n="footer.contact_team">Contact the team</span>
+          </button>
+        </div>
+
+        <!-- Data sources -->
+        <div class="tt-footer-col">
+          <p class="tt-footer-heading" data-i18n="footer.sources_title">Data sources</p>
+          <ul class="tt-footer-list">
+            <li data-i18n="footer.source_nasa">NASA Planetary Data System</li>
+            <li data-i18n="footer.source_esa">ESA Copernicus (Sentinel-2)</li>
+            <li data-i18n="footer.source_usgs">USGS / NASA JPL</li>
+          </ul>
+          <a class="tt-footer-link tt-footer-more" href="evidence.html#dataCatalogSection" data-i18n="footer.view_all_sources">View all data sources</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright" data-i18n="footer.copyright">© 2026 TerraTwin · Astraea Team</div>
+        <div class="footer-badges-group">
+          <span class="footer-license" data-i18n="footer.source_textures">Planet textures: Solar System Scope (CC BY 4.0)</span>
+          <span class="footer-license">CC-BY 4.0</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data/data-store.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/avatars.js"></script>
+  <script src="js/user-system.js"></script>
+  <script src="js/astrabot.js"></script>
+  <script src="js/tour.js"></script>
+  <script src="js/tour-marker.js"></script>
+    <script src="js/rag-engine.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/guide.js"></script>
+  <script src="js/space-bg.js"></script>
+  <script src="js/section-dots.js"></script>
+  <script src="js/luxe.js" defer></script>
+  <script src="js/cinema-bg.js"></script>
+</body>
+</html>

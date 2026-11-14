@@ -1,0 +1,357 @@
+/**
+ * Astraea - AstraBot Cute Space Robot Guide Companion (Global Stylesheet)
+ * Appears smoothly alongside the Guide on all pages without colliding with the AI Chatbot.
+ */
+
+.astrabot-companion {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+[dir="rtl"] .astrabot-companion {
+  left: auto;
+  right: 1.4rem;
+  align-items: flex-end;
+}
+
+/* Guide Spotlight Active State */
+.astrabot-companion.tour-active {
+  z-index: 10025;
+}
+
+.astrabot-bubble {
+  pointer-events: auto;
+  width: 295px;
+  max-width: calc(100vw - 2.8rem);
+  background: rgba(10, 18, 34, 0.94);
+  border: 1px solid rgba(217, 183, 126, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 22px rgba(217, 183, 126, 0.18);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.7rem;
+  position: relative;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  animation: astrabot-bubble-pop 0.35s ease;
+}
+
+.astrabot-companion.collapsed .astrabot-bubble {
+  display: none;
+}
+
+[data-theme="light"] .astrabot-bubble {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(2, 132, 199, 0.42);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.14);
+}
+
+@keyframes astrabot-bubble-pop {
+  0% { transform: scale(0.9) translateY(8px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.astrabot-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 32px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(217, 183, 126, 0.5);
+}
+
+[dir="rtl"] .astrabot-bubble::after {
+  left: auto;
+  right: 32px;
+}
+
+.bubble-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  padding-bottom: 0.42rem;
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="light"] .bubble-header {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.bot-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #86c4a0;
+  box-shadow: 0 0 8px #86c4a0;
+  flex-shrink: 0;
+  animation: pulse-ring 2s infinite;
+}
+
+.bot-name-tag {
+  font-family: 'JetBrains Mono', 'Orbitron', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d9b77e;
+  letter-spacing: 0.03em;
+  flex: 1;
+  text-align: start;
+}
+
+[data-theme="light"] .bot-name-tag {
+  color: #0284c7;
+}
+
+.bot-header-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bot-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-primary, #f0f4fc);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.bot-ctrl-btn:hover {
+  background: rgba(217, 183, 126, 0.2);
+  border-color: #d9b77e;
+  color: #d9b77e;
+}
+
+[data-theme="light"] .bot-ctrl-btn {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: rgba(15, 23, 42, 0.14);
+  color: #0f172a;
+}
+
+.bubble-text {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-primary, #f0f4fc);
+  font-family: 'Inter', 'Cairo', sans-serif;
+  text-align: start;
+}
+
+[data-theme="light"] .bubble-text {
+  color: #1e293b;
+}
+
+.astrabot-quick-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .astrabot-quick-bar {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+.astrabot-action-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(160, 178, 204, 0.12);
+  border: 1px solid rgba(217, 183, 126, 0.32);
+  color: var(--accent-cyan, #d9b77e);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: all 0.18s ease;
+}
+
+.astrabot-action-pill:hover {
+  background: rgba(217, 183, 126, 0.22);
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .astrabot-action-pill {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0369a1;
+}
+
+/* Avatar Robot Character */
+.astrabot-avatar-wrap {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 8px 18px rgba(160, 178, 204, 0.35));
+}
+
+.astrabot-avatar-wrap:hover {
+  transform: scale(1.07) translateY(-3px);
+  filter: drop-shadow(0 12px 24px rgba(217, 183, 126, 0.48));
+}
+
+.astrabot-avatar-wrap:active {
+  transform: scale(0.95);
+}
+
+.astrabot-figure {
+  animation: astrabot-float 3.5s ease-in-out infinite;
+}
+
+.astrabot-svg {
+  display: block;
+}
+
+@keyframes astrabot-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.astrabot-companion .bot-thruster-flame {
+  animation: astrabot-flame 0.8s ease-in-out infinite alternate;
+  transform-origin: 50px 104px;
+}
+
+@keyframes astrabot-flame {
+  0% { transform: scaleY(0.75) scaleX(0.85); opacity: 0.7; }
+  100% { transform: scaleY(1.25) scaleX(1.1); opacity: 1; }
+}
+
+.astrabot-companion .antenna-bulb {
+  animation: astrabot-antenna 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes astrabot-antenna {
+  0% { fill: #d9b77e; }
+  100% { fill: #e2c492; }
+}
+
+.astrabot-companion .bot-eye {
+  animation: astrabot-blink 4s infinite;
+  transform-origin: center;
+}
+
+@keyframes astrabot-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+}
+
+.astrabot-companion .bot-arm-right {
+  animation: astrabot-wave 2.2s ease-in-out infinite;
+  transform-origin: 74px 73px;
+}
+
+@keyframes astrabot-wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-16deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+.astrabot-hover-platform {
+  position: absolute;
+  bottom: 14px;
+  width: 46px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(217, 183, 126, 0.45) 0%, transparent 75%);
+  animation: astrabot-platform-glow 3.5s ease-in-out infinite;
+}
+
+@keyframes astrabot-platform-glow {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(0.8); opacity: 0.25; }
+}
+
+.astrabot-badge-tag {
+  background: rgba(6, 15, 32, 0.88);
+  border: 1px solid rgba(217, 183, 126, 0.45);
+  color: #d9b77e;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 2px;
+}
+
+[data-theme="light"] .astrabot-badge-tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #7dd3fc;
+}
+
+/* Peeking Robot Companion Inside Guided Tour Card */
+.tour-astrabot-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.55rem;
+}
+
+.tour-astrabot-mini {
+  width: 46px;
+  height: 52px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(217, 183, 126, 0.35));
+  animation: astrabot-float 2.8s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .astrabot-companion {
+    bottom: 0.75rem;
+    left: 0.75rem;
+  }
+  [dir="rtl"] .astrabot-companion {
+    left: auto;
+    right: 0.75rem;
+  }
+  .astrabot-svg {
+    width: 68px;
+    height: 82px;
+  }
+  .astrabot-bubble {
+    width: 245px;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.76rem;
+  }
+}
+
+/* hidden while the footer is visible (see watchFooter in astrabot.js) */
+.astrabot-companion { transition: opacity .4s ease, transform .4s ease; }
+.astrabot-companion.astrabot-away { opacity: 0; transform: translateY(24px); pointer-events: none; }
+
+/* Sit bottom-right, stacked just above the chat button: the right edge has no text,
+   so the robot no longer covers page content on the left. */
+.astrabot-companion { left: auto !important; right: 1.5rem !important; bottom: calc(1.5rem + 76px) !important; align-items: flex-end !important; }
+[dir="rtl"] .astrabot-companion { right: auto !important; left: 1.5rem !important; align-items: flex-start !important; }
+.astrabot-companion .astrabot-avatar-wrap { transform: scale(.78); transform-origin: bottom right; }
+[dir="rtl"] .astrabot-companion .astrabot-avatar-wrap { transform-origin: bottom left; }
+.astrabot-bubble::after { left: auto !important; right: 26px !important; }
+[dir="rtl"] .astrabot-bubble::after { right: auto !important; left: 26px !important; }
+@media (max-width: 760px) { .astrabot-companion { bottom: calc(1rem + 70px) !important; right: 1rem !important; } }

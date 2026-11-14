@@ -1,0 +1,10 @@
+# Local secrets - never commit (API keys live in .env locally and in Netlify environment variables)
+.env
+.env.*
+!.env.example
+
+# Netlify CLI local folder
+.netlify/
+
+# Dependencies
+node_modules/

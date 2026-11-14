@@ -1,0 +1,72 @@
+{
+ "Earth|Devon Island / Haughton Crater": {
+  "name_ar": "جزيرة ديفون / فوهة هوتون"
+ },
+ "Earth|Atacama Desert (Yungay)": {
+  "name_ar": "صحراء أتاكاما (يونغاي)"
+ },
+ "Earth|Mars Desert Research Station": {
+  "name_ar": "محطة أبحاث صحراء المريخ (MDRS)"
+ },
+ "Earth|HI-SEAS Mauna Loa": {
+  "name_ar": "محطة هاي سيز، ماونا لوا"
+ },
+ "Earth|Rio Tinto": {
+  "name_ar": "ريو تينتو، إسبانيا"
+ },
+ "Earth|Dhofar AMADEE site": {
+  "name_ar": "موقع ظفار (أمادي)، عمان"
+ },
+ "Earth|Mafraq, Jordan": {
+  "name_ar": "سهل المفرق البازلتي، الأردن"
+ },
+ "Earth|Chubut, Argentina": {
+  "name_ar": "هضبة تشوبوت البازلتية",
+  "country_ar": "الأرجنتين",
+  "env_type_ar": "هضبة بازلتية جافة منبسطة"
+ },
+ "Earth|Norway": {
+  "name_ar": "تربة سفالبارد الصقيعية",
+  "country_ar": "النرويج",
+  "env_type_ar": "تربة جليدية صقيعية قطبية"
+ },
+ "Earth|Wadi Rum": {
+  "name_ar": "وادي رم، الأردن"
+ },
+ "Mars|Jezero": {
+  "name_ar": "دلتا فوهة جيزيرو"
+ },
+ "Mars|Gale": {
+  "name_ar": "فوهة غيل (جبل شارب)"
+ },
+ "Mars|Meridiani Planum": {
+  "name_ar": "سهل ميريدياني بلانوم"
+ },
+ "Mars|Elysium Planitia": {
+  "name_ar": "سهل إليسيوم بلانيتيا"
+ },
+ "Mars|Olympus Mons": {
+  "name_ar": "بركان أوليمبوس مونس"
+ },
+ "Mars|Valles Marineris": {
+  "name_ar": "أخاديد فالس مارينيريس"
+ },
+ "Moon|Copernicus": {
+  "name_ar": "فوهة كوبرنيكوس المركزية"
+ },
+ "Moon|Aristarchus": {
+  "name_ar": "هضبة أريستارخوس البركانية"
+ },
+ "Moon|Mare Tranquillitatis": {
+  "name_ar": "بحر السكون (أبولو 11)"
+ },
+ "Moon|Rima Ariadaeus": {
+  "name_ar": "أخدود ريما أرياديوس"
+ },
+ "Moon|Shackleton": {
+  "name_ar": "حافة فوهة شاكلتون (القطب الجنوبي)"
+ },
+ "Moon|Mons Mouton": {
+  "name_ar": "مونس موتون (الكتلة القطبية)"
+ }
+}
