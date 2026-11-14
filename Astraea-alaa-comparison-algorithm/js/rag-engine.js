@@ -854,11 +854,15 @@
         // "What is TerraTwin?" - the name is in almost every chunk, so BM25 alone can't find the overview.
         if (hints.aboutPlatform && c.id === 'method:overview') s += 4;
         if (hints.wantsRanking && (c.kind === 'ranking' || c.id === 'list:top_analogs')) s *= 1.25;
+        let entityHit = false;
         if (entityIds.size && c.entityIds && c.entityIds.length) {
           const primary = c.entityIds[0];
-          if (entityIds.has(primary)) s += 9;
-          else if (c.entityIds.some(id => entityIds.has(id))) s += 3.5;
+          if (entityIds.has(primary)) { s += 9; entityHit = true; }
+          else if (c.entityIds.some(id => entityIds.has(id))) { s += 3.5; entityHit = true; }
         }
+        // A single rejected site repeats "NDVI gate" in its text; unless that site is named,
+        // the method explanation and the rejected-sites list answer the question better.
+        if (c.kind === 'rejected' && !entityHit) s *= 0.6;
         // Lists are useful only for list-style questions; keep them from crowding entity answers.
         if (c.kind === 'list' && hasStrongEntity) s *= 0.6;
         if (s > 0) out.push({ chunk: c, score: s });
@@ -909,8 +913,8 @@
       return chunks.map((c, i) => ({ n: i + 1, id: c.id, kind: c.kind, title: c.title }));
     },
 
-    /** Answer built straight from the catalog when no language model is available. */
-    directAnswer(analysis, reason = 'no-model') {
+    /** Answer built straight from the TerraTwin catalog entries retrieved by analyze(). */
+    directAnswer(analysis) {
       const ar = analysis.lang === 'ar';
       const chunks = (analysis.chunks || []).slice(0, 3);
       if (!chunks.length) {
@@ -918,23 +922,9 @@
           ? 'لم أجد معلومات عن هذا السؤال في كتالوج TerraTwin. جرّب ذكر اسم موقع (مثل جيزيرو أو المفرق) أو موضوع منهجي (مثل بوابة NDVI).'
           : "I couldn't find this in the TerraTwin catalog. Try naming a site (for example Jezero or Mafraq) or a method topic (for example the NDVI gate).";
       }
-      const head = ar ? 'إليك ما يقوله كتالوج TerraTwin مباشرة:' : 'Here is what the TerraTwin catalog says:';
+      const head = ar ? 'إليك ما يقوله كتالوج TerraTwin:' : 'Here is what the TerraTwin catalog says:';
       const body = chunks.map((c, i) => `**[${i + 1}] ${c.title}**\n${c.text}`).join('\n\n');
-      const notes = {
-        'no-model': ar ? '_هذه بيانات الكتالوج كما هي. فعّل نموذج الذكاء الاصطناعي للحصول على إجابة مكتوبة ومفسّرة._'
-                       : '_This is the raw catalog data. Enable the AI model to get a written, explained answer._',
-        'loading': ar ? '_بيانات الكتالوج الفورية. ستظهر إجابة الذكاء الاصطناعي الكاملة هنا عند جاهزية النموذج._'
-                      : '_Instant catalog data. The full AI answer will appear here when the model is ready._',
-        'unsupported': ar ? '_متصفحك لا يدعم WebGPU، لذلك أعرض بيانات الكتالوج مباشرة._'
-                          : '_Your browser does not support WebGPU, so I am showing the catalog data directly._',
-        'error': ar ? '_تعذر تشغيل نموذج الذكاء الاصطناعي، لذلك أعرض بيانات الكتالوج مباشرة._'
-                    : '_The AI model could not run, so I am showing the catalog data directly._',
-        'offline': ar ? '_خدمة الذكاء الاصطناعي غير متاحة حالياً، لذلك أعرض بيانات كتالوج TerraTwin مباشرة. حاول مرة أخرى بعد قليل._'
-                      : '_The AI service is not reachable right now, so I am showing the TerraTwin catalog data directly. Please try again shortly._',
-        'busy': ar ? '_خدمة الذكاء الاصطناعي مشغولة حالياً (تم تجاوز حد الطلبات)، لذلك أعرض بيانات كتالوج TerraTwin مباشرة. حاول مرة أخرى بعد دقيقة._'
-                   : '_The AI service is busy right now (request limit reached), so I am showing the TerraTwin catalog data directly. Please try again in a minute._'
-      };
-      return `${head}\n\n${body}\n\n${notes[reason] || notes['no-model']}`;
+      return `${head}\n\n${body}`;
     },
 
     /** Legacy API kept for compatibility with older callers. */

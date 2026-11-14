@@ -121,9 +121,9 @@ Structured in 3 vertical linear sections:
 3. **Contextual Scientific Chatbot (Floating Widget)**:
    - Bottom-right floating icon with live status dot.
    - 3 page-tailored quick-prompts in English and Arabic.
-   - Deterministic responses powered by local JSON datasets.
-   - Unsupported queries deterministically receive:
-     *"Information not available in current run / لا تتوفر هذه المعلومة في نتائج التحليل الحالية"* with pointers to relevant pages.
+   - Answers from the TerraTwin catalog: `js/rag-engine.js` searches `data/terratwin-knowledge.json` and `data/terratwin-platform-guide.json` in the browser and lists the entries used as sources. No external AI service or API key is involved.
+   - Questions outside TerraTwin receive (in English or Arabic):
+     *"I answer questions about TerraTwin: its sites, Moon and Mars targets, data, method and pages."* followed by 3 example questions.
 
 4. **Global Professional Scientific Footer**:
    - **Project Team**: Developed by the **Astraea Team** and the **Astraea Planetary Science Lab**.

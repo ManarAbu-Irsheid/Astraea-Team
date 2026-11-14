@@ -101,8 +101,8 @@
   "assistant": {
     "title_en": "About TerraTwin AI (this chatbot)",
     "title_ar": "عن مساعد TerraTwin AI (هذا الشات بوت)",
-    "keywords": "chatbot assistant you model qwen groq ai server privacy how work answer",
-    "text_en": "TerraTwin AI is the assistant built into this website. Questions are sent to the TerraTwin server, which retrieves the relevant entries from the platform's verified catalog and asks the Qwen3 language model (served by Groq) to write the answer. Nothing needs to be downloaded or installed. It answers general questions from the model's own knowledge and TerraTwin questions from the catalog, citing the entries it used. If the AI service is unavailable, it answers TerraTwin questions directly from the catalog.",
-    "text_ar": "TerraTwin AI هو المساعد المدمج في هذا الموقع. تُرسل الأسئلة إلى خادم TerraTwin الذي يسترجع البيانات المناسبة من الكتالوج الموثق للمنصة، ثم يطلب من نموذج اللغة Qwen3 (عبر خدمة Groq) كتابة الإجابة. لا حاجة لتحميل أو تثبيت أي شيء. يجيب عن الأسئلة العامة من معرفة النموذج، وعن أسئلة TerraTwin من الكتالوج مع ذكر المصادر التي استخدمها. وإذا تعذر الوصول إلى خدمة الذكاء الاصطناعي، يجيب عن أسئلة TerraTwin مباشرة من الكتالوج."
+    "keywords": "chatbot assistant you catalog privacy how work answer",
+    "text_en": "TerraTwin AI is the assistant built into this website. It answers from the TerraTwin catalog: it searches the platform's verified entries (sites, Moon and Mars targets, similarity rankings, data sources, method and pages) directly in your browser and shows the entries it used as sources. Nothing is sent to an external service and nothing needs to be installed. It answers questions about TerraTwin only.",
+    "text_ar": "TerraTwin AI هو المساعد المدمج في هذا الموقع. يجيب من كتالوج TerraTwin: يبحث في البيانات الموثقة للمنصة (المواقع، وأهداف القمر والمريخ، وترتيب التشابه، ومصادر البيانات، والمنهجية، والصفحات) مباشرة داخل متصفحك، ويعرض البيانات التي استخدمها كمصادر. لا يُرسل أي شيء إلى خدمة خارجية ولا حاجة لتثبيت أي شيء. يجيب عن الأسئلة المتعلقة بمنصة TerraTwin فقط."
   }
 }
